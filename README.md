@@ -1,17 +1,27 @@
-# Typescript Template for React
+# Jellyfin Music Client
 
-[![Actions Status](https://github.com/MarkSFrancis/ts-react-template/workflows/Build/badge.svg)](https://github.com/MarkSFrancis/ts-react-template/actions)
+[![Actions Status](https://github.com/MarkSFrancis/jellyfin-music-client/workflows/Build/badge.svg)](https://github.com/MarkSFrancis/jellyfin-music-client/actions)
 
-## Features
+This project is very much a work in progress.
 
-1. [Typescript](https://www.typescriptlang.org/)
-1. Hot reload (using [NextJS](https://nextjs.org/))
-1. [React](https://reactjs.org/)
-1. [CSS in JS](https://en.wikipedia.org/wiki/CSS-in-JS) (using [Emotion](https://emotion.sh/) and [Chakra UI](https://chakra-ui.com/))
-1. Linter (using [eslint](https://eslint.org/))
-1. Formatter (using [prettier](https://prettier.io/))
-1. Testing (using [@testing-library/react](https://testing-library.com/))
-1. Auto-package install on pull (using [husky](https://typicode.github.io/husky))
-1. Auto-lint on commit (using [lint-staged](https://github.com/okonet/lint-staged))
-1. Auto-test on push (using [husky](https://typicode.github.io/husky))
-1. Auto-update dependencies via PRs (using [Dependabot](https://dependabot.com/))
+## Currently supported features
+
+1. Connecting to a jellyfin server
+
+## Features on the way
+
+1. Sign in
+1. Browse your songs
+1. Audio playback
+1. Deploy to a demo instance, that you can connect to your own server
+1. Shuffle all
+1. Audio streaming support for faster playback start
+1. Manage "up next" playback
+1. Gapless playback
+1. PWA support
+1. Browse by album, genre, song, and artist
+1. Caching audio for faster skip forward/ backward
+1. Search tools
+1. Playlist support
+1. Offline support
+1. Automatically match similar music via genre labels
