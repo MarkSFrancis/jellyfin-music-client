@@ -3,7 +3,6 @@ import { createContext } from "react";
 import { ApiClient } from "../../utils/jellyfinClient";
 
 export interface Auth {
-  server: string;
   api: ApiClient;
 }
 

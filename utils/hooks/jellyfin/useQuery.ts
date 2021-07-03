@@ -6,7 +6,8 @@ import axios, {
 import { useCallback, useEffect, useRef } from "react";
 import { useApi } from "../../../components/Jellyfin";
 import { ApiClient } from "../../jellyfinClient";
-import { ApiParams, PickNever } from "../../types";
+import { ApiParams, ApiResult, PickNever } from "../../types";
+import { useCache } from "../useCache";
 import { useSafeState } from "../useSafeState";
 import { marshalRequestArgs, marshalResponse } from "./utils";
 
@@ -45,7 +46,6 @@ export type QueryState<T> =
   | QueryErrorState<T>;
 
 export const useQuery = <
-  T,
   ApiId extends keyof ApiClient,
   ApiMethod extends keyof ApiClient[ApiId]
 >(
@@ -54,10 +54,13 @@ export const useQuery = <
   params: ApiParams<ApiId, ApiMethod>,
   requestOptions?: Omit<AxiosRequestConfig, "cancelToken">,
   options?: QueryOptions
-): [QueryState<T>, QueryMetadata] => {
+): [QueryState<ApiResult<ApiId, ApiMethod>>, QueryMetadata] => {
+  type T = ApiResult<ApiId, ApiMethod>;
+
   const [state, setState] = useSafeState<QueryState<T>>({ status: "loading" });
   const currentRequest = useRef<CancelTokenSource>();
   const { api } = useApi();
+  const paramsCache = useCache(params);
 
   const fetch = useCallback(() => {
     if (currentRequest.current) {
@@ -67,23 +70,23 @@ export const useQuery = <
     const source = axios.CancelToken.source();
     currentRequest.current = source;
 
-    if (!options.preserveDataOnRefetch) {
+    if (!options?.preserveDataOnRefetch) {
       setState({
         status: "loading",
       });
     }
 
-    const request = marshalRequestArgs<T, ApiId, ApiMethod>(
+    const request = marshalRequestArgs<ApiId, ApiMethod>(
       apiId,
       apiMethod,
-      params,
+      paramsCache,
       requestOptions,
       source,
       api
     );
 
-    marshalResponse(request, setState);
-  }, [options, requestOptions, apiMethod, params, apiId, setState, api]);
+    marshalResponse<T>(request, setState);
+  }, [options, requestOptions, apiMethod, paramsCache, apiId, setState, api]);
 
   useEffect(() => {
     if (!currentRequest.current) {
@@ -92,7 +95,11 @@ export const useQuery = <
 
     return () => {
       if (currentRequest.current) {
-        currentRequest.current.cancel();
+        currentRequest.current.cancel(
+          "query parameters updated or component unmounted"
+        );
+
+        currentRequest.current = undefined;
       }
     };
   }, [fetch]);

@@ -6,10 +6,9 @@ import axios, {
 import { SetStateAction } from "react";
 import { MutationState } from ".";
 import { ApiClient } from "../../jellyfinClient";
-import { ApiParams } from "../../types";
+import { ApiParams, ApiResult } from "../../types";
 
 export const marshalRequestArgs = <
-  T,
   ApiId extends keyof ApiClient,
   ApiMethod extends keyof ApiClient[ApiId]
 >(
@@ -19,7 +18,7 @@ export const marshalRequestArgs = <
   requestOptions: Omit<AxiosRequestConfig, "cancelToken">,
   cancellationSource: CancelTokenSource,
   api: ApiClient
-) => {
+): Promise<AxiosResponse<ApiResult<ApiId, ApiMethod>>> => {
   const reqOpts: AxiosRequestConfig = {
     ...(requestOptions ?? {}),
     cancelToken: cancellationSource.token,
@@ -27,31 +26,33 @@ export const marshalRequestArgs = <
 
   const apiFunc = api[apiId][apiMethod] as unknown as (
     ...args: unknown[]
-  ) => Promise<AxiosResponse<T>>;
+  ) => Promise<AxiosResponse<ApiResult<ApiId, ApiMethod>>>;
 
-  return apiFunc(...params, reqOpts);
+  return apiFunc.call(api[apiId], ...params, reqOpts);
 };
 
-export const marshalResponse = <T>(
-  response: Promise<AxiosResponse>,
+export const marshalResponse = async <T>(
+  response: Promise<AxiosResponse<T>>,
   setState: (value: SetStateAction<MutationState<T>>) => void
 ) => {
-  response
-    .then((res) => {
-      setState({
-        status: "success",
-        data: res.data,
-        response: res,
-      });
-    })
-    .catch((err) => {
-      if (axios.isCancel(err)) {
-        return;
-      }
-
-      setState({
-        status: "error",
-        error: err,
-      });
+  try {
+    const res = await response;
+    setState({
+      status: "success",
+      data: res.data,
+      response: res,
     });
+
+    return res;
+  } catch (err) {
+    if (axios.isCancel(err)) {
+      console.error(err);
+      return;
+    }
+
+    setState({
+      status: "error",
+      error: err,
+    });
+  }
 };

@@ -1,38 +1,56 @@
+import { Center, Spinner } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { FC } from "react";
 import { useLocalStorage } from "../../utils";
 import { ApiClient, initApi } from "../../utils/jellyfinClient";
 import { ApiProvider } from "./ApiContext";
+import { UserGuard } from "./UserGuard";
 import { SetServer } from "./SetServer";
 import { SignIn } from "./SignIn";
 
-export const ApiGuard: FC = () => {
+export const ApiGuard: FC = (props) => {
   const [serverUrl, setServerUrl] = useLocalStorage<string>(
     "jellyfin-server-url"
   );
-  const [userId, setUserId] = useLocalStorage<string>("jellyfin-user-id");
+  const [token, setToken] = useLocalStorage<string>("jellyfin-auth-token");
   const [api, setApi] = useState<ApiClient>();
 
   useEffect(() => {
-    if (!serverUrl) {
+    if (!serverUrl || !token) {
       setApi(undefined);
     } else {
-      setApi(initApi(serverUrl));
+      setApi(initApi(serverUrl, token));
     }
-  }, [serverUrl, userId]);
+  }, [serverUrl, token]);
 
   if (!serverUrl) {
     return <SetServer onSetServer={setServerUrl} />;
   }
 
-  if (!userId) {
-    return <SignIn onChangeServer={() => setServerUrl(undefined)} />;
+  if (!token) {
+    return (
+      <SignIn
+        onChangeServer={() => setServerUrl(undefined)}
+        serverUrl={serverUrl}
+        onSetToken={setToken}
+      />
+    );
   }
 
   if (!api) {
-    return <></>;
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    );
   }
 
-  return <ApiProvider value={{ api, server: serverUrl }}></ApiProvider>;
+  return (
+    <ApiProvider value={{ api }}>
+      <UserGuard onSignOut={() => setToken(undefined)}>
+        {props.children}
+      </UserGuard>
+    </ApiProvider>
+  );
 };

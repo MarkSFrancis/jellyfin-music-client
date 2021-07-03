@@ -17,10 +17,12 @@
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "@jellyfin/client-axios": "10.7.0",
+    "dequal": "^2.0.2",
     "framer-motion": "^4",
     "next": "11.0.1",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.14.1",

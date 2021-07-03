@@ -6,21 +6,17 @@ import axios, {
 import { useCallback, useEffect, useRef } from "react";
 import { useApi } from "../../../components/Jellyfin";
 import { ApiClient } from "../../jellyfinClient";
-import { ApiParams, PickNever } from "../../types";
+import { ApiParams, ApiResult, PickNever } from "../../types";
 import { useSafeState } from "../useSafeState";
 import { marshalRequestArgs, marshalResponse } from "./utils";
 
-export interface MutationMetadata<
+export type MutateRequest<
   ApiId extends keyof ApiClient,
   ApiMethod extends keyof ApiClient[ApiId]
-> {
-  mutate: (
-    apiId: ApiId,
-    apiMethod: ApiMethod,
-    params: ApiParams<ApiId, ApiMethod>,
-    requestOptions?: Omit<AxiosRequestConfig, "cancelToken">
-  ) => void;
-}
+> = (
+  params: ApiParams<ApiId, ApiMethod>,
+  requestOptions?: Omit<AxiosRequestConfig, "cancelToken">
+) => Promise<AxiosResponse<ApiResult<ApiId, ApiMethod>>>;
 
 interface MutationStateBaseType<T> {
   data: T;
@@ -55,23 +51,25 @@ export type MutationState<T> =
   | MutationErrorState<T>;
 
 export const useMutation = <
-  T,
   ApiId extends keyof ApiClient,
   ApiMethod extends keyof ApiClient[ApiId]
->(): [MutationMetadata<ApiId, ApiMethod>, MutationState<T>] => {
-  const [state, setState] = useSafeState<MutationState<T>>({
+>(
+  apiId: ApiId,
+  apiMethod: ApiMethod
+): [
+  MutateRequest<ApiId, ApiMethod>,
+  MutationState<ApiResult<ApiId, ApiMethod>>
+] => {
+  const [state, setState] = useSafeState<
+    MutationState<ApiResult<ApiId, ApiMethod>>
+  >({
     status: "idle",
   });
   const currentRequest = useRef<CancelTokenSource>();
   const { api } = useApi();
 
-  const fetch = useCallback(
-    (
-      apiId: ApiId,
-      apiMethod: ApiMethod,
-      params: ApiParams<ApiId, ApiMethod>,
-      requestOptions?: Omit<AxiosRequestConfig, "cancelToken">
-    ) => {
+  const fetch: MutateRequest<ApiId, ApiMethod> = useCallback(
+    async (params, requestOptions) => {
       if (currentRequest.current) {
         currentRequest.current.cancel();
       }
@@ -83,7 +81,7 @@ export const useMutation = <
         status: "loading",
       });
 
-      const request = marshalRequestArgs<T, ApiId, ApiMethod>(
+      const request = marshalRequestArgs<ApiId, ApiMethod>(
         apiId,
         apiMethod,
         params,
@@ -92,22 +90,11 @@ export const useMutation = <
         api
       );
 
-      marshalResponse(request, setState);
+      const response = await marshalResponse(request, setState);
+      return response;
     },
-    [setState, api]
+    [setState, api, apiId, apiMethod]
   );
 
-  useEffect(() => {
-    return () => {
-      if (currentRequest.current) {
-        currentRequest.current.cancel();
-      }
-    };
-  }, [fetch]);
-
-  const meta: MutationMetadata<ApiId, ApiMethod> = {
-    mutate: fetch,
-  };
-
-  return [meta, state];
+  return [fetch, state];
 };

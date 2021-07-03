@@ -65,11 +65,13 @@ import axios from "axios";
 
 export type ApiClient = ReturnType<typeof initApi>;
 
-export const initApi = (baseUrl: string) => {
+export const initApi = (baseUrl: string, token: string) => {
   const config = new Configuration();
   const contextAxios = axios.create({
     baseURL: baseUrl,
   });
+
+  contextAxios.defaults.headers["X-Emby-Authorization"] = token;
 
   const api = {
     activityLog: new ActivityLogApi(config, "", contextAxios),
