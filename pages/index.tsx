@@ -1,5 +1,5 @@
-import { HelloWorld } from "../components/HelloWorld";
+import React from "react";
 
 export default function Home() {
-  return <HelloWorld />;
+  return <>Connected</>;
 }

@@ -1,9 +1,13 @@
-import { ChakraProvider } from "@chakra-ui/react";
+import React from "react";
+import { ChakraProvider } from "../components/Chakra";
+import { ApiGuard } from "../components/Jellyfin";
 
 function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider>
-      <Component {...pageProps} />
+      <ApiGuard>
+        <Component {...pageProps} />
+      </ApiGuard>
     </ChakraProvider>
   );
 }
