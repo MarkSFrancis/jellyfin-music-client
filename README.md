@@ -7,11 +7,12 @@ This project is very much a work in progress.
 ## Currently supported features
 
 1. Connecting to a jellyfin server
+1. Sign in
+1. Browse your songs (as JSON)
 
 ## Features on the way
 
-1. Sign in
-1. Browse your songs
+1. Browse your songs (as a nice UI)
 1. Audio playback
 1. Deploy to a demo instance, that you can connect to your own server
 1. Shuffle all
