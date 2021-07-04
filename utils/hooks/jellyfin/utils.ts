@@ -46,7 +46,6 @@ export const marshalResponse = async <T>(
     return res;
   } catch (err) {
     if (axios.isCancel(err)) {
-      console.error(err);
       return;
     }
 

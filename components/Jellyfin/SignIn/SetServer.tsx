@@ -1,7 +1,7 @@
 import React, { FormEvent, useCallback } from "react";
 import { FC } from "react";
 import { useState } from "react";
-import { initApi } from "../../utils/jellyfinClient";
+import { initApi } from "../../../utils/jellyfinClient";
 import {
   Button,
   ButtonGroup,
@@ -10,10 +10,11 @@ import {
   FormLabel,
   Input,
   VStack,
+  Heading,
 } from "@chakra-ui/react";
 import { PublicSystemInfo } from "@jellyfin/client-axios";
 import { useEffect } from "react";
-import { AuthContainer } from "./AuthContainer";
+import { SlimPageContainer } from "../../Layout";
 
 export interface SetServerProps {
   onSetServer: (url: string) => void;
@@ -63,9 +64,10 @@ export const SetServer: FC<SetServerProps> = (props) => {
   );
 
   return (
-    <AuthContainer>
+    <SlimPageContainer>
       <form onSubmit={handleSetServer}>
         <VStack spacing={4} align="stretch">
+          <Heading as="h2">Connect to your Jellyfin server</Heading>
           <FormControl isRequired id="serverUrl">
             <FormLabel>Server URL</FormLabel>
             <Input
@@ -80,6 +82,7 @@ export const SetServer: FC<SetServerProps> = (props) => {
             <Button
               isLoading={validating}
               colorScheme="gray"
+              variant="outline"
               isDisabled={!serverUrl}
               onClick={validateServer}
             >
@@ -90,6 +93,6 @@ export const SetServer: FC<SetServerProps> = (props) => {
           {isValid === false && <Text>Failed to validate Jellyfin server</Text>}
         </VStack>
       </form>
-    </AuthContainer>
+    </SlimPageContainer>
   );
 };

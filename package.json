@@ -19,6 +19,7 @@
     "@jellyfin/client-axios": "10.7.0",
     "dequal": "^2.0.2",
     "framer-motion": "^4",
+    "howler": "^2.2.3",
     "next": "11.0.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
@@ -27,6 +28,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
+    "@types/howler": "^2.2.2",
     "@types/jest": "^26.0.23",
     "@types/react": "^17.0.13",
     "@typescript-eslint/eslint-plugin": "^4.28.1",

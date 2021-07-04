@@ -4,6 +4,7 @@ import {
   ButtonGroup,
   FormControl,
   FormLabel,
+  Heading,
   Input,
   Text,
   VStack,
@@ -11,10 +12,10 @@ import {
 import { AuthenticationResult } from "@jellyfin/client-axios";
 import React, { FC, FormEvent } from "react";
 import { useCallback } from "react";
-import { AuthContainer } from "./AuthContainer";
+import { SlimPageContainer } from "../../Layout";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
-import { initApi } from "../../utils/jellyfinClient";
+import { initApi } from "../../../utils/jellyfinClient";
 
 export interface SignInProps {
   serverUrl: string;
@@ -54,9 +55,10 @@ export const SignIn: FC<SignInProps> = (props) => {
   );
 
   return (
-    <AuthContainer>
+    <SlimPageContainer>
       <form onSubmit={signIn}>
         <VStack spacing={4} align="stretch">
+          <Heading as="h2">Sign in</Heading>
           <FormControl isRequired id="username">
             <FormLabel>Username</FormLabel>
             <Input
@@ -76,7 +78,11 @@ export const SignIn: FC<SignInProps> = (props) => {
           </FormControl>
           <ButtonGroup>
             <Button type="submit">Login</Button>
-            <Button colorScheme="gray" onClick={() => props.onChangeServer()}>
+            <Button
+              colorScheme="gray"
+              onClick={() => props.onChangeServer()}
+              variant="outline"
+            >
               Change server
             </Button>
           </ButtonGroup>
@@ -87,7 +93,7 @@ export const SignIn: FC<SignInProps> = (props) => {
           )}
         </VStack>
       </form>
-    </AuthContainer>
+    </SlimPageContainer>
   );
 };
 

@@ -5,9 +5,10 @@ import { FC } from "react";
 import { useLocalStorage } from "../../utils";
 import { ApiClient, initApi } from "../../utils/jellyfinClient";
 import { ApiProvider } from "./ApiContext";
-import { UserGuard } from "./UserGuard";
-import { SetServer } from "./SetServer";
-import { SignIn } from "./SignIn";
+import { UserGuard } from "./User/UserGuard";
+import { SetServer, SignIn } from "./SignIn";
+import { useMemo } from "react";
+import { MusicLibraryGuard } from "./MusicLibrary";
 
 export const ApiGuard: FC = (props) => {
   const [serverUrl, setServerUrl] = useLocalStorage<string>(
@@ -24,6 +25,14 @@ export const ApiGuard: FC = (props) => {
     }
   }, [serverUrl, token]);
 
+  const apiConfig = useMemo(() => {
+    if (!api || !token || !serverUrl) {
+      return undefined;
+    }
+
+    return { api, auth: { authToken: token, serverUrl: serverUrl } };
+  }, [serverUrl, api, token]);
+
   if (!serverUrl) {
     return <SetServer onSetServer={setServerUrl} />;
   }
@@ -38,7 +47,7 @@ export const ApiGuard: FC = (props) => {
     );
   }
 
-  if (!api) {
+  if (!apiConfig) {
     return (
       <Center>
         <Spinner />
@@ -47,9 +56,11 @@ export const ApiGuard: FC = (props) => {
   }
 
   return (
-    <ApiProvider value={{ api }}>
+    <ApiProvider value={apiConfig}>
       <UserGuard onSignOut={() => setToken(undefined)}>
-        {props.children}
+        <MusicLibraryGuard onSignOut={() => setToken(undefined)}>
+          {props.children}
+        </MusicLibraryGuard>
       </UserGuard>
     </ApiProvider>
   );

@@ -1,7 +1,7 @@
 import { Button, Center, Spinner, Text } from "@chakra-ui/react";
 import React, { FC } from "react";
 import { useCallback } from "react";
-import { useMutation, useQuery } from "../../utils";
+import { useMutation, useQuery } from "../../../utils";
 import { UserProvider } from "./UserContext";
 
 export interface GetUserDetailsProps {

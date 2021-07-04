@@ -1,4 +1,4 @@
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useCallback, useState } from "react";
 
 export const useLocalStorage = <T>(
   key: string,
@@ -18,11 +18,15 @@ export const useLocalStorage = <T>(
     }
   });
 
-  const setValue = (value: SetStateAction<T>) => {
-    const valueToStore = value instanceof Function ? value(storedValue) : value;
-    setStoredValue(valueToStore);
-    window.localStorage.setItem(key, JSON.stringify(valueToStore));
-  };
+  const setValue = useCallback(
+    (value: SetStateAction<T>) => {
+      const valueToStore =
+        value instanceof Function ? value(storedValue) : value;
+      setStoredValue(valueToStore);
+      window.localStorage.setItem(key, JSON.stringify(valueToStore));
+    },
+    [key, storedValue]
+  );
 
   return [storedValue, setValue] as const;
 };
