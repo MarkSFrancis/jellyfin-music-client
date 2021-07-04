@@ -1,5 +1,6 @@
 import { Center, Spinner, Text } from "@chakra-ui/react";
 import React, { FC } from "react";
+import { useMemo } from "react";
 import { SlimPageContainer } from "../../Layout";
 import { MusicLibraryConfigProvider } from "./MusicLibraryContext";
 import { SelectMusicLibrary } from "./SelectMusicLibrary";
@@ -14,9 +15,11 @@ export const MusicLibraryGuard: FC<MusicLibraryGuardProps> = (props) => {
   const state = useLibraries();
   const [library, setLibrary] = useStoredMusicLibrary(state);
 
+  const libraryMemo = useMemo(() => ({ library }), [library]);
+
   if (library) {
     return (
-      <MusicLibraryConfigProvider value={{ library }}>
+      <MusicLibraryConfigProvider value={libraryMemo}>
         {props.children}
       </MusicLibraryConfigProvider>
     );
