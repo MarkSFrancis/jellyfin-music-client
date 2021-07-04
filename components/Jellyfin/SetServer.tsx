@@ -32,7 +32,7 @@ export const SetServer: FC<SetServerProps> = (props) => {
 
   const validateServer = useCallback(async () => {
     setValidating(true);
-    const apiClient = initApi(serverUrl);
+    const apiClient = initApi(serverUrl, undefined);
 
     try {
       return await apiClient.system.getPublicSystemInfo().then((r) => {
