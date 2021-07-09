@@ -46,7 +46,7 @@ function getPreviousTracks(queue: Track[], index: number, loop: boolean) {
   for (let i = index - 1; previousTracks.length < lookBehindMax; i--) {
     if (i < 0) {
       if (!loop) break;
-      i = queue.length;
+      i = queue.length - 1;
     }
 
     previousTracks.push(queue[i]);
@@ -61,7 +61,7 @@ function getNextTracks(queue: Track[], index: number, loop: boolean) {
   }
 
   const nextTracks: Track[] = [];
-  for (let i = index + 1; nextTracks.length < lookAheadMax; i--) {
+  for (let i = index + 1; nextTracks.length < lookAheadMax; i++) {
     if (i >= queue.length) {
       if (!loop) break;
       i = 0;

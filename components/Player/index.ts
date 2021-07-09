@@ -1,1 +1,1 @@
-export * from "./TrackPlayer";
+export * from "./PlayerBar";

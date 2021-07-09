@@ -3,3 +3,4 @@ export * from "./jellyfin";
 export * from "./useSafeState";
 export * from "./useLocalStorage";
 export * from "./useCache";
+export * from "./useMusicLibrary";

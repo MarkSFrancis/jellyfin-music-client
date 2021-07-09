@@ -12,14 +12,14 @@ This project is very much a work in progress.
 1. Audio playback
 1. Audio streaming support for faster playback start
 1. Caching audio for faster skip forward/ backward
+1. Shuffle all
+1. Gapless playback
 
 ## Features on the way
 
 1. Browse your songs (as a nice UI)
 1. Deploy to a demo instance, that you can connect to your own server
-1. Shuffle all
 1. Manage "up next" playback
-1. Gapless playback
 1. PWA support
 1. Browse by album, genre, song, and artist
 1. Search tools

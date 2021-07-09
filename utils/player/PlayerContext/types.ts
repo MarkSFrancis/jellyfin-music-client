@@ -1,3 +1,4 @@
+import { Howl } from "howler";
 import { Dispatch, SetStateAction } from "react";
 import { Track } from "../../trackTypes";
 
@@ -24,10 +25,15 @@ export interface PlayerCommandsContext {
   stop: () => void;
 }
 
-export interface PlayerProgressContext {
-  ticks: number;
-  updateTicks: (tick: number) => void;
-}
+export type PlayerAudioContext =
+  | {
+      track: Track;
+      rawAudio: Howl;
+    }
+  | {
+      track?: never;
+      rawAudio?: never;
+    };
 
 export interface PlayerCurrentTrackContext {
   track: Track | undefined;
