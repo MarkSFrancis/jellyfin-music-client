@@ -35,6 +35,8 @@ jobs:
           node-version: "14.x"
       - name: Install dependencies
         run: yarn --frozen-lockfile --non-interactive
+      - name: Switch next.config.js
+        run: mv -f next.gh-pages.config.js next.config.js
       - name: Build for static hosting
         run: yarn build:static
       - name: Deploy

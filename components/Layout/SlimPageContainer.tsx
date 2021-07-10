@@ -9,7 +9,7 @@ import { Logo } from "./Logo";
 
 export const SlimPageContainer = forwardRef<ContainerProps, typeof Container>(
   (props, ref) => (
-    <Container p={0} maxW="container.sm" ref={ref} {...props}>
+    <Container p={4} maxW="container.sm" ref={ref} {...props}>
       <VStack align="stretch" justifyContent="center" minH="100vh" spacing={4}>
         <Logo width="100px" height="100px" />
         {props.children}
