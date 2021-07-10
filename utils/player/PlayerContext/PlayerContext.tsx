@@ -7,6 +7,7 @@ import { PlayerQueueProvider } from "./PlayerQueue";
 import { PlayerSettingsProvider } from "./PlayerSettings";
 import { PlayerStateProvider } from "./PlayerState";
 import { PlayerPlayNext } from "./PlayerPlayNext";
+import { MediaSessionManager } from "./MediaSessionManager";
 
 export const PlayerProvider: FC = ({ children }) => {
   return (
@@ -17,7 +18,9 @@ export const PlayerProvider: FC = ({ children }) => {
             <PlayerStateProvider>
               <PlayerCommandsProvider>
                 <PlayerAudioProvider>
-                  <PlayerPlayNext>{children}</PlayerPlayNext>
+                  <PlayerPlayNext>
+                    <MediaSessionManager>{children}</MediaSessionManager>
+                  </PlayerPlayNext>
                 </PlayerAudioProvider>
               </PlayerCommandsProvider>
             </PlayerStateProvider>

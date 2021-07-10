@@ -60,6 +60,14 @@ export const PlayerCommandsProvider: FC = ({ children }) => {
     [setTrack, setState, setQueue]
   );
 
+  const canSkipBackward: PlayerCommandsContext["canSkipBackward"] =
+    useCallback(() => {
+      if (repeating) return true;
+
+      const currentTrackIndex = getCurrentTrackIndex(track, queue);
+      return currentTrackIndex > 0;
+    }, [repeating, queue, track]);
+
   const skipBackward1Track: PlayerCommandsContext["skipBackward1Track"] =
     useCallback(() => {
       setTrack((t) => {
@@ -70,13 +78,21 @@ export const PlayerCommandsProvider: FC = ({ children }) => {
           if (repeating) {
             prevTrackIndex = queue.length - 1;
           }
-        } else {
-          // TODO stop playback
         }
 
         return queue[prevTrackIndex];
       });
     }, [setTrack, queue, repeating]);
+
+  const canSkipForward: PlayerCommandsContext["canSkipForward"] =
+    useCallback(() => {
+      if (repeating) return true;
+
+      const currentTrackIndex = getCurrentTrackIndex(track, queue);
+      if (currentTrackIndex < 0) return false;
+
+      return currentTrackIndex < queue.length - 1;
+    }, [repeating, queue, track]);
 
   const skipForward1Track: PlayerCommandsContext["skipForward1Track"] =
     useCallback(() => {
@@ -88,25 +104,11 @@ export const PlayerCommandsProvider: FC = ({ children }) => {
           if (repeating) {
             nextTrackIndex = 0;
           }
-        } else {
-          // TODO stop playback
         }
 
         return queue[nextTrackIndex];
       });
     }, [setTrack, queue, repeating]);
-
-  const stop: PlayerCommandsContext["stop"] = useCallback(() => {
-    setState(PlayerState.Stopped);
-    setQueue([]);
-  }, [setState, setQueue]);
-
-  const togglePlayPause: PlayerCommandsContext["togglePlayPause"] =
-    useCallback(() => {
-      setState((s) =>
-        s === PlayerState.Playing ? PlayerState.Paused : PlayerState.Playing
-      );
-    }, [setState]);
 
   const addToQueue: PlayerCommandsContext["addToQueue"] = useCallback(
     (track) => {
@@ -127,11 +129,11 @@ export const PlayerCommandsProvider: FC = ({ children }) => {
         addToUpNext,
         jumpToTrackInQueue,
         removeFromQueue,
+        canSkipBackward,
         skipBackward1Track,
+        canSkipForward,
         skipForward1Track,
         startNewQueue,
-        stop,
-        togglePlayPause,
       }}
     >
       {children}

@@ -1553,6 +1553,11 @@
   resolved "https://registry.yarnpkg.com/@types/warning/-/warning-3.0.0.tgz#0d2501268ad8f9962b740d387c4654f5f8e23e52"
   integrity sha1-DSUBJorY+ZYrdA04fEZU9fjiPlI=
 
+"@types/wicg-mediasession@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@types/wicg-mediasession/-/wicg-mediasession-1.1.2.tgz#f02d76f9713f8dd53180d3ae14e23c01e34f5e4d"
+  integrity sha512-5UJ8tBtgMmIzyJafmfBjq2VcXk0SXqZnNCApepKiqLracDV4+dJdYPZCW0IwaYfOBkY54SmfCOWqMBmLCPrfuQ==
+
 "@types/yargs-parser@*":
   version "20.2.0"
   resolved "https://registry.yarnpkg.com/@types/yargs-parser/-/yargs-parser-20.2.0.tgz#dd3e6699ba3237f0348cd085e4698780204842f9"
