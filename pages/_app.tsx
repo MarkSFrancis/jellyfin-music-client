@@ -1,7 +1,7 @@
 import React from "react";
 import { ChakraProvider } from "../components/Chakra";
 import { ApiGuard } from "../components/Jellyfin";
-import { PlayerBar } from "../components/Player";
+import { PlayerBarContainer } from "../components/PlayerBar/PlayerBarContainer";
 import { PlayerProvider } from "../utils/player";
 
 function MyApp({ Component, pageProps }) {
@@ -9,8 +9,9 @@ function MyApp({ Component, pageProps }) {
     <ChakraProvider>
       <ApiGuard>
         <PlayerProvider>
-          <Component {...pageProps} />
-          <PlayerBar />
+          <PlayerBarContainer>
+            <Component {...pageProps} />
+          </PlayerBarContainer>
         </PlayerProvider>
       </ApiGuard>
     </ChakraProvider>
