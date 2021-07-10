@@ -1,31 +1,28 @@
 import { ItemFields, ItemsApiGetItemsRequest } from "@jellyfin/client-axios";
 import { useCallback } from "react";
-import { useQuery } from ".";
 import { useMusicLibraryConfig } from "../../components/Jellyfin";
 import { useUser } from "../../components/Jellyfin/User/UserContext";
 import { Track } from "../trackTypes";
 import { useMutation } from "./jellyfin";
 
-export const useMusicLibraryQuery = (options: ItemsApiGetItemsRequest = {}) => {
-  const user = useUser();
-  const musicLibrary = useMusicLibraryConfig();
+export interface MusicLibraryResult {
+  tracks: Track[];
+  /**
+   * Useful if you've limited the original query to only return a subset of data
+   */
+  totalTracks: number;
+}
 
-  return useQuery("items", "getItems", [
-    {
-      ...getDefaultOptions(user.Id, musicLibrary.id),
-      ...options,
-    },
-  ]);
-};
-
-export const useMusicLibraryFetch = () => {
+export const useGetTracks = () => {
   const user = useUser();
   const musicLibrary = useMusicLibraryConfig();
 
   const [fetch, state] = useMutation("items", "getItems");
 
   const fetchWithDefaults = useCallback(
-    async (options: ItemsApiGetItemsRequest = {}) => {
+    async (
+      options: ItemsApiGetItemsRequest = {}
+    ): Promise<MusicLibraryResult> => {
       const result = await fetch([
         {
           ...getDefaultOptions(user.Id, musicLibrary.id),
@@ -33,7 +30,10 @@ export const useMusicLibraryFetch = () => {
         },
       ]);
 
-      return result.data.Items as Track[];
+      return {
+        totalTracks: result.data.TotalRecordCount as number,
+        tracks: result.data.Items as Track[],
+      };
     },
     [user, musicLibrary, fetch]
   );

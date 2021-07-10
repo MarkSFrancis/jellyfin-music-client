@@ -15,10 +15,10 @@ This project is very much a work in progress.
 1. Shuffle all
 1. Gapless playback
 1. Deploy to a demo instance, that you can connect to your own server
+1. Browse your songs (as a nice UI)
 
 ## Features on the way
 
-1. Browse your songs (as a nice UI)
 1. Manage "up next" playback
 1. PWA support
 1. Browse by album, genre, song, and artist

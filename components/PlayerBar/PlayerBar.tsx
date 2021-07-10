@@ -15,7 +15,7 @@ export const PlayerBar: FC = () => {
       p={4}
       borderTop="1px"
       borderColor="blue.700"
-      backgroundColor="whiteAlpha.100"
+      backgroundColor="gray.900"
     >
       <Flex>
         <Box minWidth={180} width="30%" alignSelf="center">

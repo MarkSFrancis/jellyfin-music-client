@@ -4,7 +4,7 @@ import {
   SliderFilledTrack,
   SliderThumb,
 } from "@chakra-ui/react";
-import React, { FC, WheelEvent } from "react";
+import React, { FC } from "react";
 import { useRef } from "react";
 import { useCallback } from "react";
 import { useEffect } from "react";
@@ -14,7 +14,9 @@ import { usePlayerAudio } from "../../utils";
 export const PlayerSeek: FC = () => {
   const { rawAudio } = usePlayerAudio();
   const [progress, setProgress] = useState<number | undefined>();
+  const [duration, setDuration] = useState<number>(1);
   const queuedScroll = useRef(0);
+  const sliderRef = useRef<HTMLDivElement>();
 
   useEffect(() => {
     let currentFrameHandle: number;
@@ -26,6 +28,7 @@ export const PlayerSeek: FC = () => {
 
       const currentTicks = rawAudio.seek() as number;
       setProgress(currentTicks);
+      setDuration(rawAudio.duration());
 
       currentFrameHandle = requestAnimationFrame(frameHandler);
     };
@@ -48,6 +51,7 @@ export const PlayerSeek: FC = () => {
 
   const handleScroll = useCallback(
     (e: WheelEvent) => {
+      e.preventDefault();
       if (!rawAudio) return;
 
       const scrollAmount = Math.floor((e.deltaX + e.deltaY) / 20);
@@ -56,19 +60,28 @@ export const PlayerSeek: FC = () => {
     [rawAudio]
   );
 
+  useEffect(() => {
+    const slider = sliderRef.current;
+    console.log("Attaching listener", slider);
+    slider.addEventListener("wheel", handleScroll, { passive: false });
+
+    return () => slider.removeEventListener("wheel", handleScroll);
+  }, [handleScroll]);
+
   return (
-    <Slider
-      aria-label="Track progress"
-      value={progress || 0}
-      max={rawAudio?.duration() || 1}
-      onChange={(seekTo) => rawAudio?.seek(seekTo)}
-      isDisabled={!rawAudio}
-      onWheel={handleScroll}
-    >
-      <SliderTrack>
-        <SliderFilledTrack />
-      </SliderTrack>
-      {rawAudio && <SliderThumb />}
-    </Slider>
+    <div ref={sliderRef} style={{ width: "100%" }}>
+      <Slider
+        aria-label="Track progress"
+        value={progress || 0}
+        max={duration}
+        onChange={(seekTo) => rawAudio?.seek(seekTo)}
+        isDisabled={!rawAudio}
+      >
+        <SliderTrack>
+          <SliderFilledTrack />
+        </SliderTrack>
+        {rawAudio && <SliderThumb />}
+      </Slider>
+    </div>
   );
 };

@@ -2,29 +2,30 @@ import { Box, Button, ButtonGroup, Heading, VStack } from "@chakra-ui/react";
 import { ItemFields } from "@jellyfin/client-axios";
 import { useCallback } from "react";
 import { FC } from "react";
-import { useMusicLibraryFetch } from "../../utils";
+import { useGetTracks } from "../../utils";
 import { usePlayerCommands } from "../../utils";
+import { SongList } from "../SongList";
 
 export const Dashboard: FC = () => {
   const { startNewQueue } = usePlayerCommands();
-  const [fetchLibrary, fetchLibraryState] = useMusicLibraryFetch();
+  const [getTracks, getTracksState] = useGetTracks();
 
   const handlePlayMostRecent = useCallback(async () => {
-    const library = await fetchLibrary({
+    const library = await getTracks({
       limit: 300,
       sortBy: ItemFields.DateCreated,
       sortOrder: "Descending",
     });
-    startNewQueue(library);
-  }, [fetchLibrary, startNewQueue]);
+    startNewQueue(library.tracks);
+  }, [getTracks, startNewQueue]);
 
   const handleShuffleAll = useCallback(async () => {
-    const library = await fetchLibrary({
+    const library = await getTracks({
       limit: 300,
       sortBy: "Random",
     });
-    startNewQueue(library);
-  }, [fetchLibrary, startNewQueue]);
+    startNewQueue(library.tracks);
+  }, [getTracks, startNewQueue]);
 
   return (
     <VStack spacing={4}>
@@ -32,18 +33,21 @@ export const Dashboard: FC = () => {
       <Box>
         <ButtonGroup spacing={4}>
           <Button
-            isLoading={fetchLibraryState.status === "loading"}
+            isLoading={getTracksState.status === "loading"}
             onClick={handlePlayMostRecent}
           >
             Play most recent
           </Button>
           <Button
-            isLoading={fetchLibraryState.status === "loading"}
+            isLoading={getTracksState.status === "loading"}
             onClick={handleShuffleAll}
           >
             Shuffle all
           </Button>
         </ButtonGroup>
+      </Box>
+      <Box>
+        <SongList sortBy={ItemFields.DateCreated} sortOrder="Descending" />
       </Box>
     </VStack>
   );
