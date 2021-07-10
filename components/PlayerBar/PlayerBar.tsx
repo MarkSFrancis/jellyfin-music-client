@@ -1,4 +1,4 @@
-import { Box, Flex, VStack } from "@chakra-ui/react";
+import { Box, Flex, useColorModeValue, VStack } from "@chakra-ui/react";
 import { IconPlaylist } from "@tabler/icons";
 import React, { FC } from "react";
 import { PlayerBarProgress } from "./PlayerBarProgress";
@@ -8,6 +8,7 @@ import { PlayerButtons } from "./PlayerButtons";
 export const PlayerBar: FC = () => {
   return (
     <Box
+      zIndex={1}
       position="fixed"
       bottom={0}
       w="100vw"
@@ -38,7 +39,10 @@ export const PlayerBar: FC = () => {
           justifySelf="flex-end"
           alignSelf="center"
         >
-          <Flex justifyContent="flex-end">
+          <Flex
+            justifyContent="flex-end"
+            color={useColorModeValue("blackAlpha.700", "whiteAlpha.700")}
+          >
             <IconPlaylist />
           </Flex>
         </Box>

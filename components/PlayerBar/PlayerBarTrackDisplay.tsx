@@ -14,7 +14,7 @@ export const PlayerBarTrackDisplay: FC = () => {
     <>
       <Text>{track.Name}</Text>
       <SecondaryText>
-        {track.ArtistItems.map((a) => (
+        {track.ArtistItems?.map((a) => (
           <span key={a.Id}>{a.Name}</span>
         ))}
       </SecondaryText>

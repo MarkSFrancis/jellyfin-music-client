@@ -1,38 +1,11 @@
-import { Button, ButtonGroup, VStack } from "@chakra-ui/react";
-import React, { useCallback } from "react";
-import { Track } from "../utils";
-import { usePlayerQueue, usePlayerCommands } from "../utils";
+import React from "react";
+import { Dashboard } from "../components/Dashboard";
+import { PageContainer } from "../components/Layout";
 
-export default function Home() {
-  const { queue } = usePlayerQueue();
-  const { startNewQueue } = usePlayerCommands();
-
-  const playExample = useCallback(() => {
-    const defaultTrackId = `298332b3fa37fe629a3179b69594259a`;
-    const defaultTrackContainer = "opus";
-
-    if (queue.length > 0) {
-      return;
-    }
-
-    startNewQueue([
-      {
-        Id: defaultTrackId,
-        MediaSources: [
-          {
-            Id: defaultTrackId,
-            Container: defaultTrackContainer,
-          },
-        ],
-      } as Track,
-    ]);
-  }, [startNewQueue, queue]);
-
+export default function Library() {
   return (
-    <VStack spacing={4}>
-      <ButtonGroup>
-        <Button onClick={playExample}>Play example song</Button>
-      </ButtonGroup>
-    </VStack>
+    <PageContainer>
+      <Dashboard />
+    </PageContainer>
   );
 }
