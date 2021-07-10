@@ -22,25 +22,3 @@ jobs:
         run: yarn build
       - name: Test
         run: yarn test:all
-  deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: "14.x"
-      - name: Install dependencies
-        run: yarn --frozen-lockfile --non-interactive
-      - name: Switch next.config.js
-        run: mv -f next.gh-pages.config.js next.config.js
-      - name: Build for static hosting
-        run: yarn build:static
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@4.1.4
-        with:
-          branch: gh-pages
-          folder: out
