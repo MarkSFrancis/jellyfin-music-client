@@ -13,7 +13,7 @@ import { usePlayerAudio } from "../../utils";
 
 export const PlayerSeek: FC = () => {
   const { rawAudio } = usePlayerAudio();
-  const [progress, setProgress] = useState<number | undefined>();
+  const [progress, setProgress] = useState<number | undefined>(undefined);
   const [duration, setDuration] = useState<number | undefined>(undefined);
   const queuedScroll = useRef(0);
   const sliderRef = useRef<HTMLDivElement>();
@@ -32,7 +32,6 @@ export const PlayerSeek: FC = () => {
       } else {
         setProgress(undefined);
       }
-      setDuration(rawAudio.duration());
 
       currentFrameHandle = requestAnimationFrame(frameHandler);
     };
@@ -43,15 +42,34 @@ export const PlayerSeek: FC = () => {
   }, [rawAudio]);
 
   useEffect(() => {
+    if (!rawAudio) {
+      setDuration(undefined);
+      return;
+    }
+
+    const loadHandler = () => {
+      setDuration(rawAudio.duration());
+    };
+
+    rawAudio.on("load", loadHandler);
+
+    return () => {
+      rawAudio?.off("load", loadHandler);
+    };
+  }, [rawAudio]);
+
+  useEffect(() => {
     const updateSeek = setInterval(() => {
+      if (!rawAudio) return;
+
       if (queuedScroll.current !== 0) {
         rawAudio.seek((rawAudio.seek() as number) + queuedScroll.current);
         queuedScroll.current = 0;
       }
-    }, 10);
+    }, 100);
 
     return () => clearInterval(updateSeek);
-  });
+  }, [rawAudio]);
 
   const handleScroll = useCallback(
     (e: WheelEvent) => {
@@ -76,6 +94,7 @@ export const PlayerSeek: FC = () => {
       <Slider
         aria-label="Track progress"
         value={progress || 0}
+        min={0}
         max={duration || 1}
         onChange={(seekTo) => rawAudio?.seek(seekTo)}
         isDisabled={!rawAudio}

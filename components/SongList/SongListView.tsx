@@ -121,6 +121,7 @@ const SongListEntry: FC<SongListEntryProps> = React.memo(
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
+              onPlay();
             }}
           >
             {isCurrentTrack && isPlaying ? (
