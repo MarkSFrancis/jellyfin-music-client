@@ -17,7 +17,7 @@ export const PlayerBar: FC = () => {
   const widths = useBreakpointValue<[string, string, string]>({
     base: [undefined, undefined, undefined],
     md: ["30%", "40%", "30%"],
-  });
+  }) ?? [undefined, undefined, undefined];
 
   return (
     <Box

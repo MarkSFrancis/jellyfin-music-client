@@ -9,6 +9,11 @@ import {
   Tr,
   Text,
   useColorModeValue,
+  useBreakpointValue,
+  HStack,
+  VStack,
+  Box,
+  Divider,
 } from "@chakra-ui/react";
 import { IconDots, IconPlayerPause, IconPlayerPlay } from "@tabler/icons";
 import React, { FC } from "react";
@@ -21,6 +26,7 @@ import {
   usePlayerCurrentTrack,
   usePlayerState,
 } from "../../utils";
+import { SecondaryText } from "../Typography";
 
 export interface SongListViewProps {
   tracks: Track[];
@@ -30,6 +36,7 @@ export const SongListView: FC<SongListViewProps> = ({ tracks }) => {
   const { track: playingTrack } = usePlayerCurrentTrack();
   const { startNewQueue } = usePlayerCommands();
   const { state, setState } = usePlayerState();
+  const isMobile = useBreakpointValue({ base: true, md: false });
 
   const handlePlayPauseTrack = useCallback(
     (track: Track) => {
@@ -49,6 +56,26 @@ export const SongListView: FC<SongListViewProps> = ({ tracks }) => {
     },
     [tracks, startNewQueue, setState, playingTrack]
   );
+
+  if (isMobile) {
+    return (
+      <VStack align="stretch" divider={<Divider />}>
+        {tracks.map((t, i) => (
+          <SongListEntry
+            key={t.Id}
+            track={t}
+            isCurrentTrack={t.Id === playingTrack?.Id}
+            index={i + 1}
+            isPlaying={
+              t.Id === playingTrack?.Id && state === PlayerState.Playing
+            }
+            onPlay={() => handlePlayPauseTrack(t)}
+            isMobile={true}
+          />
+        ))}
+      </VStack>
+    );
+  }
 
   return (
     <Table key="table" variant="simple" size="sm" colorScheme="gray">
@@ -72,6 +99,7 @@ export const SongListView: FC<SongListViewProps> = ({ tracks }) => {
               t.Id === playingTrack?.Id && state === PlayerState.Playing
             }
             onPlay={() => handlePlayPauseTrack(t)}
+            isMobile={false}
           />
         ))}
       </Tbody>
@@ -85,22 +113,15 @@ interface SongListEntryProps {
   isPlaying: boolean;
   onPlay: () => void;
   index: number;
+  isMobile: boolean;
 }
 
 const SongListEntry: FC<SongListEntryProps> = React.memo(
-  ({ track, isCurrentTrack, onPlay, index, isPlaying }) => {
+  ({ track, isCurrentTrack, onPlay, index, isPlaying, isMobile }) => {
     const playableTrackHover = useColorModeValue(
       "blackAlpha.300",
       "whiteAlpha.300"
     );
-
-    const trProps: TableRowProps = isCurrentTrack
-      ? { background: playableTrackHover }
-      : {
-          onClick: onPlay,
-          cursor: "pointer",
-          _hover: { background: playableTrackHover },
-        };
 
     const hoverCss = useMemo(() => {
       return [
@@ -110,6 +131,47 @@ const SongListEntry: FC<SongListEntryProps> = React.memo(
         ":hover .none-on-hover { display: none }",
       ].join("\n");
     }, []);
+
+    if (isMobile) {
+      return (
+        <HStack align="stretch">
+          <Box>
+            <IconButton
+              variant="ghost"
+              isRound
+              aria-label={isCurrentTrack ? "Play" : "Pause"}
+              onClick={onPlay}
+            >
+              {isCurrentTrack && isPlaying ? (
+                <IconPlayerPause />
+              ) : (
+                <IconPlayerPlay />
+              )}
+            </IconButton>
+          </Box>
+          <VStack align="stretch">
+            <Box>{track.Name}</Box>
+            <Box>
+              <SecondaryText>
+                {track.ArtistItems.map((a) => a.Name).join(", ")}
+              </SecondaryText>
+            </Box>
+            <Box>
+              <SecondaryText>
+                {track.GenreItems.map((g) => g.Name).join(", ")}
+              </SecondaryText>
+            </Box>
+          </VStack>
+        </HStack>
+      );
+    }
+
+    const trProps: TableRowProps = isCurrentTrack
+      ? { background: playableTrackHover }
+      : {
+          onDoubleClick: onPlay,
+          _hover: { background: playableTrackHover },
+        };
 
     return (
       <Tr {...trProps} css={hoverCss}>
