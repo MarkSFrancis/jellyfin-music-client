@@ -1,9 +1,14 @@
+import { PublicSystemInfo } from "@jellyfin/client-axios";
 import { useContext } from "react";
 import { createContext } from "react";
 import { ApiClient } from "../../utils/jellyfinClient";
 
+export interface Server extends PublicSystemInfo {
+  url: string;
+}
+
 export interface ApiAuthContext {
-  serverUrl: string;
+  server: Server;
   authToken: string;
 }
 

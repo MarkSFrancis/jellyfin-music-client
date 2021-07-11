@@ -4,11 +4,13 @@ import { useCallback } from "react";
 import { FC } from "react";
 import { useGetTracks } from "../../utils";
 import { usePlayerCommands } from "../../utils";
+import { useApi } from "../Jellyfin";
 import { SongList } from "../SongList";
 
 export const Dashboard: FC = () => {
   const { startNewQueue } = usePlayerCommands();
   const [getTracks, getTracksState] = useGetTracks();
+  const { auth } = useApi();
 
   const handlePlayMostRecent = useCallback(async () => {
     const library = await getTracks({

@@ -16,9 +16,10 @@ import { SlimPageContainer } from "../../Layout";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import { initApi } from "../../../utils/jellyfinClient";
+import { Server } from "../ApiContext";
 
 export interface SignInProps {
-  serverUrl: string;
+  server: Server;
   onChangeServer: () => void;
   onSetToken: (token: string) => void;
 }
@@ -34,7 +35,7 @@ export const SignIn: FC<SignInProps> = (props) => {
 
       // Jellyfin requires a temporary token to sign in
       const tempToken = createToken(undefined);
-      const api = initApi(props.serverUrl, tempToken);
+      const api = initApi(props.server.url, tempToken);
 
       try {
         const authResponse = await api.user.authenticateUserByName({

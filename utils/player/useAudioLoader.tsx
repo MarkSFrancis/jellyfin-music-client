@@ -91,7 +91,7 @@ const getTrackSrc = (auth: ApiAuthContext, track: Track) => {
   }
 
   return generateAudioSrc({
-    serverUrl: auth.serverUrl,
+    serverUrl: auth.server.url,
     trackContainer: stream.Container,
     trackId: stream.Id,
     userToken: auth.authToken,

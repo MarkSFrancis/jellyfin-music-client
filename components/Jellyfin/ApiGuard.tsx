@@ -4,44 +4,42 @@ import { useEffect } from "react";
 import { FC } from "react";
 import { useLocalStorage } from "../../utils";
 import { ApiClient, initApi } from "../../utils/jellyfinClient";
-import { ApiProvider } from "./ApiContext";
+import { ApiProvider, Server } from "./ApiContext";
 import { UserGuard } from "./User/UserGuard";
 import { SetServer, SignIn } from "./SignIn";
 import { useMemo } from "react";
 import { MusicLibraryGuard } from "./MusicLibrary";
 
 export const ApiGuard: FC = (props) => {
-  const [serverUrl, setServerUrl] = useLocalStorage<string>(
-    "jellyfin-server-url"
-  );
+  const [server, setServer] = useLocalStorage<Server>("jellyfin-server-url");
   const [token, setToken] = useLocalStorage<string>("jellyfin-auth-token");
   const [api, setApi] = useState<ApiClient>();
 
   useEffect(() => {
-    if (!serverUrl || !token) {
+    if (!server || !token) {
       setApi(undefined);
     } else {
-      setApi(initApi(serverUrl, token));
+      setApi(initApi(server.url, token));
     }
-  }, [serverUrl, token]);
+  }, [server, token]);
 
   const apiConfig = useMemo(() => {
-    if (!api || !token || !serverUrl) {
+    if (!api || !token || !server) {
       return undefined;
     }
 
-    return { api, auth: { authToken: token, serverUrl: serverUrl } };
-  }, [serverUrl, api, token]);
+    return { api, auth: { authToken: token, server } };
+  }, [server, api, token]);
 
-  if (!serverUrl) {
-    return <SetServer onSetServer={setServerUrl} />;
+  if (!server) {
+    return <SetServer onSetServer={setServer} />;
   }
 
   if (!token) {
     return (
       <SignIn
-        onChangeServer={() => setServerUrl(undefined)}
-        serverUrl={serverUrl}
+        onChangeServer={() => setServer(undefined)}
+        server={server}
         onSetToken={setToken}
       />
     );

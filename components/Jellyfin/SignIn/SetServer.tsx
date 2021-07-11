@@ -15,13 +15,14 @@ import {
 import { PublicSystemInfo } from "@jellyfin/client-axios";
 import { useEffect } from "react";
 import { SlimPageContainer } from "../../Layout";
+import { Server } from "../ApiContext";
 
 export interface SetServerProps {
-  onSetServer: (url: string) => void;
+  onSetServer: (server: Server) => void;
 }
 
 export const SetServer: FC<SetServerProps> = (props) => {
-  const [serverUrl, setServerUrl] = useState<string>();
+  const [server, setServer] = useState<string>();
   const [validating, setValidating] = useState(false);
   const [isValid, setIsValid] = useState<
     PublicSystemInfo | false | undefined
@@ -29,11 +30,11 @@ export const SetServer: FC<SetServerProps> = (props) => {
 
   useEffect(() => {
     setIsValid(undefined);
-  }, [serverUrl]);
+  }, [server]);
 
   const validateServer = useCallback(async () => {
     setValidating(true);
-    const apiClient = initApi(serverUrl, undefined);
+    const apiClient = initApi(server, undefined);
 
     try {
       return await apiClient.system.getPublicSystemInfo().then((r) => {
@@ -43,24 +44,25 @@ export const SetServer: FC<SetServerProps> = (props) => {
 
         setIsValid(r.data);
         setValidating(false);
-        return true;
+        return r.data;
       });
     } catch {
       setIsValid(false);
       setValidating(false);
       return false;
     }
-  }, [serverUrl]);
+  }, [server]);
 
   const handleSetServer = useCallback(
     async (e: FormEvent) => {
       e.preventDefault();
 
-      if (await validateServer()) {
-        props.onSetServer(serverUrl);
-      }
+      const serverInfo = await validateServer();
+      if (!serverInfo) return;
+
+      props.onSetServer({ url: server, ...serverInfo });
     },
-    [serverUrl, validateServer, props]
+    [server, validateServer, props]
   );
 
   return (
@@ -72,18 +74,18 @@ export const SetServer: FC<SetServerProps> = (props) => {
             <FormLabel>Server URL</FormLabel>
             <Input
               placeholder="https://my-jellyfin-server.com"
-              onChange={(e) => setServerUrl(e.target.value)}
+              onChange={(e) => setServer(e.target.value)}
             />
           </FormControl>
           <ButtonGroup>
-            <Button type="submit" isDisabled={!serverUrl}>
+            <Button type="submit" isDisabled={!server}>
               Connect
             </Button>
             <Button
               isLoading={validating}
               colorScheme="gray"
               variant="outline"
-              isDisabled={!serverUrl}
+              isDisabled={!server}
               onClick={validateServer}
             >
               Test connection
