@@ -104,6 +104,7 @@ export const PlayerSeek: FC = () => {
         onChange={(seekTo) => rawAudio?.seek(seekTo)}
         isDisabled={!rawAudio}
         focusThumbOnChange={false}
+        verticalAlign="middle"
       >
         <SliderTrack>
           <SliderFilledTrack />
