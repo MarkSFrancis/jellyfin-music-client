@@ -42,6 +42,7 @@ export const PlayerSeek: FC = () => {
   }, [rawAudio]);
 
   useEffect(() => {
+    console.log("Setting duration", rawAudio?.duration());
     if (!rawAudio) {
       setDuration(undefined);
       return;
@@ -51,11 +52,15 @@ export const PlayerSeek: FC = () => {
       setDuration(rawAudio.duration());
     };
 
-    rawAudio.on("load", loadHandler);
+    if (rawAudio.state() === "loading") {
+      rawAudio.once("load", loadHandler);
 
-    return () => {
-      rawAudio?.off("load", loadHandler);
-    };
+      return () => {
+        rawAudio.off("load", loadHandler);
+      };
+    } else {
+      loadHandler();
+    }
   }, [rawAudio]);
 
   useEffect(() => {

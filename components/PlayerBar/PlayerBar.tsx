@@ -1,4 +1,10 @@
-import { Box, Flex, useColorModeValue, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  useBreakpointValue,
+  useColorModeValue,
+  VStack,
+} from "@chakra-ui/react";
 import { IconPlaylist } from "@tabler/icons";
 import React, { FC } from "react";
 import { PlayerBarProgress } from "./PlayerBarProgress";
@@ -6,6 +12,13 @@ import { PlayerBarTrackDisplay } from "./PlayerBarTrackDisplay";
 import { PlayerButtons } from "./PlayerButtons";
 
 export const PlayerBar: FC = () => {
+  const playerTrackDisplay = useBreakpointValue({ base: "none", md: "block" });
+  const playerProgressGrow = useBreakpointValue({ base: 1, md: 0 });
+  const widths = useBreakpointValue<[string, string, string]>({
+    base: [undefined, undefined, undefined],
+    md: ["30%", "40%", "30%"],
+  });
+
   return (
     <Box
       p={4}
@@ -14,10 +27,15 @@ export const PlayerBar: FC = () => {
       backgroundColor="gray.900"
     >
       <Flex>
-        <Box minWidth={180} width="30%" alignSelf="center">
+        <Box display={playerTrackDisplay} width={widths[0]} alignSelf="center">
           <PlayerBarTrackDisplay />
         </Box>
-        <Flex maxW={720} width="40%" justifyContent="center" mx={4}>
+        <Flex
+          flexGrow={playerProgressGrow}
+          width={widths[1]}
+          alignSelf="center"
+          mx={4}
+        >
           <VStack
             flexGrow={1}
             maxW={720}
@@ -30,8 +48,8 @@ export const PlayerBar: FC = () => {
           </VStack>
         </Flex>
         <Box
-          minWidth={180}
-          width="30%"
+          flexShrink={1}
+          width={widths[2]}
           justifySelf="flex-end"
           alignSelf="center"
         >
