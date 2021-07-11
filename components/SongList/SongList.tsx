@@ -11,6 +11,7 @@ import React, { useState } from "react";
 import { FC, useCallback } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { Track, useGetTracks } from "../../utils";
+import { usePlayerBar } from "../PlayerBar";
 import { SongListView } from "./SongListView";
 
 export interface SongListProps {
@@ -20,6 +21,7 @@ export interface SongListProps {
 }
 
 export const SongList: FC<SongListProps> = (props) => {
+  const { scrollRef } = usePlayerBar();
   const [getTracks, getTracksState] = useGetTracks();
   const [loadedSongs, setLoadedSongs] = useState<Track[]>([]);
   const [totalSongs, setTotalSongs] = useState(0);
@@ -48,19 +50,24 @@ export const SongList: FC<SongListProps> = (props) => {
   );
 
   return (
-    <InfiniteScroll
-      pageStart={0}
-      loadMore={() => handleLoadMore(false)}
-      hasMore={
-        getTracksState.status === "idle" || loadedSongs.length < totalSongs
-      }
-      loader={
-        <Center>
-          <Spinner />
-        </Center>
-      }
-    >
-      <SongListView tracks={loadedSongs} />
+    <>
+      <InfiniteScroll
+        pageStart={0}
+        loadMore={() => handleLoadMore(false)}
+        hasMore={
+          getTracksState.status !== "error" &&
+          (getTracksState.status === "idle" || loadedSongs.length < totalSongs)
+        }
+        loader={
+          <Center>
+            <Spinner />
+          </Center>
+        }
+        useWindow={false}
+        getScrollParent={() => scrollRef.current}
+      >
+        <SongListView tracks={loadedSongs} />
+      </InfiniteScroll>
       {getTracksState.status === "error" && (
         <Alert key="error" status="error">
           <AlertIcon />
@@ -72,6 +79,6 @@ export const SongList: FC<SongListProps> = (props) => {
           </AlertDescription>
         </Alert>
       )}
-    </InfiniteScroll>
+    </>
   );
 };

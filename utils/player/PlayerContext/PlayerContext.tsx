@@ -8,6 +8,7 @@ import { PlayerSettingsProvider } from "./PlayerSettings";
 import { PlayerStateProvider } from "./PlayerState";
 import { PlayerPlayNext } from "./PlayerPlayNext";
 import { MediaSessionManager } from "./MediaSessionManager";
+import { KeyboardShortcuts } from "./KeyboardShortcuts";
 
 export const PlayerProvider: FC = ({ children }) => {
   return (
@@ -19,7 +20,9 @@ export const PlayerProvider: FC = ({ children }) => {
               <PlayerCommandsProvider>
                 <PlayerAudioProvider>
                   <PlayerPlayNext>
-                    <MediaSessionManager>{children}</MediaSessionManager>
+                    <MediaSessionManager>
+                      <KeyboardShortcuts>{children}</KeyboardShortcuts>
+                    </MediaSessionManager>
                   </PlayerPlayNext>
                 </PlayerAudioProvider>
               </PlayerCommandsProvider>

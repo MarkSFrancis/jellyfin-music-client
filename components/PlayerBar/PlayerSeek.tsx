@@ -14,7 +14,7 @@ import { usePlayerAudio } from "../../utils";
 export const PlayerSeek: FC = () => {
   const { rawAudio } = usePlayerAudio();
   const [progress, setProgress] = useState<number | undefined>();
-  const [duration, setDuration] = useState<number>(1);
+  const [duration, setDuration] = useState<number | undefined>(undefined);
   const queuedScroll = useRef(0);
   const sliderRef = useRef<HTMLDivElement>();
 
@@ -26,8 +26,12 @@ export const PlayerSeek: FC = () => {
         return;
       }
 
-      const currentTicks = rawAudio.seek() as number;
-      setProgress(currentTicks);
+      const currentTicks = rawAudio.seek();
+      if (typeof currentTicks === "number") {
+        setProgress(currentTicks);
+      } else {
+        setProgress(undefined);
+      }
       setDuration(rawAudio.duration());
 
       currentFrameHandle = requestAnimationFrame(frameHandler);
@@ -62,7 +66,6 @@ export const PlayerSeek: FC = () => {
 
   useEffect(() => {
     const slider = sliderRef.current;
-    console.log("Attaching listener", slider);
     slider.addEventListener("wheel", handleScroll, { passive: false });
 
     return () => slider.removeEventListener("wheel", handleScroll);
@@ -73,9 +76,10 @@ export const PlayerSeek: FC = () => {
       <Slider
         aria-label="Track progress"
         value={progress || 0}
-        max={duration}
+        max={duration || 1}
         onChange={(seekTo) => rawAudio?.seek(seekTo)}
         isDisabled={!rawAudio}
+        focusThumbOnChange={false}
       >
         <SliderTrack>
           <SliderFilledTrack />

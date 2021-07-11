@@ -8,10 +8,6 @@ import { PlayerButtons } from "./PlayerButtons";
 export const PlayerBar: FC = () => {
   return (
     <Box
-      zIndex={1}
-      position="fixed"
-      bottom={0}
-      w="100vw"
       p={4}
       borderTop="1px"
       borderColor="blue.700"
