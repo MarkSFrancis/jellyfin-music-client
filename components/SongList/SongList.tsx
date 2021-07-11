@@ -66,7 +66,7 @@ export const SongList: FC<SongListProps> = (props) => {
         useWindow={false}
         getScrollParent={() => scrollRef.current}
       >
-        <SongListView tracks={loadedSongs} />
+        <SongListView key="song-list" tracks={loadedSongs} />
       </InfiniteScroll>
       {getTracksState.status === "error" && (
         <Alert key="error" status="error">
