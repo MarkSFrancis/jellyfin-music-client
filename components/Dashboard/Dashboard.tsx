@@ -4,13 +4,12 @@ import { useCallback } from "react";
 import { FC } from "react";
 import { useGetTracks } from "../../utils";
 import { usePlayerCommands } from "../../utils";
-import { useApi } from "../Jellyfin";
+import { Logo } from "../Layout";
 import { SongList } from "../SongList";
 
 export const Dashboard: FC = () => {
   const { startNewQueue } = usePlayerCommands();
   const [getTracks, getTracksState] = useGetTracks();
-  const { auth } = useApi();
 
   const handlePlayMostRecent = useCallback(async () => {
     const library = await getTracks({
@@ -31,7 +30,9 @@ export const Dashboard: FC = () => {
 
   return (
     <VStack spacing={4}>
-      <Heading>Jellyfin Music</Heading>
+      <Heading>
+        <Logo width="100px" height="100px" />
+      </Heading>
       <Box>
         <ButtonGroup spacing={4}>
           <Button
