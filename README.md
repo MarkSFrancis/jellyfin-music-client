@@ -16,13 +16,14 @@ This project is very much a work in progress.
 1. Gapless playback
 1. Deploy to a demo instance, that you can connect to your own server
 1. Browse your songs (as a nice UI)
+1. Manage "up next" playback
+1. Search tools (currently only searches by track title)
 
 ## Features on the way
 
-1. Manage "up next" playback
 1. PWA support
-1. Browse by album, genre, song, and artist
-1. Search tools
+1. Browse by genre and artist
+1. Search tools (search by artist and genre)
 1. Playlist support
 1. Offline support
 1. "Start radio" - automatically play similar music via genre labels
