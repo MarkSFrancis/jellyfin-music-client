@@ -1,32 +1,33 @@
+import { ItemsApiGetItemsRequest } from "@jellyfin/client-axios";
 import React, { useState } from "react";
 import { FC, useCallback } from "react";
 import { Track, useGetTracks } from "../../utils";
 import { LazyDisplay } from "../LazyDisplay/LazyDisplay";
 import { TracksDisplay } from "./TracksDisplay";
 
-export interface LibraryTracksProps {
-  sortBy: string;
-  sortOrder: string;
+export interface LibraryTracksProps
+  extends Omit<ItemsApiGetItemsRequest, "limit" | "startIndex"> {
   pageSize?: number;
 }
 
-export const LibraryTracks: FC<LibraryTracksProps> = (props) => {
+export const LibraryTracks: FC<LibraryTracksProps> = ({
+  pageSize,
+  ...searchProps
+}) => {
   const [getTracksPage, getTracksPageState] = useGetTracks();
   const [tracks, setTracks] = useState<Track[]>([]);
   const [totalTracks, setTotalTracks] = useState<number>(undefined);
 
   const handleLoadMore = useCallback(async () => {
-    const pageSize = props.pageSize || 100;
     const nextPage = await getTracksPage({
-      limit: pageSize,
-      sortBy: props.sortBy,
-      sortOrder: props.sortOrder,
+      ...searchProps,
+      limit: pageSize || 100,
       startIndex: tracks.length,
     });
 
     setTracks((s) => [...s, ...nextPage.tracks]);
     setTotalTracks(nextPage.totalTracks);
-  }, [getTracksPage, tracks, props]);
+  }, [getTracksPage, tracks, pageSize, searchProps]);
 
   return (
     <LazyDisplay
