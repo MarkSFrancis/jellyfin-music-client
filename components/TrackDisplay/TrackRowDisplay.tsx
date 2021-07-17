@@ -9,6 +9,8 @@ import {
 import { IconPlayerPause, IconPlayerPlay, IconDots } from "@tabler/icons";
 import React, { FC, useMemo } from "react";
 import { Track } from "../../utils";
+import { TrackOptionsButton } from "./TrackOptionsButton";
+import { TrackPlayButton } from "./TrackPlayButton";
 
 interface TrackRowDisplayProps {
   track: Track;
@@ -49,42 +51,17 @@ export const TrackRowDisplay: FC<TrackRowDisplayProps> = ({
   return (
     <Tr {...trProps} css={hoverCss}>
       <Td>
-        <IconButton
-          variant="ghost"
-          isRound
-          aria-label={isCurrentTrack ? "Play" : "Pause"}
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            onPlay();
-          }}
-        >
-          {isCurrentTrack && isPlaying ? (
-            <IconPlayerPause />
-          ) : (
-            <>
-              <IconPlayerPlay className="display-on-hover" />
-              <Text className="none-on-hover">{index}</Text>
-            </>
-          )}
-        </IconButton>
+        <TrackPlayButton
+          isCurrentTrack={isCurrentTrack}
+          onClick={onPlay}
+          isPlaying={isPlaying}
+        />
       </Td>
       <Td>{track.Name}</Td>
       <Td>{track.ArtistItems.map((a) => a.Name).join(", ")}</Td>
       <Td>{track.GenreItems.map((g) => g.Name).join(", ")}</Td>
       <Td>
-        <IconButton
-          className="visible-on-hover"
-          variant="ghost"
-          isRound
-          aria-label="View options"
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-          }}
-        >
-          <IconDots />
-        </IconButton>
+        <TrackOptionsButton track={track} />
       </Td>
     </Tr>
   );
