@@ -26,7 +26,7 @@ export const UpNextTracks: FC = () => {
       <DrawerCloseButton />
       <DrawerBody>
         <Tabs isFitted variant="enclosed">
-          <TabList mb="1em">
+          <TabList mr={8} mb="1em">
             <Tab isDisabled={next.length === 0}>Up next</Tab>
             <Tab isDisabled={previous.length === 0}>Previous</Tab>
           </TabList>
