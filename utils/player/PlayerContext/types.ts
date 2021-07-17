@@ -54,5 +54,6 @@ export enum PlayerState {
 
 export interface PlayerStateContext {
   state: PlayerState;
+  togglePlayPause: () => void;
   setState: Dispatch<SetStateAction<PlayerState>>;
 }

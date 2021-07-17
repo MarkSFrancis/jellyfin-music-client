@@ -5,11 +5,11 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import { IconPlaylist } from "@tabler/icons";
 import React, { FC } from "react";
 import { PlayerBarProgress } from "./PlayerBarProgress";
 import { PlayerBarTrackDisplay } from "./PlayerBarTrackDisplay";
 import { PlayerButtons } from "./PlayerButtons";
+import { UpNext } from "./UpNext/UpNext";
 
 export const PlayerBar: FC = () => {
   const playerTrackDisplay = useBreakpointValue({ base: "none", md: "block" });
@@ -57,7 +57,7 @@ export const PlayerBar: FC = () => {
             justifyContent="flex-end"
             color={useColorModeValue("blackAlpha.700", "whiteAlpha.700")}
           >
-            <IconPlaylist />
+            <UpNext />
           </Flex>
         </Box>
       </Flex>

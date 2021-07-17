@@ -5,7 +5,7 @@ import { FC } from "react";
 import { useGetTracks } from "../../utils";
 import { usePlayerCommands } from "../../utils";
 import { Logo } from "../Layout";
-import { SongList } from "../SongList";
+import { LibraryTracks } from "../TracksDisplay";
 
 export const Dashboard: FC = () => {
   const { startNewQueue } = usePlayerCommands();
@@ -50,7 +50,7 @@ export const Dashboard: FC = () => {
         </ButtonGroup>
       </Box>
       <Box>
-        <SongList sortBy={ItemFields.DateCreated} sortOrder="Descending" />
+        <LibraryTracks sortBy={ItemFields.DateCreated} sortOrder="Descending" />
       </Box>
     </VStack>
   );

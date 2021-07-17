@@ -42,7 +42,6 @@ export const PlayerSeek: FC = () => {
   }, [rawAudio]);
 
   useEffect(() => {
-    console.log("Setting duration", rawAudio?.duration());
     if (!rawAudio) {
       setDuration(undefined);
       return;
