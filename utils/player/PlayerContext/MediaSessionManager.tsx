@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { FC } from "react";
+import { usePlayerAudio } from "./PlayerAudio";
 import { usePlayerCommands } from "./PlayerCommands";
 import { usePlayerCurrentTrack } from "./PlayerCurrentTrack";
 import { usePlayerState } from "./PlayerState";
@@ -16,6 +17,7 @@ export const MediaSessionManager: FC = ({ children }) => {
   } = usePlayerCommands();
   const { state, setState } = usePlayerState();
   const { track } = usePlayerCurrentTrack();
+  const { rawAudio } = usePlayerAudio();
 
   useEffect(() => {
     if (!hasMediaSession()) return;
@@ -55,6 +57,16 @@ export const MediaSessionManager: FC = ({ children }) => {
 
     return setHandler("nexttrack", skipForward1Track);
   }, [canSkipForward, skipForward1Track]);
+
+  useEffect(() => {
+    if (!rawAudio) return;
+
+    return setHandler("seekto", (details) => {
+      if (details.fastSeek) return;
+
+      rawAudio.seek(details.seekTime);
+    });
+  }, [rawAudio]);
 
   return <>{children}</>;
 };
