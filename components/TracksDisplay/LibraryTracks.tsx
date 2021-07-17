@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { FC, useCallback } from "react";
 import { Track, useGetTracks } from "../../utils";
-import { LazyTracksDisplay } from "./LazyTracksDisplay";
+import { LazyDisplay } from "../LazyDisplay/LazyDisplay";
+import { TracksDisplay } from "./TracksDisplay";
 
 export interface LibraryTracksProps {
   sortBy: string;
@@ -28,11 +29,13 @@ export const LibraryTracks: FC<LibraryTracksProps> = (props) => {
   }, [getTracksPage, tracks, props]);
 
   return (
-    <LazyTracksDisplay
-      tracks={tracks}
-      getTracksPageState={getTracksPageState}
-      totalTracks={totalTracks}
-      onGetTracksPage={handleLoadMore}
-    />
+    <LazyDisplay
+      loadedCount={tracks.length}
+      getPageStatus={getTracksPageState.status}
+      totalItems={totalTracks}
+      onGetPage={handleLoadMore}
+    >
+      <TracksDisplay tracks={tracks} />
+    </LazyDisplay>
   );
 };

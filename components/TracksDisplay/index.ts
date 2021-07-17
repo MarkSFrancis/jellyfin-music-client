@@ -1,3 +1,3 @@
 export * from "./LibraryTracks";
-export * from "./LazyTracksDisplay";
+export * from "../LazyDisplay/LazyDisplay";
 export * from "./TracksDisplay";

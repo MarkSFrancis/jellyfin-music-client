@@ -7,34 +7,33 @@ import {
   Center,
   Spinner,
 } from "@chakra-ui/react";
-import { BaseItemDtoQueryResult } from "@jellyfin/client-axios";
 import React from "react";
 import { FC, useCallback } from "react";
 import InfiniteScroll from "react-infinite-scroller";
-import { MutationState, Track } from "../../utils";
+import { MutationState } from "../../utils";
 import { usePlayerBar } from "../PlayerBar";
-import { TracksDisplay } from "./TracksDisplay";
 
-export interface LazyTracksDisplayProps {
-  tracks: Track[];
-  getTracksPageState: MutationState<BaseItemDtoQueryResult>;
-  onGetTracksPage: () => void;
-  totalTracks: number | undefined;
+export interface LazyDisplayProps {
+  loadedCount: number;
+  getPageStatus: MutationState<unknown>["status"];
+  onGetPage: () => void;
+  totalItems: number | undefined;
+  scrollRef?: React.MutableRefObject<HTMLElement>;
 }
 
-export const LazyTracksDisplay: FC<LazyTracksDisplayProps> = (props) => {
-  const { scrollRef } = usePlayerBar();
+export const LazyDisplay: FC<LazyDisplayProps> = (props) => {
+  const { scrollRef: playerScrollRef } = usePlayerBar();
 
   const handleLoadMore = useCallback(
     async (continueOnError: boolean) => {
       if (
-        (!continueOnError && props.getTracksPageState.status === "error") ||
-        props.getTracksPageState.status === "loading"
+        (!continueOnError && props.getPageStatus === "error") ||
+        props.getPageStatus === "loading"
       ) {
         return;
       }
 
-      props.onGetTracksPage();
+      props.onGetPage();
     },
     [props]
   );
@@ -45,9 +44,9 @@ export const LazyTracksDisplay: FC<LazyTracksDisplayProps> = (props) => {
         pageStart={0}
         loadMore={() => handleLoadMore(false)}
         hasMore={
-          (props.getTracksPageState.status === "success" &&
-            props.tracks.length < props.totalTracks) ||
-          props.getTracksPageState.status === "idle"
+          (props.getPageStatus === "success" &&
+            props.loadedCount < props.totalItems) ||
+          props.getPageStatus === "idle"
         }
         loader={
           <Center>
@@ -55,11 +54,13 @@ export const LazyTracksDisplay: FC<LazyTracksDisplayProps> = (props) => {
           </Center>
         }
         useWindow={false}
-        getScrollParent={() => scrollRef.current}
+        getScrollParent={() =>
+          props.scrollRef ? props.scrollRef.current : playerScrollRef.current
+        }
       >
-        <TracksDisplay key="song-list" tracks={props.tracks} />
+        {props.children}
       </InfiniteScroll>
-      {props.getTracksPageState.status === "error" && (
+      {props.getPageStatus === "error" && (
         <Alert status="error">
           <AlertIcon />
           <AlertTitle mr={2}>Failed to fetch media!</AlertTitle>

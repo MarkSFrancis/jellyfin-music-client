@@ -3,64 +3,61 @@ import {
   Divider,
   DrawerBody,
   DrawerCloseButton,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
+  DrawerHeader,
 } from "@chakra-ui/react";
 import React, { FC } from "react";
-import { usePlayerCommands } from "../../../utils";
+import { useRef } from "react";
+import { useCallback } from "react";
+import { useState } from "react";
+import { Track, usePlayerCommands } from "../../../utils";
 import { TrackDisplay } from "../../TrackDisplay";
+import { LazyDisplay } from "../../TracksDisplay";
 import { useUpNext } from "./useUpNext";
 
-const maxPreviousToShow = 10;
-const maxNextToShow = 30;
+const nextPageSize = 30;
 
 export const UpNextTracks: FC = () => {
-  const [previous, , next] = useUpNext();
+  const [, , next] = useUpNext();
   const { jumpToTrackInQueue } = usePlayerCommands();
+  const [totalToShow, setTotalToShow] = useState(nextPageSize);
+  const bodyRef = useRef<HTMLDivElement>();
+
+  const onPlay = useCallback(
+    (track: Track) => {
+      jumpToTrackInQueue(track);
+      if (bodyRef.current) {
+        bodyRef.current.scrollTo({
+          top: 0,
+        });
+      }
+    },
+    [jumpToTrackInQueue]
+  );
 
   return (
     <>
+      <DrawerHeader>Up next</DrawerHeader>
       <DrawerCloseButton />
-      <DrawerBody>
-        <Tabs isFitted variant="enclosed">
-          <TabList mr={8} mb="1em">
-            <Tab isDisabled={next.length === 0}>Up next</Tab>
-            <Tab isDisabled={previous.length === 0}>Previous</Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>
-              <VStack align="stretch" divider={<Divider />}>
-                {next.slice(0, maxNextToShow).map((t) => (
-                  <TrackDisplay
-                    key={t.Id}
-                    track={t}
-                    isCurrentTrack={false}
-                    isPlaying={false}
-                    onPlay={() => jumpToTrackInQueue(t)}
-                  />
-                ))}
-              </VStack>
-            </TabPanel>
-            <TabPanel>
-              <VStack align="stretch" divider={<Divider />}>
-                {previous
-                  .slice(previous.length - maxPreviousToShow)
-                  .map((t) => (
-                    <TrackDisplay
-                      key={t.Id}
-                      track={t}
-                      isCurrentTrack={false}
-                      isPlaying={false}
-                      onPlay={() => jumpToTrackInQueue(t)}
-                    />
-                  ))}
-              </VStack>
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
+      <DrawerBody ref={bodyRef}>
+        <LazyDisplay
+          loadedCount={totalToShow}
+          totalItems={next.length}
+          getPageStatus={"success"}
+          onGetPage={() => setTotalToShow((t) => t + nextPageSize)}
+          scrollRef={bodyRef}
+        >
+          <VStack align="stretch" divider={<Divider />}>
+            {next.slice(0, totalToShow).map((t) => (
+              <TrackDisplay
+                key={t.Id}
+                track={t}
+                isCurrentTrack={false}
+                isPlaying={false}
+                onPlay={() => onPlay(t)}
+              />
+            ))}
+          </VStack>
+        </LazyDisplay>
       </DrawerBody>
     </>
   );
