@@ -26,7 +26,13 @@ export const UpNext: FC = () => {
           isDisabled={!queue?.length}
         />
       </Tooltip>
-      <Drawer placement="right" onClose={onClose} isOpen={isOpen} size="md">
+      <Drawer
+        placement="right"
+        onClose={onClose}
+        isOpen={isOpen}
+        size="md"
+        returnFocusOnClose={false}
+      >
         <DrawerOverlay />
         <DrawerContent>
           <UpNextTracks />
