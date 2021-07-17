@@ -1,10 +1,8 @@
 import {
   VStack,
   Divider,
-  Text,
   DrawerBody,
   DrawerCloseButton,
-  DrawerHeader,
   Tab,
   TabList,
   TabPanel,
@@ -12,38 +10,16 @@ import {
   Tabs,
 } from "@chakra-ui/react";
 import React, { FC } from "react";
-import { useCallback } from "react";
-import {
-  PlayerState,
-  Track,
-  usePlayerCommands,
-  usePlayerState,
-} from "../../../utils";
+import { usePlayerCommands } from "../../../utils";
 import { TrackDisplay } from "../../TrackDisplay";
 import { useUpNext } from "./useUpNext";
-
-export interface UpNextTracksProps {
-  currentTrackRef: React.MutableRefObject<HTMLButtonElement>;
-}
 
 const maxPreviousToShow = 10;
 const maxNextToShow = 30;
 
-export const UpNextTracks: FC<UpNextTracksProps> = ({ currentTrackRef }) => {
-  const [previous, current, next] = useUpNext();
+export const UpNextTracks: FC = () => {
+  const [previous, , next] = useUpNext();
   const { jumpToTrackInQueue } = usePlayerCommands();
-  const { state, togglePlayPause } = usePlayerState();
-
-  const handlePlayPauseTrack = useCallback(
-    (track: Track) => {
-      if (current?.Id === track.Id) {
-        togglePlayPause();
-      } else {
-        jumpToTrackInQueue(track);
-      }
-    },
-    [jumpToTrackInQueue, togglePlayPause, current]
-  );
 
   return (
     <>
@@ -51,8 +27,8 @@ export const UpNextTracks: FC<UpNextTracksProps> = ({ currentTrackRef }) => {
       <DrawerBody>
         <Tabs isFitted variant="enclosed">
           <TabList mb="1em">
-            <Tab>Up Next</Tab>
-            <Tab>Previous</Tab>
+            <Tab isDisabled={next.length === 0}>Up next</Tab>
+            <Tab isDisabled={previous.length === 0}>Previous</Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
@@ -63,7 +39,7 @@ export const UpNextTracks: FC<UpNextTracksProps> = ({ currentTrackRef }) => {
                     track={t}
                     isCurrentTrack={false}
                     isPlaying={false}
-                    onPlay={() => handlePlayPauseTrack(t)}
+                    onPlay={() => jumpToTrackInQueue(t)}
                   />
                 ))}
               </VStack>
@@ -78,7 +54,7 @@ export const UpNextTracks: FC<UpNextTracksProps> = ({ currentTrackRef }) => {
                       track={t}
                       isCurrentTrack={false}
                       isPlaying={false}
-                      onPlay={() => handlePlayPauseTrack(t)}
+                      onPlay={() => jumpToTrackInQueue(t)}
                     />
                   ))}
               </VStack>

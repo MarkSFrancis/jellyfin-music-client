@@ -1,8 +1,6 @@
 import {
   Drawer,
-  DrawerBody,
   DrawerContent,
-  DrawerHeader,
   DrawerOverlay,
   IconButton,
   Tooltip,
@@ -10,12 +8,12 @@ import {
 } from "@chakra-ui/react";
 import { IconPlaylist } from "@tabler/icons";
 import React, { FC } from "react";
-import { useRef } from "react";
+import { usePlayerQueue } from "../../../utils";
 import { UpNextTracks } from "./UpNextTracks";
 
 export const UpNext: FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const currentTrackRef = useRef<HTMLButtonElement>();
+  const { queue } = usePlayerQueue();
 
   return (
     <>
@@ -25,18 +23,13 @@ export const UpNext: FC = () => {
           icon={<IconPlaylist />}
           aria-label="Up next"
           onClick={onOpen}
+          isDisabled={!queue?.length}
         />
       </Tooltip>
-      <Drawer
-        placement="right"
-        onClose={onClose}
-        isOpen={isOpen}
-        size="md"
-        initialFocusRef={currentTrackRef}
-      >
+      <Drawer placement="right" onClose={onClose} isOpen={isOpen} size="md">
         <DrawerOverlay />
         <DrawerContent>
-          <UpNextTracks currentTrackRef={currentTrackRef} />
+          <UpNextTracks />
         </DrawerContent>
       </Drawer>
     </>
