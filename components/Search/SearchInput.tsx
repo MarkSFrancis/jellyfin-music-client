@@ -24,7 +24,7 @@ export const SearchInput: FC<SearchInputProps> = (props) => {
           flexGrow={1}
           onChange={(e) => setSearchFor(e.target.value)}
           maxW="container.sm"
-          placeholder="Search your library"
+          placeholder="Search by song title"
         />
         <IconButton aria-label="Search" type="submit">
           <Search2Icon />

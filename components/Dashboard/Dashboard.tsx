@@ -49,7 +49,7 @@ export const Dashboard: FC = () => {
           </Button>
         </ButtonGroup>
       </Box>
-      <Box>
+      <Box width="100%">
         <LibraryTracks sortBy={ItemFields.DateCreated} sortOrder="Descending" />
       </Box>
     </VStack>

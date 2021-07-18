@@ -18,6 +18,7 @@
     "@emotion/styled": "^11",
     "@jellyfin/client-axios": "10.7.0",
     "@tabler/icons": "^1.41.2",
+    "@types/react-virtualized-auto-sizer": "^1.0.1",
     "dequal": "^2.0.2",
     "framer-motion": "^4",
     "howler": "^2.2.3",
@@ -25,6 +26,9 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-infinite-scroller": "^1.2.4",
+    "react-virtualized": "^9.22.3",
+    "react-virtualized-auto-sizer": "^1.0.5",
+    "react-window": "^1.8.6",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
@@ -34,6 +38,8 @@
     "@types/jest": "^26.0.24",
     "@types/react": "^17.0.14",
     "@types/react-infinite-scroller": "^1.2.2",
+    "@types/react-virtualized": "^9.21.12",
+    "@types/react-window": "^1.8.4",
     "@types/wicg-mediasession": "^1.1.2",
     "@typescript-eslint/eslint-plugin": "^4.28.3",
     "@typescript-eslint/parser": "^4.28.3",

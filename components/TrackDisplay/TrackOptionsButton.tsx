@@ -28,13 +28,14 @@ export const TrackOptionsButton = forwardRef<
   }, [addToUpNext, track]);
 
   return (
-    <Menu>
+    <Menu isLazy>
       <MenuButton
         as={IconButton}
         ref={ref}
         variant="ghost"
         aria-label="View options"
         icon={<IconDots />}
+        isRound
         {...buttonProps}
       />
       <MenuList>

@@ -5,22 +5,22 @@ import { SecondaryText } from "../Typography";
 import { TrackOptionsButton } from "./TrackOptionsButton";
 import { TrackPlayButton } from "./TrackPlayButton";
 
-interface TrackDisplayProps extends StackProps {
+interface TrackDisplayProps extends Omit<StackProps, "onPlay"> {
   track: Track;
   isCurrentTrack: boolean;
   isPlaying: boolean;
-  onPlay: () => void;
+  onPlay: (track: Track, isCurrentTrack: boolean, isPlaying: boolean) => void;
 }
 
-export const TrackDisplay = forwardRef<TrackDisplayProps, typeof HStack>(
+const TrackDisplayInternal = forwardRef<TrackDisplayProps, typeof HStack>(
   ({ track, isCurrentTrack, onPlay, isPlaying, ...stackProps }, ref) => {
     return (
       <HStack align="stretch" ref={ref} {...stackProps}>
         <VStack>
           <TrackPlayButton
             isCurrentTrack={isCurrentTrack}
-            isPlaying={isPlaying}
-            onClick={onPlay}
+            isPlaying={isCurrentTrack && isPlaying}
+            onClick={() => onPlay(track, isCurrentTrack, isPlaying)}
           />
           <TrackOptionsButton track={track} />
         </VStack>
@@ -41,3 +41,5 @@ export const TrackDisplay = forwardRef<TrackDisplayProps, typeof HStack>(
     );
   }
 );
+
+export const TrackDisplay = TrackDisplayInternal;

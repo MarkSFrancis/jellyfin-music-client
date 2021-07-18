@@ -1,2 +1,3 @@
 export * from "./TrackDisplay";
-export * from "./TrackRowDisplay";
+export * from "./TrackOptionsButton";
+export * from "./TrackPlayButton";

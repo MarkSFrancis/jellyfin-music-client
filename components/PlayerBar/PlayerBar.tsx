@@ -9,7 +9,7 @@ import React, { FC } from "react";
 import { PlayerBarProgress } from "./PlayerBarProgress";
 import { PlayerBarTrackDisplay } from "./PlayerBarTrackDisplay";
 import { PlayerButtons } from "./PlayerButtons";
-import { UpNext } from "./UpNext/UpNext";
+import { UpNext } from "./UpNext";
 
 export const PlayerBar: FC = () => {
   const playerTrackDisplay = useBreakpointValue({ base: "none", md: "block" });

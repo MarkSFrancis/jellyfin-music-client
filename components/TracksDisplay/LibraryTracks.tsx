@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { FC, useCallback } from "react";
 import { Track, useGetTracks } from "../../utils";
 import { LazyDisplay } from "../LazyDisplay/LazyDisplay";
+import { usePlayerBar } from "../PlayerBar";
 import { TracksDisplay } from "./TracksDisplay";
 
 export interface LibraryTracksProps
@@ -17,6 +18,7 @@ export const LibraryTracks: FC<LibraryTracksProps> = ({
   const [getTracksPage, getTracksPageState] = useGetTracks();
   const [tracks, setTracks] = useState<Track[]>([]);
   const [totalTracks, setTotalTracks] = useState<number>(undefined);
+  const { scrollRef } = usePlayerBar();
 
   const handleLoadMore = useCallback(async () => {
     const nextPage = await getTracksPage({
@@ -35,8 +37,9 @@ export const LibraryTracks: FC<LibraryTracksProps> = ({
       getPageStatus={getTracksPageState.status}
       totalItems={totalTracks}
       onGetPage={handleLoadMore}
+      scrollRef={scrollRef}
     >
-      <TracksDisplay tracks={tracks} />
+      <TracksDisplay key="tracks" tracks={tracks} scrollRef={scrollRef} />
     </LazyDisplay>
   );
 };

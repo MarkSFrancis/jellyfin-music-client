@@ -39,7 +39,6 @@ export const PlayerCommandsProvider: FC = ({ children }) => {
   const jumpToTrackInQueue: PlayerCommandsContext["jumpToTrackInQueue"] =
     useCallback(
       (track) => {
-        console.log("Jumping to new track", track);
         setTrack(track);
         setState(PlayerState.Playing);
       },
