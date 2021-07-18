@@ -1,4 +1,4 @@
-import { Td, useCallbackRef } from "@chakra-ui/react";
+import { Td } from "@chakra-ui/react";
 import React, {
   FC,
   MutableRefObject,
