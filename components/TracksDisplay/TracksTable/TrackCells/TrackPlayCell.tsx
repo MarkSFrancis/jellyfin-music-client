@@ -28,7 +28,6 @@ export const TrackPlayCell: FC<TrackPlayCellProps> = ({
 
   return (
     <Td as="div" width={trackColumnWidths[0]} display="inline-block">
-      <TrackPlayCell index={index} track={track} tracks={tracks} />
       <TrackIndexPlayButton
         isPlaying={isCurrentTrack(track) && isPlaying}
         isCurrentTrack={isCurrentTrack(track)}
