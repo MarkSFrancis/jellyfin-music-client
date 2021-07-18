@@ -1,45 +1,28 @@
-import { useColorModeValue, TableRowProps, Tr } from "@chakra-ui/react";
-import React, { FC, useMemo } from "react";
-import { Track, useIsCurrentTrack, usePlayTrack } from "../../../utils";
+import React, { FC, useRef } from "react";
+import { TrackCellsDisplay } from "./TrackCells";
+import {
+  TrackCellsContainer,
+  TrackCellsContainerProps,
+} from "./TrackCells/TrackCellsContainer";
 
-interface TrackRowDisplayProps extends Omit<TableRowProps, "onPlay"> {
-  trackPlaylist: Track[];
-  track: Track;
+export interface TrackRowDisplayProps extends TrackCellsContainerProps {
+  index: number;
 }
 
 export const TrackRowDisplay: FC<TrackRowDisplayProps> = ({
-  track,
-  children,
-  trackPlaylist,
+  index,
   ...trProps
 }) => {
-  const isCurrentTrack = useIsCurrentTrack();
-  const playTrack = usePlayTrack();
-
-  const playableTrackHover = useColorModeValue(
-    "blackAlpha.300",
-    "whiteAlpha.300"
-  );
-
-  const hoverCss = useMemo(() => {
-    return [
-      ":not(:hover) .visible-on-hover { visibility: hidden }",
-      ":not(:hover) .display-on-hover { display: none }",
-      ":hover .hidden-on-hover { display: none }",
-      ":hover .none-on-hover { display: none }",
-    ].join("\n");
-  }, []);
-
-  const styleTrProps: TableRowProps = isCurrentTrack(track)
-    ? { background: playableTrackHover }
-    : {
-        onDoubleClick: () => playTrack(track, trackPlaylist),
-        _hover: { background: playableTrackHover },
-      };
+  const rowRef = useRef<HTMLElement>();
 
   return (
-    <Tr {...styleTrProps} css={hoverCss} {...trProps}>
-      {children}
-    </Tr>
+    <TrackCellsContainer {...trProps} ref={rowRef}>
+      <TrackCellsDisplay
+        index={index}
+        track={trProps.track}
+        tracks={trProps.trackPlaylist}
+        rowRef={rowRef}
+      />
+    </TrackCellsContainer>
   );
 };

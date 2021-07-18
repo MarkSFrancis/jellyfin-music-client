@@ -28,12 +28,12 @@ const TrackDisplayInternal = forwardRef<TrackDisplayProps, typeof HStack>(
           <Box>{track.Name}</Box>
           <Box>
             <SecondaryText>
-              {track.ArtistItems.map((a) => a.Name).join(", ")}
+              {track.ArtistItems?.map((a) => a.Name).join(", ")}
             </SecondaryText>
           </Box>
           <Box>
             <SecondaryText>
-              {track.GenreItems.map((g) => g.Name).join(", ")}
+              {track.GenreItems?.map((g) => g.Name).join(", ")}
             </SecondaryText>
           </Box>
         </VStack>

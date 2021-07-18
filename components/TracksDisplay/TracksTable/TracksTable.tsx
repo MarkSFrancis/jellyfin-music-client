@@ -21,13 +21,11 @@ export const TracksTable: FC<TracksTableProps> = ({ tracks, scrollRef }) => {
 
       return (
         <TrackRowDisplay
-          as="div"
           style={style}
           trackPlaylist={tracks}
           track={track}
-        >
-          <TrackCellsDisplay index={index} tracks={tracks} track={track} />
-        </TrackRowDisplay>
+          index={index}
+        />
       );
     },
     [tracks]

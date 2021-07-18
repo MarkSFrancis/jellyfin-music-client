@@ -27,7 +27,7 @@ export const MediaSessionManager: FC = ({ children }) => {
     } else {
       navigator.mediaSession.metadata = new MediaMetadata({
         title: track.Name,
-        artist: track.ArtistItems.map((a) => a.Name).join("; "),
+        artist: track.ArtistItems?.map((a) => a.Name).join("; "),
         album: track.Album,
         artwork: [],
       });

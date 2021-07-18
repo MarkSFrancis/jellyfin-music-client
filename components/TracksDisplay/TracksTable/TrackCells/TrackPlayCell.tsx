@@ -27,7 +27,12 @@ export const TrackPlayCell: FC<TrackPlayCellProps> = ({
   const isPlaying = state === PlayerState.Playing;
 
   return (
-    <Td as="div" width={trackColumnWidths[0]} display="inline-block">
+    <Td
+      as="div"
+      border="none"
+      width={trackColumnWidths[0]}
+      display="inline-block"
+    >
       <TrackIndexPlayButton
         isPlaying={isCurrentTrack(track) && isPlaying}
         isCurrentTrack={isCurrentTrack(track)}

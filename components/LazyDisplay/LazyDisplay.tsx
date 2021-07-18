@@ -44,10 +44,9 @@ export const LazyDisplay: FC<LazyDisplayProps> = (props) => {
         pageStart={0}
         loadMore={() => handleLoadMore(false)}
         hasMore={
-          props.loadedCount < 200 &&
-          ((props.getPageStatus === "success" &&
+          (props.getPageStatus === "success" &&
             props.loadedCount < props.totalItems) ||
-            props.getPageStatus === "idle")
+          props.getPageStatus === "idle"
         }
         loader={
           <Center>

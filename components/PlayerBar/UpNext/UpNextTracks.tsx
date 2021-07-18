@@ -46,7 +46,7 @@ export const UpNextTracks: FC = () => {
           onGetPage={() => setTotalToShow((t) => t + nextPageSize)}
           scrollRef={bodyRef}
         >
-          <VStack key="up-next" align="stretch" divider={<Divider />}>
+          <VStack key="up-next" align="stretch">
             {next.slice(0, totalToShow).map((t) => (
               <TrackDisplay
                 key={t.Id}
