@@ -4,6 +4,36 @@
 
 This project is very much a work in progress.
 
+
+## Requirements
+
+This project requires [Node 14](https://nodejs.org/en/) and uses **npm** as a package manager.
+
+You also need the following Jellyfin server version:
+
+```
+Jellyfin >=10.7.0
+```
+
+## Installation
+
+```bash
+# cloning repository
+git clone https://github.com/MarkSFrancis/jellyfin-music-client.git
+
+# installing dependencies
+cd jellyfin-music-client
+npm install
+
+# building web client
+npm run-script build
+
+# starting web client
+npm start
+```
+
+You can now access the client by navigating your browser to http://localhost:4000
+
 ## Currently supported features
 
 1. Connecting to a jellyfin server
