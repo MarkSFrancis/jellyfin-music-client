@@ -4,10 +4,9 @@
 
 This project is very much a work in progress.
 
-
 ## Requirements
 
-This project requires [Node 14](https://nodejs.org/en/) and uses **npm** as a package manager.
+This project requires [Node 14](https://nodejs.org/en/) and uses [yarn](https://classic.yarnpkg.com/en/docs/install) as a package manager.
 
 You also need the following Jellyfin server version:
 
@@ -23,13 +22,20 @@ git clone https://github.com/MarkSFrancis/jellyfin-music-client.git
 
 # installing dependencies
 cd jellyfin-music-client
-npm install
+yarn install
+```
 
-# building web client
-npm run-script build
+You can run the application in development or production mode.
 
-# starting web client
-npm start
+```bash
+# run in development mode
+yarn start
+```
+
+```bash
+# or run in production mode
+yarn build
+yarn start:prod
 ```
 
 You can now access the client by navigating your browser to http://localhost:4000
