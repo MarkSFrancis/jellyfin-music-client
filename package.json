@@ -16,7 +16,7 @@
     "@chakra-ui/react": "^1.6.7",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
-    "@jellyfin/client-axios": "10.7.0",
+    "@jellyfin/client-axios": "10.7.7",
     "@tabler/icons": "^1.41.2",
     "@types/react-virtualized-auto-sizer": "^1.0.1",
     "dequal": "^2.0.2",
