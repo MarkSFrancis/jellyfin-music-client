@@ -72,7 +72,7 @@ export const MediaSessionManager: FC = ({ children }) => {
 };
 
 const setHandler = (
-  event: string,
+  event: MediaSessionAction,
   handler: (details: MediaSessionActionDetails) => void
 ) => {
   if (!hasMediaSession()) return;
