@@ -10,6 +10,9 @@ export const KeyboardShortcuts: FC = ({ children }) => {
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
+      if (!shouldHandleKeyPress(e)) {
+        return false;
+      }
       if (e.key === " ") {
         e.preventDefault();
 
@@ -39,4 +42,20 @@ export const KeyboardShortcuts: FC = ({ children }) => {
   });
 
   return <>{children}</>;
+};
+
+const shouldHandleKeyPress = (e: KeyboardEvent) => {
+  const nodeName = (e.target as HTMLElement)?.nodeName?.toUpperCase();
+
+  switch (nodeName) {
+    case "INPUT":
+      return false;
+    case "BUTTON":
+      // Suppress only the space key for buttons
+      return e.key !== " ";
+    case "TEXTAREA":
+      return false;
+    default:
+      return true;
+  }
 };
