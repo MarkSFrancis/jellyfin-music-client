@@ -6,21 +6,18 @@ import {
 } from "@chakra-ui/react";
 import React, { FC } from "react";
 import { useRef } from "react";
-import { useCallback } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { usePlayerAudio } from "../../utils";
 
 export const PlayerSeek: FC = () => {
-  const { rawAudio } = usePlayerAudio();
+  const rawAudio = usePlayerAudio();
   const [progress, setProgress] = useState<number | undefined>(undefined);
   const [duration, setDuration] = useState<number | undefined>(undefined);
-  const queuedScroll = useRef(0);
   const sliderRef = useRef<HTMLDivElement>();
 
   useEffect(() => {
-    let currentFrameHandle: number;
-    const frameHandler = () => {
+    const updateProgress = setInterval(() => {
       if (!rawAudio) {
         setProgress(undefined);
         return;
@@ -30,15 +27,11 @@ export const PlayerSeek: FC = () => {
       if (typeof currentTicks === "number") {
         setProgress(currentTicks);
       } else {
-        setProgress(undefined);
+        setProgress(0);
       }
+    }, 250);
 
-      currentFrameHandle = requestAnimationFrame(frameHandler);
-    };
-
-    currentFrameHandle = requestAnimationFrame(frameHandler);
-
-    return () => cancelAnimationFrame(currentFrameHandle);
+    return () => clearInterval(updateProgress);
   }, [rawAudio]);
 
   useEffect(() => {
@@ -47,51 +40,25 @@ export const PlayerSeek: FC = () => {
       return;
     }
 
+    const loadingAudio = rawAudio;
+
     const loadHandler = () => {
-      setDuration(rawAudio.duration());
+      setTimeout(() => {
+        const duration = loadingAudio?.duration();
+        setDuration(duration);
+      }, 0);
     };
 
-    if (rawAudio.state() === "loading") {
-      rawAudio.once("load", loadHandler);
+    if (loadingAudio.state() === "loading") {
+      loadingAudio.once("load", loadHandler);
 
       return () => {
-        rawAudio.off("load", loadHandler);
+        loadingAudio.off("load", loadHandler);
       };
     } else {
       loadHandler();
     }
   }, [rawAudio]);
-
-  useEffect(() => {
-    const updateSeek = setInterval(() => {
-      if (!rawAudio) return;
-
-      if (queuedScroll.current !== 0) {
-        rawAudio.seek((rawAudio.seek() as number) + queuedScroll.current);
-        queuedScroll.current = 0;
-      }
-    }, 100);
-
-    return () => clearInterval(updateSeek);
-  }, [rawAudio]);
-
-  const handleScroll = useCallback(
-    (e: WheelEvent) => {
-      e.preventDefault();
-      if (!rawAudio) return;
-
-      const scrollAmount = Math.floor((e.deltaX + e.deltaY) / 20);
-      queuedScroll.current += scrollAmount;
-    },
-    [rawAudio]
-  );
-
-  useEffect(() => {
-    const slider = sliderRef.current;
-    slider.addEventListener("wheel", handleScroll, { passive: false });
-
-    return () => slider.removeEventListener("wheel", handleScroll);
-  }, [handleScroll]);
 
   return (
     <div ref={sliderRef} style={{ width: "100%" }}>

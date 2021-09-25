@@ -4,7 +4,7 @@ import { usePlayerAudio } from "../../utils";
 import { PlayerSeek } from "./PlayerSeek";
 
 export const PlayerBarProgress: FC = () => {
-  const { rawAudio } = usePlayerAudio();
+  const rawAudio = usePlayerAudio();
   const [progress, setProgress] = useState<string | undefined>();
 
   useEffect(() => {

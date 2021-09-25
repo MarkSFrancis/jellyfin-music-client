@@ -12,7 +12,7 @@ export const PlayerAudioProvider: FC = ({ children }) => {
   const audio = useAudio(currentTracks);
 
   return (
-    <playerAudioContext.Provider value={audio ?? {}}>
+    <playerAudioContext.Provider value={audio}>
       {children}
     </playerAudioContext.Provider>
   );

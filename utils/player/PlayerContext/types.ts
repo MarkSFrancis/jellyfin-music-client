@@ -1,5 +1,5 @@
 import { Howl } from "howler";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, MutableRefObject, SetStateAction } from "react";
 import { Track } from "../../trackTypes";
 
 export interface PlayerSettingsContext {
@@ -25,15 +25,7 @@ export interface PlayerCommandsContext {
   startNewQueue: (newQueue: Track[], startTrack?: Track) => void;
 }
 
-export type PlayerAudioContext =
-  | {
-      track: Track;
-      rawAudio: Howl;
-    }
-  | {
-      track?: never;
-      rawAudio?: never;
-    };
+export type PlayerAudioContext = Howl | undefined;
 
 export interface PlayerCurrentTrackContext {
   track: Track | undefined;

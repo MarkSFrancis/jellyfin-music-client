@@ -39,12 +39,13 @@ export interface TrackIndexPlayButtonProps extends TrackPlayButtonProps {
 export const TrackIndexPlayButton = forwardRef<
   TrackIndexPlayButtonProps,
   typeof IconButton
->(({ index, isCurrentTrack, ...buttonProps }, ref) => {
+>(({ index, isCurrentTrack, isPlaying, ...buttonProps }, ref) => {
   if (isCurrentTrack) {
     return (
       <TrackPlayButton
         ref={ref}
         isCurrentTrack={isCurrentTrack}
+        isPlaying={isPlaying}
         {...buttonProps}
       />
     );

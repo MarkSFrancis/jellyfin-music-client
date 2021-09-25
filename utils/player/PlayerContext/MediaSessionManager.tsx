@@ -17,7 +17,7 @@ export const MediaSessionManager: FC = ({ children }) => {
   } = usePlayerCommands();
   const { state, setState } = usePlayerState();
   const { track } = usePlayerCurrentTrack();
-  const { rawAudio } = usePlayerAudio();
+  const rawAudio = usePlayerAudio();
 
   useEffect(() => {
     if (!hasMediaSession()) return;
@@ -59,12 +59,10 @@ export const MediaSessionManager: FC = ({ children }) => {
   }, [canSkipForward, skipForward1Track]);
 
   useEffect(() => {
-    if (!rawAudio) return;
-
     return setHandler("seekto", (details) => {
       if (details.fastSeek) return;
 
-      rawAudio.seek(details.seekTime);
+      rawAudio?.seek(details.seekTime);
     });
   }, [rawAudio]);
 
