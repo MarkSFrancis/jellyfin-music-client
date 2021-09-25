@@ -38,39 +38,37 @@ export const LazyDisplay: FC<LazyDisplayProps> = (props) => {
     [props]
   );
 
+  const hasMore =
+    (props.getPageStatus === "success" &&
+      props.loadedCount < props.totalItems) ||
+    props.getPageStatus === "idle";
+
+  if (props.loadedCount === 0 && props.getPageStatus === "loading") {
+    handleLoadMore(false);
+    console.log("Showing base spinner");
+    return <Loader />;
+  }
+
   return (
-    <>
-      <InfiniteScroll
-        pageStart={0}
-        loadMore={() => handleLoadMore(false)}
-        hasMore={
-          (props.getPageStatus === "success" &&
-            props.loadedCount < props.totalItems) ||
-          props.getPageStatus === "idle"
-        }
-        loader={
-          <Center>
-            <Spinner />
-          </Center>
-        }
-        useWindow={false}
-        getScrollParent={() =>
-          props.scrollRef ? props.scrollRef.current : playerScrollRef.current
-        }
-      >
-        {props.children}
-      </InfiniteScroll>
-      {props.getPageStatus === "error" && (
-        <Alert status="error">
-          <AlertIcon />
-          <AlertTitle mr={2}>Failed to fetch media!</AlertTitle>
-          <AlertDescription>
-            <Button variant="link" onClick={() => handleLoadMore(true)}>
-              Try again
-            </Button>
-          </AlertDescription>
-        </Alert>
-      )}
-    </>
+    <InfiniteScroll
+      pageStart={0}
+      loadMore={() => handleLoadMore(false)}
+      hasMore={hasMore}
+      loader={<Loader />}
+      useWindow={false}
+      getScrollParent={() =>
+        props.scrollRef ? props.scrollRef.current : playerScrollRef.current
+      }
+    >
+      {props.children}
+    </InfiniteScroll>
+  );
+};
+
+const Loader = () => {
+  return (
+    <Center>
+      <Spinner size="xl" mt={4} />
+    </Center>
   );
 };

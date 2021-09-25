@@ -5,7 +5,8 @@ import { PlayerSeek } from "./PlayerSeek";
 
 export const PlayerBarProgress: FC = () => {
   const rawAudio = usePlayerAudio();
-  const [progress, setProgress] = useState<string | undefined>();
+  const [progress, setProgress] = useState<number | undefined>();
+  const [duration, setDuration] = useState<number | undefined>();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -14,19 +15,32 @@ export const PlayerBarProgress: FC = () => {
         return;
       }
 
-      const currentTicks = formatTicks(rawAudio.seek() as number);
-      setProgress(currentTicks);
+      setProgress(rawAudio.seek());
     }, 100);
 
     return () => clearInterval(interval);
   }, [rawAudio]);
 
-  const durationDisplay = rawAudio && formatTicks(rawAudio.duration());
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!rawAudio) {
+        setDuration(undefined);
+        return;
+      }
+
+      setDuration(rawAudio.duration());
+    }, 250);
+
+    return () => clearInterval(interval);
+  }, [rawAudio]);
+
+  const durationDisplay = duration !== undefined && formatTicks(duration);
+  const progressDisplay = progress !== undefined && formatTicks(progress);
 
   return (
     <HStack spacing={4} h="1.5em">
-      {progress && <Text>{progress}</Text>}
-      <PlayerSeek />
+      {progressDisplay && <Text>{progressDisplay}</Text>}
+      <PlayerSeek progress={progress} duration={duration} />
       {durationDisplay && <Text>{durationDisplay}</Text>}
     </HStack>
   );

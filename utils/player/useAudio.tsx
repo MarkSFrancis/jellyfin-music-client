@@ -51,7 +51,7 @@ export const useAudio = (loadedTracks: LoadedAudio[]) => {
       const playing = loadedTracks.find((t) => t.track.Id === track.Id);
 
       if (!playing) {
-        audioTrack.current = playing.track;
+        audioTrack.current = undefined;
         setAudio(undefined);
         return;
       }

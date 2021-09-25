@@ -18,6 +18,7 @@ export const TrackRowDisplay: FC<TrackRowDisplayProps> = ({
   return (
     <TrackCellsContainer {...trProps} ref={rowRef}>
       <TrackCellsDisplay
+        key={trProps.track.Id}
         index={index}
         track={trProps.track}
         tracks={trProps.trackPlaylist}
