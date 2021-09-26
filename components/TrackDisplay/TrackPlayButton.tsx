@@ -51,7 +51,7 @@ export const TrackIndexPlayButton = forwardRef<
     );
   } else {
     return (
-      <Button
+      <IconButton
         ref={ref}
         variant="ghost"
         isRound
@@ -59,7 +59,7 @@ export const TrackIndexPlayButton = forwardRef<
         {...buttonProps}
       >
         {index + 1}
-      </Button>
+      </IconButton>
     );
   }
 });
