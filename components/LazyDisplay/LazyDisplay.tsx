@@ -45,7 +45,6 @@ export const LazyDisplay: FC<LazyDisplayProps> = (props) => {
 
   if (props.loadedCount === 0 && props.getPageStatus === "loading") {
     handleLoadMore(false);
-    console.log("Showing base spinner");
     return <Loader />;
   }
 

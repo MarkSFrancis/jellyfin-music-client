@@ -1,5 +1,5 @@
 import { Howl } from "howler";
-import { Dispatch, MutableRefObject, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { Track } from "../../trackTypes";
 
 export interface PlayerSettingsContext {

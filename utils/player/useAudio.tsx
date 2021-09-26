@@ -17,10 +17,16 @@ export const useAudio = (loadedTracks: LoadedAudio[]) => {
   const audioTrack = useRef<Track | undefined>();
   const audioRef = useRef<Howl | undefined>();
   const [audio, setAudio] = useState<Howl | undefined>();
+  const skipForward1TrackRef =
+    useRef<typeof skipForward1Track>(skipForward1Track);
+
+  useEffect(() => {
+    skipForward1TrackRef.current = skipForward1Track;
+  }, [skipForward1Track]);
 
   useEffect(() => {
     const trackEndHandler = () => {
-      skipForward1Track();
+      skipForward1TrackRef.current();
     };
 
     let previousAudio = audioRef.current;
@@ -44,21 +50,23 @@ export const useAudio = (loadedTracks: LoadedAudio[]) => {
         previousAudio.off("end", trackEndHandler);
       }
     };
-  }, [audio, skipForward1Track]);
+  }, [audio]);
 
   useEffect(() => {
-    if (track?.Id !== audioTrack.current?.Id) {
-      const playing = loadedTracks.find((t) => t.track.Id === track.Id);
-
-      if (!playing) {
-        audioTrack.current = undefined;
-        setAudio(undefined);
-        return;
-      }
-
-      audioTrack.current = playing.track;
-      setAudio(playing.rawAudio);
+    if (track?.Id === audioTrack.current?.Id) {
+      return;
     }
+
+    const playing = loadedTracks.find((t) => t.track.Id === track.Id);
+
+    if (!playing) {
+      audioTrack.current = undefined;
+      setAudio(undefined);
+      return;
+    }
+
+    audioTrack.current = playing.track;
+    setAudio(playing.rawAudio);
   }, [loadedTracks, track]);
 
   useEffect(() => {
