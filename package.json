@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.1.0",
-    "@chakra-ui/react": "^1.7.0",
+    "@chakra-ui/react": "^1.7.1",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "@jellyfin/client-axios": "10.7.0",
