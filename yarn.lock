@@ -1463,10 +1463,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@tabler/icons@^1.50.0":
-  version "1.50.0"
-  resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-1.50.0.tgz#f4cb8912b8ee848be40c89132600d3f93e5d63ec"
-  integrity sha512-0HYdiGk5Z9OnHpt6yEn1EAkrkWGgsRWcNJpTUoc32psliVXD7613QMX/VSHdJppIZS4zts7IjHmBz8nHDBC0NA==
+"@tabler/icons@^1.51.0":
+  version "1.51.0"
+  resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-1.51.0.tgz#e5c4882afd84a463fda9a265b66fee4791c72950"
+  integrity sha512-YjA7yurn5oThr7HnNaMA9CeK7Pgo7LNPOKPxZ2gj02qPoJbcde4047MPSYLRDTvVrOanEzB8fTFixjee51x1cw==
 
 "@testing-library/dom@^8.0.0":
   version "8.0.0"
