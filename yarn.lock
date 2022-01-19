@@ -1409,10 +1409,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@tabler/icons@^1.52.0":
-  version "1.52.0"
-  resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-1.52.0.tgz#446dbd5a801128406dedee14d381eb44efe514fa"
-  integrity sha512-k2UHsH7WVhX/vjz9g2cWsz3WaHxL9GJ/KPU6HVnCQxsftwFQBHKTC/15s2EDuProDjFnDAs+kVjo69J+CcR3tg==
+"@tabler/icons@^1.53.0":
+  version "1.53.0"
+  resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-1.53.0.tgz#51536e01b343cfaf26b701df306b2c0369769e3c"
+  integrity sha512-Skk1BqXEOEhiRsXJgZBYtjFa/+4dMSFA5UyzTUW20oyyUSd3iizhEWrYt0jT87iFu771gWoqVV2/OGobBcGjgQ==
 
 "@testing-library/dom@^8.0.0":
   version "8.0.0"
