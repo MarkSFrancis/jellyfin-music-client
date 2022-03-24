@@ -32,7 +32,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
     "@types/howler": "^2.2.6",
     "@types/jest": "^27.4.1",
