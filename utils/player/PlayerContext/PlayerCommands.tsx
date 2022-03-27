@@ -2,8 +2,9 @@ import { useCallback } from "react";
 import { useRecoilValue } from "recoil";
 import { Track } from "../../trackTypes";
 import {
-  usePlayerCurrentTrack,
+  usePlayerCurrentTrackIndex,
   useSetPlayerCurrentTrack,
+  useSetPlayerCurrentTrackIndex,
 } from "./PlayerCurrentTrack";
 import { usePlayerQueue, useSetPlayerQueue } from "./PlayerQueue";
 import { playerRepeatingAtom } from "./PlayerSettings";
@@ -24,23 +25,21 @@ export const useAddToQueue = () => {
 };
 
 export const useAddToUpNext = () => {
+  const trackIndex = usePlayerCurrentTrackIndex();
   const setQueue = useSetPlayerQueue();
 
   const addToUpNext = useCallback(
-    (track: Track) => {
+    (trackToQueue: Track) => {
       setQueue((queue) => {
-        const currentTrackIndex = getCurrentTrackIndex(track, queue);
-
-        const nextTrackIndex =
-          currentTrackIndex < 0 ? 0 : currentTrackIndex + 1;
+        const nextTrackIndex = trackIndex < 0 ? 0 : trackIndex + 1;
 
         const upToNext = queue.slice(0, nextTrackIndex);
         const afterCurrent = queue.slice(nextTrackIndex);
 
-        return [...upToNext, track, ...afterCurrent];
+        return [...upToNext, trackToQueue, ...afterCurrent];
       });
     },
-    [setQueue]
+    [trackIndex, setQueue]
   );
 
   return addToUpNext;
@@ -75,85 +74,86 @@ export const useRemoveFromQueue = () => {
 };
 
 export const useCanSkipBackward = () => {
-  const track = usePlayerCurrentTrack();
+  const trackIndex = usePlayerCurrentTrackIndex();
   const queue = usePlayerQueue();
   const repeating = useRecoilValue(playerRepeatingAtom);
 
   const canSkipBackward = useCallback(() => {
     if (repeating) return true;
+    if (!queue.length) return false;
 
-    const currentTrackIndex = getCurrentTrackIndex(track, queue);
-    return currentTrackIndex > 0;
-  }, [track, queue, repeating]);
+    return trackIndex > 0;
+  }, [trackIndex, queue, repeating]);
 
   return canSkipBackward;
 };
 
 export const useSkipBackward1Track = () => {
-  const setTrack = useSetPlayerCurrentTrack();
+  const setTrackIndex = useSetPlayerCurrentTrackIndex();
   const queue = usePlayerQueue();
   const repeating = useRecoilValue(playerRepeatingAtom);
 
   const skipBackward1Track = useCallback(() => {
-    setTrack((track) => {
-      const currentTrackIndex = getCurrentTrackIndex(track, queue);
-      let prevTrackIndex = currentTrackIndex - 1;
+    setTrackIndex((trackIndex) => {
+      if (!queue.length) return trackIndex;
+
+      let prevTrackIndex = trackIndex - 1;
 
       if (prevTrackIndex < 0) {
         if (repeating) {
           prevTrackIndex = queue.length - 1;
         } else {
           // Cannot skip backward
-          return track;
+          return trackIndex;
         }
       }
 
-      return queue[prevTrackIndex];
+      return prevTrackIndex;
     });
-  }, [setTrack, queue, repeating]);
+  }, [setTrackIndex, queue, repeating]);
 
   return skipBackward1Track;
 };
 
 export const useCanSkipForward = () => {
   const queue = usePlayerQueue();
-  const track = usePlayerCurrentTrack();
+  const trackIndex = usePlayerCurrentTrackIndex();
   const repeating = useRecoilValue(playerRepeatingAtom);
 
   const canSkipForward = useCallback(() => {
+    if (!queue.length) return false;
     if (repeating) return true;
+    if (trackIndex < 0) return false;
 
-    const currentTrackIndex = getCurrentTrackIndex(track, queue);
-    if (currentTrackIndex < 0) return false;
-
-    return currentTrackIndex < queue.length - 1;
-  }, [queue, track, repeating]);
+    return trackIndex < queue.length - 1;
+  }, [queue, trackIndex, repeating]);
 
   return canSkipForward;
 };
 
 export const useSkipForward1Track = () => {
   const queue = usePlayerQueue();
-  const setTrack = useSetPlayerCurrentTrack();
+  const setTrackIndex = useSetPlayerCurrentTrackIndex();
   const repeating = useRecoilValue(playerRepeatingAtom);
 
   const skipForward1Track = useCallback(() => {
-    setTrack((track) => {
-      const currentTrackIndex = getCurrentTrackIndex(track, queue);
-      let nextTrackIndex = Math.max(currentTrackIndex, -1) + 1;
+    setTrackIndex((trackIndex) => {
+      if (!queue.length) return trackIndex;
+
+      let nextTrackIndex = trackIndex + 1;
 
       if (queue.length <= nextTrackIndex) {
         if (repeating) {
           nextTrackIndex = 0;
         } else {
           // Cannot skip forward
-          return track;
+          return trackIndex;
         }
       }
 
-      return queue[nextTrackIndex];
+      return nextTrackIndex;
     });
-  }, [queue, setTrack, repeating]);
+  }, [queue, setTrackIndex, repeating]);
 
   return skipForward1Track;
 };
@@ -179,6 +179,3 @@ export const useStartNewQueue = () => {
 
   return startNewQueue;
 };
-
-const getCurrentTrackIndex = (current: Track, queue: Track[]) =>
-  queue.findIndex((t) => t === current);
