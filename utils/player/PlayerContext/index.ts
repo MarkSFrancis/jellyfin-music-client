@@ -5,4 +5,8 @@ export { usePlayerCurrentTrack } from "./PlayerCurrentTrack";
 export { usePlayerQueue } from "./PlayerQueue";
 export { usePlayerAudio } from "./PlayerAudio";
 export * from "./PlayerCommands";
-export { usePlayerState, useTogglePlayPause } from "./PlayerState";
+export {
+  usePlayerState,
+  useSetPlayerState,
+  useTogglePlayPause,
+} from "./PlayerState";

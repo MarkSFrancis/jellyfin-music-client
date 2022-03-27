@@ -22,7 +22,7 @@ export const findTrackIndexInQueue = (current: Track, queue: Track[]) => {
   return queue.findIndex((t) => t.Id === current.Id);
 };
 
-export const playerCurrentTrackSelector = selector<Track | undefined>({
+export const playerCurrentTrackAtom = selector<Track | undefined>({
   key: "player-current-track",
   get: ({ get }) => {
     const index = get(playerCurrentTrackIndexAtom);
@@ -51,10 +51,10 @@ export const usePlayerCurrentTrackIndex = () =>
   useRecoilValue(playerCurrentTrackIndexAtom);
 
 export const usePlayerCurrentTrack = () =>
-  useRecoilValue(playerCurrentTrackSelector);
+  useRecoilValue(playerCurrentTrackAtom);
 
 export const useSetPlayerCurrentTrackIndex = () =>
   useSetRecoilState(playerCurrentTrackIndexAtom);
 
 export const useSetPlayerCurrentTrack = () =>
-  useSetRecoilState(playerCurrentTrackSelector);
+  useSetRecoilState(playerCurrentTrackAtom);

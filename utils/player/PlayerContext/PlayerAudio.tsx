@@ -3,6 +3,8 @@ import { PlayerAudioContext } from "./types";
 import { useAudio } from "../useAudio";
 import { useAudioLoader } from "../useAudioLoader";
 
+// TODO - migrate to recoil, using dangerouslyAllowMutability
+
 const playerAudioContext = createContext<PlayerAudioContext>(undefined);
 
 export const usePlayerAudio = () => useContext(playerAudioContext);

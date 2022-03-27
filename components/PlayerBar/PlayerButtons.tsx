@@ -11,13 +11,13 @@ import {
   IconPlayerSkipBack,
   IconPlayerSkipForward,
 } from "@tabler/icons";
-import { useRecoilState } from "recoil";
-import { playerStateAtom } from "../../utils/player/PlayerContext/PlayerState";
+import { usePlayerState, useSetPlayerState } from "../../utils";
 
 export const PlayerButtons: FC = () => {
   const skipForward1Track = useSkipForward1Track();
   const skipBackward1Track = useSkipBackward1Track();
-  const [state, setState] = useRecoilState(playerStateAtom);
+  const state = usePlayerState();
+  const setState = useSetPlayerState();
 
   return (
     <ButtonGroup alignSelf="center">
