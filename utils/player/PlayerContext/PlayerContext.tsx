@@ -1,32 +1,26 @@
 import React from "react";
 import { FC } from "react";
-import { PlayerCommandsProvider } from "./PlayerCommands";
 import { PlayerCurrentTrackProvider } from "./PlayerCurrentTrack";
 import { PlayerAudioProvider } from "./PlayerAudio";
 import { PlayerQueueProvider } from "./PlayerQueue";
-import { PlayerSettingsProvider } from "./PlayerSettings";
 import { PlayerStateProvider } from "./PlayerState";
 import { MediaSessionManager } from "./MediaSessionManager";
 import { KeyboardShortcuts } from "./KeyboardShortcuts";
 
 export const PlayerProvider: FC = ({ children }) => {
   return (
-    <PlayerSettingsProvider>
-      <PlayerCurrentTrackProvider>
-        <PlayerQueueProvider>
-          <PlayerCurrentTrackProvider>
-            <PlayerStateProvider>
-              <PlayerCommandsProvider>
-                <PlayerAudioProvider>
-                  <MediaSessionManager>
-                    <KeyboardShortcuts>{children}</KeyboardShortcuts>
-                  </MediaSessionManager>
-                </PlayerAudioProvider>
-              </PlayerCommandsProvider>
-            </PlayerStateProvider>
-          </PlayerCurrentTrackProvider>
-        </PlayerQueueProvider>
-      </PlayerCurrentTrackProvider>
-    </PlayerSettingsProvider>
+    <PlayerCurrentTrackProvider>
+      <PlayerQueueProvider>
+        <PlayerCurrentTrackProvider>
+          <PlayerStateProvider>
+            <PlayerAudioProvider>
+              <MediaSessionManager>
+                <KeyboardShortcuts>{children}</KeyboardShortcuts>
+              </MediaSessionManager>
+            </PlayerAudioProvider>
+          </PlayerStateProvider>
+        </PlayerCurrentTrackProvider>
+      </PlayerQueueProvider>
+    </PlayerCurrentTrackProvider>
   );
 };

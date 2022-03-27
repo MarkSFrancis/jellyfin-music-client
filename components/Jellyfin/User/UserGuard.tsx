@@ -1,8 +1,9 @@
 import { Button, Center, Spinner, Text } from "@chakra-ui/react";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { useCallback } from "react";
+import { useRecoilState } from "recoil";
 import { useMutation, useQuery } from "../../../utils";
-import { UserProvider } from "./UserContext";
+import { userAtom } from "./UserContext";
 
 export interface GetUserDetailsProps {
   onSignOut: () => void;
@@ -11,14 +12,20 @@ export interface GetUserDetailsProps {
 export const UserGuard: FC<GetUserDetailsProps> = (props) => {
   const [getUserState] = useQuery("user", "getCurrentUser", []);
   const [signOut, signOutState] = useMutation("session", "reportSessionEnded");
+  const [user, setUser] = useRecoilState(userAtom);
 
   const handleSignOut = useCallback(async () => {
     await signOut([]);
     props.onSignOut();
   }, [signOut, props]);
 
+  useEffect(() => {
+    setUser(getUserState.data);
+  }, [setUser, getUserState]);
+
   if (
     getUserState.status === "loading" ||
+    (getUserState.data && !user) ||
     signOutState.status === "loading" ||
     signOutState.status === "error"
   ) {
@@ -41,7 +48,5 @@ export const UserGuard: FC<GetUserDetailsProps> = (props) => {
     );
   }
 
-  return (
-    <UserProvider value={getUserState.data}>{props.children}</UserProvider>
-  );
+  return <>{props.children}</>;
 };

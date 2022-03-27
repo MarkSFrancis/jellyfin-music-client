@@ -1,22 +1,27 @@
 import { useEffect } from "react";
 import { FC } from "react";
+import { useRecoilState } from "recoil";
 import { usePlayerAudio } from "./PlayerAudio";
-import { usePlayerCommands } from "./PlayerCommands";
+import {
+  useCanSkipBackward,
+  useSkipBackward1Track,
+  useCanSkipForward,
+  useSkipForward1Track,
+} from "./PlayerCommands";
 import { usePlayerCurrentTrack } from "./PlayerCurrentTrack";
-import { usePlayerState } from "./PlayerState";
+import { playerStateAtom } from "./PlayerState";
 import { PlayerState } from "./types";
 
 const hasMediaSession = () => "mediaSession" in navigator;
 
 export const MediaSessionManager: FC = ({ children }) => {
-  const {
-    canSkipBackward,
-    skipBackward1Track,
-    canSkipForward,
-    skipForward1Track,
-  } = usePlayerCommands();
-  const { state, setState } = usePlayerState();
-  const { track } = usePlayerCurrentTrack();
+  const canSkipBackward = useCanSkipBackward();
+  const skipBackward1Track = useSkipBackward1Track();
+  const canSkipForward = useCanSkipForward();
+  const skipForward1Track = useSkipForward1Track();
+  const [state, setState] = useRecoilState(playerStateAtom);
+
+  const track = usePlayerCurrentTrack();
   const rawAudio = usePlayerAudio();
 
   useEffect(() => {

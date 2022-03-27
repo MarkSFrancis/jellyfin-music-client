@@ -13,18 +13,6 @@ export interface PlayerSettingsContext {
   toggleShuffling: () => void;
 }
 
-export interface PlayerCommandsContext {
-  addToQueue: (track: Track) => void;
-  removeFromQueue: (track: Track) => void;
-  canSkipForward: () => boolean;
-  skipForward1Track: () => void;
-  canSkipBackward: () => boolean;
-  skipBackward1Track: () => void;
-  jumpToTrackInQueue: (track: Track) => void;
-  addToUpNext: (track: Track) => void;
-  startNewQueue: (newQueue: Track[], startTrack?: Track) => void;
-}
-
 export type PlayerAudioContext = Howl | undefined;
 
 export interface PlayerCurrentTrackContext {

@@ -1,41 +1,21 @@
-import { createContext, useContext, useCallback, FC, useState } from "react";
-import { PlayerSettingsContext } from "./types";
+import { atom } from "recoil";
 
-const playerSettingsContext = createContext<PlayerSettingsContext>(undefined);
-export const usePlayerSettings = () => useContext(playerSettingsContext);
+export const playerVolumeAtom = atom({
+  key: "player-settings-volume",
+  default: 100,
+});
 
-export const PlayerSettingsProvider: FC = ({ children }) => {
-  const [volume, setVolume] = useState(100);
-  const [muted, setMuted] = useState(false);
-  const [repeating, setRepeating] = useState(false);
-  const [shuffling, setShuffling] = useState(false);
+export const playerMutedAtom = atom({
+  key: "player-settings-muted",
+  default: false,
+});
 
-  const toggleMuted = useCallback(() => {
-    setMuted((m) => !m);
-  }, []);
+export const playerRepeatingAtom = atom({
+  key: "player-settings-repeating",
+  default: false,
+});
 
-  const toggleRepeating = useCallback(() => {
-    setRepeating((r) => !r);
-  }, []);
-
-  const toggleShuffling = useCallback(() => {
-    setShuffling((s) => !s);
-  }, []);
-
-  return (
-    <playerSettingsContext.Provider
-      value={{
-        volume,
-        setVolume,
-        muted,
-        toggleMuted,
-        repeating,
-        toggleRepeating,
-        shuffling,
-        toggleShuffling,
-      }}
-    >
-      {children}
-    </playerSettingsContext.Provider>
-  );
-};
+export const playerShufflingAtom = atom({
+  key: "player-settings-shuffling",
+  default: false,
+});

@@ -17,8 +17,8 @@ export const usePageTitle = (...breadcrumb: string[]) => {
     .reverse()
     .join(` ${divider} `);
 
-  const { state } = usePlayerState();
-  const { track } = usePlayerCurrentTrack();
+  const state = usePlayerState();
+  const track = usePlayerCurrentTrack();
 
   if (!formattedPath) {
     if (track && state === PlayerState.Playing) {

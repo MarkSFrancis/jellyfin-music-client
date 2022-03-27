@@ -3,7 +3,7 @@ import { usePlayerCurrentTrack } from "../player";
 import { Track } from "../trackTypes";
 
 export const useIsCurrentTrack = () => {
-  const { track: playingTrack } = usePlayerCurrentTrack();
+  const playingTrack = usePlayerCurrentTrack();
 
   return useCallback(
     (track: Track) => {

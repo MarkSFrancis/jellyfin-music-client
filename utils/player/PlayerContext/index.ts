@@ -1,8 +1,8 @@
 export * from "./types";
 export * from "./PlayerContext";
-export { usePlayerSettings } from "./PlayerSettings";
+export * from "./PlayerSettings";
 export { usePlayerCurrentTrack } from "./PlayerCurrentTrack";
 export { usePlayerQueue } from "./PlayerQueue";
 export { usePlayerAudio } from "./PlayerAudio";
-export { usePlayerCommands } from "./PlayerCommands";
-export { usePlayerState } from "./PlayerState";
+export * from "./PlayerCommands";
+export { usePlayerState, useTogglePlayPause } from "./PlayerState";

@@ -1,12 +1,13 @@
 import React, { FC } from "react";
 import { useEffect } from "react";
-import { usePlayerCommands } from "./PlayerCommands";
-import { usePlayerState } from "./PlayerState";
+import { useSkipBackward1Track, useSkipForward1Track } from "./PlayerCommands";
+import { useSetPlayerState } from "./PlayerState";
 import { PlayerState } from "./types";
 
 export const KeyboardShortcuts: FC = ({ children }) => {
-  const { skipBackward1Track, skipForward1Track } = usePlayerCommands();
-  const { setState } = usePlayerState();
+  const skipForward1Track = useSkipForward1Track();
+  const skipBackward1Track = useSkipBackward1Track();
+  const setState = useSetPlayerState();
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {

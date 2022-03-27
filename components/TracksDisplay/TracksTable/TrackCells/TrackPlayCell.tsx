@@ -21,7 +21,7 @@ export const TrackPlayCell: FC<TrackPlayCellProps> = ({
   tracks,
   index,
 }) => {
-  const { state } = usePlayerState();
+  const state = usePlayerState();
   const playTrack = usePlayTrack();
   const isCurrentTrack = useIsCurrentTrack();
   const isPlaying = state === PlayerState.Playing;

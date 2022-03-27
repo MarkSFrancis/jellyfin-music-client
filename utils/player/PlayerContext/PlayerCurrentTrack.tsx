@@ -1,19 +1,18 @@
-import { FC, useState, createContext, useContext } from "react";
+import { FC } from "react";
+import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import { Track } from "../../trackTypes";
-import { PlayerCurrentTrackContext } from "./types";
 
-const playerCurrentTrackContext =
-  createContext<PlayerCurrentTrackContext>(undefined);
+export const playerCurrentTrackAtom = atom<Track | undefined>({
+  key: "player-current-track",
+  default: undefined,
+});
 
 export const usePlayerCurrentTrack = () =>
-  useContext(playerCurrentTrackContext);
+  useRecoilValue(playerCurrentTrackAtom);
+
+export const useSetPlayerCurrentTrack = () =>
+  useSetRecoilState(playerCurrentTrackAtom);
 
 export const PlayerCurrentTrackProvider: FC = ({ children }) => {
-  const [track, setTrack] = useState<Track | undefined>();
-
-  return (
-    <playerCurrentTrackContext.Provider value={{ track, setTrack }}>
-      {children}
-    </playerCurrentTrackContext.Provider>
-  );
+  return <>{children}</>;
 };

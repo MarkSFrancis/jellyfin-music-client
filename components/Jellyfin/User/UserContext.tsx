@@ -1,9 +1,9 @@
 import { UserDto } from "@jellyfin/client-axios";
-import { useContext } from "react";
-import { createContext } from "react";
+import { atom, useRecoilValue } from "recoil";
 
-const userContext = createContext<UserDto>(undefined);
+export const userAtom = atom<UserDto>({
+  key: "user",
+  default: undefined,
+});
 
-export const useUser = () => useContext(userContext);
-
-export const UserProvider = userContext.Provider;
+export const useUser = () => useRecoilValue(userAtom);

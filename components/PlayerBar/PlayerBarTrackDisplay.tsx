@@ -4,7 +4,7 @@ import { usePlayerCurrentTrack } from "../../utils";
 import { SecondaryText } from "../Typography";
 
 export const PlayerBarTrackDisplay: FC = () => {
-  const { track } = usePlayerCurrentTrack();
+  const track = usePlayerCurrentTrack();
 
   if (!track) {
     return <></>;

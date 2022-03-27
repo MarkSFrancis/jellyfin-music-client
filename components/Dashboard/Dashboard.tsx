@@ -2,13 +2,12 @@ import { Box, Button, ButtonGroup, Heading, VStack } from "@chakra-ui/react";
 import { ItemFields } from "@jellyfin/client-axios";
 import { useCallback } from "react";
 import { FC } from "react";
-import { useGetTracks } from "../../utils";
-import { usePlayerCommands } from "../../utils";
+import { useGetTracks, useStartNewQueue } from "../../utils";
 import { Logo } from "../Layout";
 import { LibraryTracks } from "../TracksDisplay";
 
 export const Dashboard: FC = () => {
-  const { startNewQueue } = usePlayerCommands();
+  const startNewQueue = useStartNewQueue();
   const [getTracks, getTracksState] = useGetTracks();
 
   const handlePlayMostRecent = useCallback(async () => {

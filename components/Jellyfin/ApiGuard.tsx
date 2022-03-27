@@ -4,16 +4,17 @@ import { useEffect } from "react";
 import { FC } from "react";
 import { useLocalStorage } from "../../utils";
 import { ApiClient, initApi } from "../../utils/jellyfinClient";
-import { ApiProvider, Server } from "./ApiContext";
+import { apiAtom, Server } from "./ApiContext";
 import { UserGuard } from "./User/UserGuard";
 import { SetServer, SignIn } from "./SignIn";
-import { useMemo } from "react";
 import { MusicLibraryGuard } from "./MusicLibrary";
+import { useRecoilState } from "recoil";
 
 export const ApiGuard: FC = (props) => {
   const [server, setServer] = useLocalStorage<Server>("jellyfin-server-url");
   const [token, setToken] = useLocalStorage<string>("jellyfin-auth-token");
   const [api, setApi] = useState<ApiClient>();
+  const [apiConfig, setApiConfig] = useRecoilState(apiAtom);
 
   useEffect(() => {
     if (!server || !token) {
@@ -21,15 +22,16 @@ export const ApiGuard: FC = (props) => {
     } else {
       setApi(initApi(server.url, token));
     }
-  }, [server, token]);
+  }, [server, setApi, token]);
 
-  const apiConfig = useMemo(() => {
+  useEffect(() => {
     if (!api || !token || !server) {
       return undefined;
     }
 
-    return { api, auth: { authToken: token, server } };
-  }, [server, api, token]);
+    const apiConfig = { api, auth: { authToken: token, server } };
+    setApiConfig(apiConfig);
+  }, [server, api, token, setApiConfig]);
 
   if (!server) {
     return <SetServer onSetServer={setServer} />;
@@ -54,12 +56,10 @@ export const ApiGuard: FC = (props) => {
   }
 
   return (
-    <ApiProvider value={apiConfig}>
-      <UserGuard onSignOut={() => setToken(undefined)}>
-        <MusicLibraryGuard onSignOut={() => setToken(undefined)}>
-          {props.children}
-        </MusicLibraryGuard>
-      </UserGuard>
-    </ApiProvider>
+    <UserGuard onSignOut={() => setToken(undefined)}>
+      <MusicLibraryGuard onSignOut={() => setToken(undefined)}>
+        {props.children}
+      </MusicLibraryGuard>
+    </UserGuard>
   );
 };

@@ -13,7 +13,7 @@ import { UpNextTracks } from "./UpNextTracks";
 
 export const UpNext: FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { queue } = usePlayerQueue();
+  const queue = usePlayerQueue();
 
   return (
     <>

@@ -1,16 +1,23 @@
 import { ButtonGroup, IconButton, Tooltip } from "@chakra-ui/react";
 import React, { FC } from "react";
-import { PlayerState, usePlayerCommands, usePlayerState } from "../../utils";
+import {
+  PlayerState,
+  useSkipForward1Track,
+  useSkipBackward1Track,
+} from "../../utils";
 import {
   IconPlayerPlay,
   IconPlayerPause,
   IconPlayerSkipBack,
   IconPlayerSkipForward,
 } from "@tabler/icons";
+import { useRecoilState } from "recoil";
+import { playerStateAtom } from "../../utils/player/PlayerContext/PlayerState";
 
 export const PlayerButtons: FC = () => {
-  const { skipForward1Track, skipBackward1Track } = usePlayerCommands();
-  const { state, setState } = usePlayerState();
+  const skipForward1Track = useSkipForward1Track();
+  const skipBackward1Track = useSkipBackward1Track();
+  const [state, setState] = useRecoilState(playerStateAtom);
 
   return (
     <ButtonGroup alignSelf="center">

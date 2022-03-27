@@ -6,8 +6,8 @@ export type UpNextQueue = Readonly<
 >;
 
 export const useUpNext = (): UpNextQueue => {
-  const { queue } = usePlayerQueue();
-  const { track } = usePlayerCurrentTrack();
+  const queue = usePlayerQueue();
+  const track = usePlayerCurrentTrack();
 
   const upNext: UpNextQueue = useMemo(() => {
     let previous: Track[];

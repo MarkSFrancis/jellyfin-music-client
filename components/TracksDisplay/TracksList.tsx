@@ -5,8 +5,9 @@ import {
   PlayerState,
   Track,
   useIsCurrentTrack,
-  usePlayerCommands,
   usePlayerState,
+  useStartNewQueue,
+  useTogglePlayPause,
 } from "../../utils";
 import { TrackDisplay } from "../TrackDisplay";
 import { List as FixedSizeList, WindowScroller } from "react-virtualized";
@@ -17,8 +18,9 @@ export interface TracksListProps {
 }
 
 export const TracksList: FC<TracksListProps> = ({ tracks, scrollRef }) => {
-  const { startNewQueue } = usePlayerCommands();
-  const { state, togglePlayPause } = usePlayerState();
+  const startNewQueue = useStartNewQueue();
+  const state = usePlayerState();
+  const togglePlayPause = useTogglePlayPause();
   const isCurrentTrack = useIsCurrentTrack();
 
   const handlePlayPauseTrack = useCallback(

@@ -1,17 +1,16 @@
-import { FC, useState, useContext, createContext } from "react";
+import { FC } from "react";
+import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import { Track } from "../../trackTypes";
-import { PlayerQueueContext } from "./types";
 
-const playerQueueContext = createContext<PlayerQueueContext>(undefined);
+export const playerQueueAtom = atom<Track[]>({
+  key: "player-queue",
+  default: [],
+});
 
-export const usePlayerQueue = () => useContext(playerQueueContext);
+export const usePlayerQueue = () => useRecoilValue(playerQueueAtom);
+
+export const useSetPlayerQueue = () => useSetRecoilState(playerQueueAtom);
 
 export const PlayerQueueProvider: FC = ({ children }) => {
-  const [queue, setQueue] = useState<Track[]>([]);
-
-  return (
-    <playerQueueContext.Provider value={{ queue, setQueue }}>
-      {children}
-    </playerQueueContext.Provider>
-  );
+  return <>{children}</>;
 };

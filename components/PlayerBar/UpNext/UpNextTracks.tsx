@@ -1,6 +1,5 @@
 import {
   VStack,
-  Divider,
   DrawerBody,
   DrawerCloseButton,
   DrawerHeader,
@@ -9,7 +8,7 @@ import React, { FC } from "react";
 import { useRef } from "react";
 import { useCallback } from "react";
 import { useState } from "react";
-import { Track, usePlayerCommands } from "../../../utils";
+import { Track, useJumpToTrackInQueue } from "../../../utils";
 import { TrackDisplay } from "../../TrackDisplay";
 import { LazyDisplay } from "../../TracksDisplay";
 import { useUpNext } from "./useUpNext";
@@ -18,7 +17,7 @@ const nextPageSize = 30;
 
 export const UpNextTracks: FC = () => {
   const [, , next] = useUpNext();
-  const { jumpToTrackInQueue } = usePlayerCommands();
+  const jumpToTrackInQueue = useJumpToTrackInQueue();
   const [totalToShow, setTotalToShow] = useState(nextPageSize);
   const bodyRef = useRef<HTMLDivElement>();
 

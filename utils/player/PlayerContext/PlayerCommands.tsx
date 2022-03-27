@@ -1,143 +1,184 @@
-import { FC, createContext, useContext, useCallback } from "react";
+import { useCallback } from "react";
+import { useRecoilValue } from "recoil";
 import { Track } from "../../trackTypes";
-import { usePlayerCurrentTrack } from "./PlayerCurrentTrack";
-import { usePlayerQueue } from "./PlayerQueue";
-import { usePlayerSettings } from "./PlayerSettings";
-import { usePlayerState } from "./PlayerState";
-import { PlayerCommandsContext, PlayerState } from "./types";
+import {
+  usePlayerCurrentTrack,
+  useSetPlayerCurrentTrack,
+} from "./PlayerCurrentTrack";
+import { usePlayerQueue, useSetPlayerQueue } from "./PlayerQueue";
+import { playerRepeatingAtom } from "./PlayerSettings";
+import { useSetPlayerState } from "./PlayerState";
+import { PlayerState } from "./types";
 
-const playerCommandsContext = createContext<PlayerCommandsContext>(undefined);
+export const useAddToQueue = () => {
+  const setQueue = useSetPlayerQueue();
 
-export const usePlayerCommands = () => useContext(playerCommandsContext);
+  const addToQueue = useCallback(
+    (track: Track) => {
+      setQueue((queue) => [...queue, track]);
+    },
+    [setQueue]
+  );
 
-const getCurrentTrackIndex = (current: Track, queue: Track[]) =>
-  queue.findIndex((t) => t === current);
+  return addToQueue;
+};
 
-export const PlayerCommandsProvider: FC = ({ children }) => {
-  const { setQueue, queue } = usePlayerQueue();
-  const { track, setTrack } = usePlayerCurrentTrack();
-  const { setState } = usePlayerState();
-  const { repeating } = usePlayerSettings();
+export const useAddToUpNext = () => {
+  const setQueue = useSetPlayerQueue();
 
-  const addToUpNext: PlayerCommandsContext["addToQueue"] = useCallback(
-    (newTrack) => {
-      setQueue((q) => {
-        const currentTrackIndex = getCurrentTrackIndex(track, q);
+  const addToUpNext = useCallback(
+    (track: Track) => {
+      setQueue((queue) => {
+        const currentTrackIndex = getCurrentTrackIndex(track, queue);
 
         const nextTrackIndex =
           currentTrackIndex < 0 ? 0 : currentTrackIndex + 1;
 
-        const upToNext = q.slice(0, nextTrackIndex);
-        const afterCurrent = q.slice(nextTrackIndex);
+        const upToNext = queue.slice(0, nextTrackIndex);
+        const afterCurrent = queue.slice(nextTrackIndex);
 
-        return [...upToNext, newTrack, ...afterCurrent];
+        return [...upToNext, track, ...afterCurrent];
       });
     },
-    [track, setQueue]
+    [setQueue]
   );
 
-  const jumpToTrackInQueue: PlayerCommandsContext["jumpToTrackInQueue"] =
-    useCallback(
-      (track) => {
-        setTrack(track);
-        setState(PlayerState.Playing);
-      },
-      [setTrack, setState]
-    );
+  return addToUpNext;
+};
 
-  const startNewQueue: PlayerCommandsContext["startNewQueue"] = useCallback(
+export const useJumpToTrackInQueue = () => {
+  const setTrack = useSetPlayerCurrentTrack();
+  const setState = useSetPlayerState();
+
+  const jumpToTrackInQueue = useCallback(
+    (track) => {
+      setTrack(track);
+      setState(PlayerState.Playing);
+    },
+    [setTrack, setState]
+  );
+
+  return jumpToTrackInQueue;
+};
+
+export const useRemoveFromQueue = () => {
+  const setQueue = useSetPlayerQueue();
+
+  const removeFromQueue = useCallback(
+    (track) => {
+      setQueue((q) => q.filter((t) => t !== track));
+    },
+    [setQueue]
+  );
+
+  return removeFromQueue;
+};
+
+export const useCanSkipBackward = () => {
+  const track = usePlayerCurrentTrack();
+  const queue = usePlayerQueue();
+  const repeating = useRecoilValue(playerRepeatingAtom);
+
+  const canSkipBackward = useCallback(() => {
+    if (repeating) return true;
+
+    const currentTrackIndex = getCurrentTrackIndex(track, queue);
+    return currentTrackIndex > 0;
+  }, [track, queue, repeating]);
+
+  return canSkipBackward;
+};
+
+export const useSkipBackward1Track = () => {
+  const setTrack = useSetPlayerCurrentTrack();
+  const queue = usePlayerQueue();
+  const repeating = useRecoilValue(playerRepeatingAtom);
+
+  const skipBackward1Track = useCallback(() => {
+    setTrack((track) => {
+      const currentTrackIndex = getCurrentTrackIndex(track, queue);
+      let prevTrackIndex = currentTrackIndex - 1;
+
+      if (prevTrackIndex < 0) {
+        if (repeating) {
+          prevTrackIndex = queue.length - 1;
+        } else {
+          // Cannot skip backward
+          return track;
+        }
+      }
+
+      return queue[prevTrackIndex];
+    });
+  }, [setTrack, queue, repeating]);
+
+  return skipBackward1Track;
+};
+
+export const useCanSkipForward = () => {
+  const queue = usePlayerQueue();
+  const track = usePlayerCurrentTrack();
+  const repeating = useRecoilValue(playerRepeatingAtom);
+
+  const canSkipForward = useCallback(() => {
+    if (repeating) return true;
+
+    const currentTrackIndex = getCurrentTrackIndex(track, queue);
+    if (currentTrackIndex < 0) return false;
+
+    return currentTrackIndex < queue.length - 1;
+  }, [queue, track, repeating]);
+
+  return canSkipForward;
+};
+
+export const useSkipForward1Track = () => {
+  const queue = usePlayerQueue();
+  const setTrack = useSetPlayerCurrentTrack();
+  const repeating = useRecoilValue(playerRepeatingAtom);
+
+  const skipForward1Track = useCallback(() => {
+    setTrack((track) => {
+      const currentTrackIndex = getCurrentTrackIndex(track, queue);
+      let nextTrackIndex = Math.max(currentTrackIndex, -1) + 1;
+
+      if (queue.length <= nextTrackIndex) {
+        if (repeating) {
+          nextTrackIndex = 0;
+        } else {
+          // Cannot skip forward
+          return track;
+        }
+      }
+
+      return queue[nextTrackIndex];
+    });
+  }, [queue, setTrack, repeating]);
+
+  return skipForward1Track;
+};
+
+export const useStartNewQueue = () => {
+  const setQueue = useSetPlayerQueue();
+  const setTrack = useSetPlayerCurrentTrack();
+  const setState = useSetPlayerState();
+
+  const startNewQueue = useCallback(
     (newQueue: Track[], startTrack?: Track) => {
       setQueue(newQueue);
-      if (!startTrack) {
+      if (!startTrack || !newQueue.includes(startTrack)) {
         startTrack = newQueue[0];
-      } else if (!newQueue.includes(startTrack)) {
-        startTrack = undefined;
       }
-      if (!startTrack) return;
+      if (!startTrack) return; // Empty queue
 
       setTrack(startTrack);
       setState(PlayerState.Playing);
     },
-    [setTrack, setState, setQueue]
+    [setQueue, setTrack, setState]
   );
 
-  const canSkipBackward: PlayerCommandsContext["canSkipBackward"] =
-    useCallback(() => {
-      if (repeating) return true;
-
-      const currentTrackIndex = getCurrentTrackIndex(track, queue);
-      return currentTrackIndex > 0;
-    }, [repeating, queue, track]);
-
-  const skipBackward1Track: PlayerCommandsContext["skipBackward1Track"] =
-    useCallback(() => {
-      setTrack((t) => {
-        const currentTrackIndex = getCurrentTrackIndex(t, queue);
-        let prevTrackIndex = currentTrackIndex < 0 ? 0 : currentTrackIndex - 1;
-
-        if (prevTrackIndex < 0) {
-          if (repeating) {
-            prevTrackIndex = queue.length - 1;
-          }
-        }
-
-        return queue[prevTrackIndex];
-      });
-    }, [setTrack, queue, repeating]);
-
-  const canSkipForward: PlayerCommandsContext["canSkipForward"] =
-    useCallback(() => {
-      if (repeating) return true;
-
-      const currentTrackIndex = getCurrentTrackIndex(track, queue);
-      if (currentTrackIndex < 0) return false;
-
-      return currentTrackIndex < queue.length - 1;
-    }, [repeating, queue, track]);
-
-  const skipForward1Track: PlayerCommandsContext["skipForward1Track"] =
-    useCallback(() => {
-      setTrack((t) => {
-        const currentTrackIndex = getCurrentTrackIndex(t, queue);
-        let nextTrackIndex = currentTrackIndex < 0 ? 0 : currentTrackIndex + 1;
-
-        if (queue.length >= nextTrackIndex) {
-          if (repeating) {
-            nextTrackIndex = 0;
-          }
-        }
-
-        return queue[nextTrackIndex];
-      });
-    }, [setTrack, queue, repeating]);
-
-  const addToQueue: PlayerCommandsContext["addToQueue"] = useCallback(
-    (track) => {
-      setQueue((q) => [...q, track]);
-    },
-    [setQueue]
-  );
-
-  const removeFromQueue: PlayerCommandsContext["removeFromQueue"] = useCallback(
-    (track) => setQueue((q) => q.filter((t) => t !== track)),
-    [setQueue]
-  );
-
-  return (
-    <playerCommandsContext.Provider
-      value={{
-        addToQueue,
-        addToUpNext,
-        jumpToTrackInQueue,
-        removeFromQueue,
-        canSkipBackward,
-        skipBackward1Track,
-        canSkipForward,
-        skipForward1Track,
-        startNewQueue,
-      }}
-    >
-      {children}
-    </playerCommandsContext.Provider>
-  );
+  return startNewQueue;
 };
+
+const getCurrentTrackIndex = (current: Track, queue: Track[]) =>
+  queue.findIndex((t) => t === current);

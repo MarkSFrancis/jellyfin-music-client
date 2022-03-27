@@ -5,14 +5,14 @@ import {
   usePlayerState,
   PlayerState,
   usePlayerCurrentTrack,
-  usePlayerCommands,
+  useSkipForward1Track,
 } from "./PlayerContext";
 import { LoadedAudio } from "./useAudioLoader";
 
 export const useAudio = (loadedTracks: LoadedAudio[]) => {
-  const { track } = usePlayerCurrentTrack();
-  const { state } = usePlayerState();
-  const { skipForward1Track } = usePlayerCommands();
+  const track = usePlayerCurrentTrack();
+  const state = usePlayerState();
+  const skipForward1Track = useSkipForward1Track();
 
   const audioTrack = useRef<Track | undefined>();
   const audioRef = useRef<Howl | undefined>();

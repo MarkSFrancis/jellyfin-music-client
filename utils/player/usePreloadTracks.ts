@@ -1,9 +1,10 @@
 import { useMemo } from "react";
+import { useRecoilValue } from "recoil";
 import { Track } from "../trackTypes";
 import {
+  playerRepeatingAtom,
   usePlayerCurrentTrack,
   usePlayerQueue,
-  usePlayerSettings,
 } from "./PlayerContext";
 
 // If loading a total of more than 10 items (including the current track), you'll need to increase the HTML Audio box limit (via howler configuration)
@@ -11,9 +12,9 @@ const lookAheadMax = 2;
 const lookBehindMax = 1;
 
 export const usePreloadTracks = () => {
-  const { repeating } = usePlayerSettings();
-  const { track } = usePlayerCurrentTrack();
-  const { queue } = usePlayerQueue();
+  const repeating = useRecoilValue(playerRepeatingAtom);
+  const track = usePlayerCurrentTrack();
+  const queue = usePlayerQueue();
 
   const tracksToLoad = useMemo((): Track[] => {
     if (queue.length === 0) {
