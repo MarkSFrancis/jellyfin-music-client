@@ -42,7 +42,9 @@ export const MediaSessionManager: FC = ({ children }) => {
   useEffect(() => {
     if (state !== PlayerState.Paused) return;
 
-    return setHandler("play", () => setState(PlayerState.Playing));
+    return setHandler("play", () => {
+      setState(PlayerState.Playing);
+    });
   }, [state, setState]);
 
   useEffect(() => {
@@ -50,6 +52,16 @@ export const MediaSessionManager: FC = ({ children }) => {
 
     return setHandler("pause", () => setState(PlayerState.Paused));
   }, [state, setState]);
+
+  useEffect(() => {
+    if (state === PlayerState.Playing) {
+      navigator.mediaSession.playbackState = "playing";
+    } else if (state === PlayerState.Paused) {
+      navigator.mediaSession.playbackState = "paused";
+    } else {
+      navigator.mediaSession.playbackState = "none";
+    }
+  }, [state]);
 
   useEffect(() => {
     if (!canSkipBackward()) return;

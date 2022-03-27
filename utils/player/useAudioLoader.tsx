@@ -1,9 +1,10 @@
 import { Howl } from "howler";
 import { useApi, ApiAuthContext } from "../../components/Jellyfin";
 import { Track } from "../trackTypes";
-import { useEffect } from "react";
+import { useMemo } from "react";
 import { usePreloadTracks } from "./usePreloadTracks";
-import { useState } from "react";
+
+// Hoist into recoil atoms
 
 export interface LoadedAudio {
   track: Track;
@@ -14,9 +15,7 @@ export const useAudioLoader = () => {
   const tracks = usePreloadTracks();
   const { auth } = useApi();
 
-  const [loadedTracks, setLoadedTracks] = useState<LoadedAudio[]>([]);
-
-  useEffect(() => {
+  const loadedTracks = useMemo(() => {
     let tracksToLoad = tracks;
     if (!auth || !tracks) {
       tracksToLoad = [];
@@ -24,8 +23,8 @@ export const useAudioLoader = () => {
 
     const newHowls = updateLoadedAudio(auth, loadedTracks, tracksToLoad);
 
-    setLoadedTracks(newHowls);
-  }, [auth, loadedTracks, tracks]);
+    return newHowls;
+  }, [auth, tracks]);
 
   return loadedTracks;
 };
@@ -60,15 +59,19 @@ const unloadUnusedAudio = (
   existingLoadedTracks: LoadedAudio[] | undefined,
   tracksToKeep: Track[]
 ) => {
-  const cleanedTracks = (existingLoadedTracks ?? []).filter((h) => {
-    if (tracksToKeep.includes(h.track)) {
-      return h;
+  existingLoadedTracks = existingLoadedTracks ?? [];
+
+  const cleanedTracks = existingLoadedTracks.filter((h) => {
+    if (tracksToKeep.find((t) => t.Id === h.track.Id)) {
+      return true;
     }
 
     h.rawAudio.unload();
+    return false;
   });
 
   if (cleanedTracks.length === existingLoadedTracks.length) {
+    // Tracks are unchanged
     return existingLoadedTracks;
   }
 

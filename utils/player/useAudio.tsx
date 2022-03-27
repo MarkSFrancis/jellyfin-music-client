@@ -9,6 +9,8 @@ import {
 } from "./PlayerContext";
 import { LoadedAudio } from "./useAudioLoader";
 
+// Hoist into recoil selectors
+
 export const useAudio = (loadedTracks: LoadedAudio[]) => {
   const track = usePlayerCurrentTrack();
   const state = usePlayerState();
@@ -29,12 +31,6 @@ export const useAudio = (loadedTracks: LoadedAudio[]) => {
       skipForward1TrackRef.current();
     };
 
-    let previousAudio = audioRef.current;
-    if (previousAudio) {
-      previousAudio.stop();
-      previousAudio.off("end", trackEndHandler);
-    }
-
     audioRef.current = audio;
 
     if (!audio) {
@@ -42,11 +38,13 @@ export const useAudio = (loadedTracks: LoadedAudio[]) => {
     }
 
     audioRef.current.on("end", trackEndHandler);
-    previousAudio = audioRef.current;
+    const previousAudio = audioRef.current;
 
     return () => {
       if (previousAudio) {
-        previousAudio.stop();
+        if (previousAudio !== audioRef.current) {
+          previousAudio.stop();
+        }
         previousAudio.off("end", trackEndHandler);
       }
     };
@@ -61,11 +59,13 @@ export const useAudio = (loadedTracks: LoadedAudio[]) => {
 
     if (!playing) {
       audioTrack.current = undefined;
+      audioRef.current = undefined;
       setAudio(undefined);
       return;
     }
 
     audioTrack.current = playing.track;
+    audioRef.current = playing.rawAudio;
     setAudio(playing.rawAudio);
   }, [loadedTracks, track]);
 
