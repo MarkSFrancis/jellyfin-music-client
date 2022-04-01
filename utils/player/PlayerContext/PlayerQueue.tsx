@@ -1,16 +1,14 @@
-import { FC } from "react";
-import { atom, useRecoilValue, useSetRecoilState } from "recoil";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Track } from "../../trackTypes";
 
-export const playerQueueAtom = atom<Track[]>({
-  key: "player-queue",
-  default: [],
+export const playerQueueSlice = createSlice({
+  name: "player-queue",
+  initialState: [] as Track[],
+  reducers: {
+    setPlayerQueue: (_, action: PayloadAction<Track[]>) => {
+      return action.payload;
+    },
+  },
 });
 
-export const usePlayerQueue = () => useRecoilValue(playerQueueAtom);
-
-export const useSetPlayerQueue = () => useSetRecoilState(playerQueueAtom);
-
-export const PlayerQueueProvider: FC = ({ children }) => {
-  return <>{children}</>;
-};
+export const { setPlayerQueue } = playerQueueSlice.actions;

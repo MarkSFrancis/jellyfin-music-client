@@ -8,7 +8,8 @@ import React, { FC } from "react";
 import { useRef } from "react";
 import { useCallback } from "react";
 import { useState } from "react";
-import { Track, useJumpToTrackInQueue } from "../../../utils";
+import { useAppDispatch } from "../../../store";
+import { play, setCurrentTrack, Track } from "../../../utils";
 import { TrackDisplay } from "../../TrackDisplay";
 import { LazyDisplay } from "../../TracksDisplay";
 import { useUpNext } from "./useUpNext";
@@ -17,20 +18,21 @@ const nextPageSize = 30;
 
 export const UpNextTracks: FC = () => {
   const [, , next] = useUpNext();
-  const jumpToTrackInQueue = useJumpToTrackInQueue();
+  const dispatch = useAppDispatch();
   const [totalToShow, setTotalToShow] = useState(nextPageSize);
   const bodyRef = useRef<HTMLDivElement>();
 
   const onPlay = useCallback(
     (track: Track) => {
-      jumpToTrackInQueue(track);
+      dispatch(setCurrentTrack(track));
+      dispatch(play());
       if (bodyRef.current) {
         bodyRef.current.scrollTo({
           top: 0,
         });
       }
     },
-    [jumpToTrackInQueue]
+    [dispatch]
   );
 
   return (

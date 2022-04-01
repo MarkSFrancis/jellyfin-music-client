@@ -9,7 +9,8 @@ import {
 } from "@chakra-ui/react";
 import { IconDots } from "@tabler/icons";
 import React, { useCallback } from "react";
-import { Track, useAddToUpNext } from "../../utils";
+import { useAppDispatch } from "../../store";
+import { addToUpNext, Track } from "../../utils";
 
 export interface TrackOptionsButton
   extends Omit<IconButtonProps, "aria-label"> {
@@ -21,11 +22,11 @@ export const TrackOptionsButton = forwardRef<
   TrackOptionsButton,
   typeof IconButton
 >(({ track, ...buttonProps }, ref) => {
-  const addToUpNext = useAddToUpNext();
+  const dispatch = useAppDispatch();
 
   const onPlayNext = useCallback(() => {
-    addToUpNext(track);
-  }, [addToUpNext, track]);
+    dispatch(addToUpNext(track));
+  }, [dispatch, track]);
 
   return (
     <Menu isLazy>

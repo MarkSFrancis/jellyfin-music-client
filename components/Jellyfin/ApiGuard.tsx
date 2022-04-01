@@ -4,17 +4,19 @@ import { useEffect } from "react";
 import { FC } from "react";
 import { useLocalStorage } from "../../utils";
 import { ApiClient, initApi } from "../../utils/jellyfinClient";
-import { apiAtom, Server } from "./ApiContext";
 import { UserGuard } from "./User/UserGuard";
 import { SetServer, SignIn } from "./SignIn";
 import { MusicLibraryGuard } from "./MusicLibrary";
-import { useRecoilState } from "recoil";
+import { Server, setApiConfig } from "../../utils/apiConfig/apiConfigSlice";
+import { useAppDispatch, useAppSelector } from "../../store";
+import { ApiProvider } from "./ApiContext";
 
 export const ApiGuard: FC = (props) => {
   const [server, setServer] = useLocalStorage<Server>("jellyfin-server-url");
   const [token, setToken] = useLocalStorage<string>("jellyfin-auth-token");
   const [api, setApi] = useState<ApiClient>();
-  const [apiConfig, setApiConfig] = useRecoilState(apiAtom);
+  const apiConfig = useAppSelector((state) => state.apiConfigState);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!server || !token) {
@@ -29,9 +31,9 @@ export const ApiGuard: FC = (props) => {
       return undefined;
     }
 
-    const apiConfig = { api, auth: { authToken: token, server } };
-    setApiConfig(apiConfig);
-  }, [server, api, token, setApiConfig]);
+    const apiConfig = { authToken: token, server };
+    dispatch(setApiConfig(apiConfig));
+  }, [server, api, token, dispatch]);
 
   if (!server) {
     return <SetServer onSetServer={setServer} />;
@@ -56,10 +58,12 @@ export const ApiGuard: FC = (props) => {
   }
 
   return (
-    <UserGuard onSignOut={() => setToken(undefined)}>
-      <MusicLibraryGuard onSignOut={() => setToken(undefined)}>
-        {props.children}
-      </MusicLibraryGuard>
-    </UserGuard>
+    <ApiProvider value={api}>
+      <UserGuard onSignOut={() => setToken(undefined)}>
+        <MusicLibraryGuard onSignOut={() => setToken(undefined)}>
+          {props.children}
+        </MusicLibraryGuard>
+      </UserGuard>
+    </ApiProvider>
   );
 };

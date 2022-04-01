@@ -1,24 +1,9 @@
-import { PublicSystemInfo } from "@jellyfin/client-axios";
-import { atom, useRecoilValue } from "recoil";
+import { useContext } from "react";
+import { createContext } from "react";
 import { ApiClient } from "../../utils/jellyfinClient";
 
-export interface Server extends PublicSystemInfo {
-  url: string;
-}
+const apiContext = createContext<ApiClient>(undefined);
 
-export interface ApiAuthContext {
-  server: Server;
-  authToken: string;
-}
+export const ApiProvider = apiContext.Provider;
 
-export interface ApiContext {
-  auth: ApiAuthContext;
-  api: ApiClient;
-}
-
-export const apiAtom = atom<ApiContext>({
-  key: "api",
-  default: undefined,
-});
-
-export const useApi = () => useRecoilValue(apiAtom);
+export const useApi = () => useContext(apiContext);

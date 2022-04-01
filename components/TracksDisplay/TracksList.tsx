@@ -3,14 +3,15 @@ import React, { FC, MutableRefObject } from "react";
 import { useCallback } from "react";
 import {
   PlayerState,
+  startNewQueue,
+  togglePlayPause,
   Track,
   useIsCurrentTrack,
-  usePlayerState,
-  useStartNewQueue,
-  useTogglePlayPause,
 } from "../../utils";
 import { TrackDisplay } from "../TrackDisplay";
 import { List as FixedSizeList, WindowScroller } from "react-virtualized";
+import { usePlayerSelector } from "../../utils/player/PlayerContext/playerSelectors";
+import { useAppDispatch } from "../../store";
 
 export interface TracksListProps {
   tracks: Track[];
@@ -18,20 +19,19 @@ export interface TracksListProps {
 }
 
 export const TracksList: FC<TracksListProps> = ({ tracks, scrollRef }) => {
-  const startNewQueue = useStartNewQueue();
-  const state = usePlayerState();
-  const togglePlayPause = useTogglePlayPause();
+  const dispatch = useAppDispatch();
+  const state = usePlayerSelector((state) => state.state);
   const isCurrentTrack = useIsCurrentTrack();
 
   const handlePlayPauseTrack = useCallback(
     (track: Track, isCurrentTrack: boolean) => {
       if (isCurrentTrack) {
-        togglePlayPause();
+        dispatch(togglePlayPause());
       } else {
-        startNewQueue(tracks, track);
+        dispatch(startNewQueue({ newQueue: tracks, startTrack: track }));
       }
     },
-    [tracks, startNewQueue, togglePlayPause]
+    [tracks, dispatch]
   );
 
   const renderItem = useCallback(

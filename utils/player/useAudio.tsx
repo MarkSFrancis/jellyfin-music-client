@@ -1,34 +1,33 @@
 import { Howl } from "howler";
 import { useEffect, useRef, useState } from "react";
+import { useAppDispatch } from "../../store";
 import { Track } from "../trackTypes";
+import { PlayerState, skipForward1Track } from "./PlayerContext";
 import {
-  usePlayerState,
-  PlayerState,
-  usePlayerCurrentTrack,
-  useSkipForward1Track,
-} from "./PlayerContext";
+  getPlayerCurrentTrack,
+  usePlayerSelector,
+} from "./PlayerContext/playerSelectors";
 import { LoadedAudio } from "./useAudioLoader";
 
 // Hoist into recoil selectors
 
 export const useAudio = (loadedTracks: LoadedAudio[]) => {
-  const track = usePlayerCurrentTrack();
-  const state = usePlayerState();
-  const skipForward1Track = useSkipForward1Track();
+  const track = usePlayerSelector(getPlayerCurrentTrack);
+  const state = usePlayerSelector((state) => state.state);
+  const dispatch = useAppDispatch();
 
   const audioTrack = useRef<Track | undefined>();
   const audioRef = useRef<Howl | undefined>();
   const [audio, setAudio] = useState<Howl | undefined>();
-  const skipForward1TrackRef =
-    useRef<typeof skipForward1Track>(skipForward1Track);
+  const dispatchRef = useRef<typeof dispatch>(dispatch);
 
   useEffect(() => {
-    skipForward1TrackRef.current = skipForward1Track;
-  }, [skipForward1Track]);
+    dispatchRef.current = dispatch;
+  }, [dispatch]);
 
   useEffect(() => {
     const trackEndHandler = () => {
-      skipForward1TrackRef.current();
+      dispatchRef.current(skipForward1Track);
     };
 
     audioRef.current = audio;

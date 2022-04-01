@@ -1,27 +1,30 @@
 import { useEffect } from "react";
 import { FC } from "react";
-import { useRecoilState } from "recoil";
+import { useAppDispatch } from "../../../store";
 import { usePlayerAudio } from "./PlayerAudio";
 import {
-  useCanSkipBackward,
-  useSkipBackward1Track,
-  useCanSkipForward,
-  useSkipForward1Track,
-} from "./PlayerCommands";
-import { usePlayerCurrentTrack } from "./PlayerCurrentTrack";
-import { playerStateAtom } from "./PlayerState";
+  getCanSkipBackward,
+  getCanSkipForward,
+  getPlayerCurrentTrack,
+  usePlayerSelector,
+} from "./playerSelectors";
+import {
+  pause,
+  play,
+  skipBackward1Track,
+  skipForward1Track,
+} from "./playerSlice";
 import { PlayerState } from "./types";
 
 const hasMediaSession = () => "mediaSession" in navigator;
 
 export const MediaSessionManager: FC = ({ children }) => {
-  const canSkipBackward = useCanSkipBackward();
-  const skipBackward1Track = useSkipBackward1Track();
-  const canSkipForward = useCanSkipForward();
-  const skipForward1Track = useSkipForward1Track();
-  const [state, setState] = useRecoilState(playerStateAtom);
+  const dispatch = useAppDispatch();
+  const canSkipBackward = usePlayerSelector(getCanSkipBackward);
+  const canSkipForward = usePlayerSelector(getCanSkipForward);
+  const state = usePlayerSelector((state) => state.state);
 
-  const track = usePlayerCurrentTrack();
+  const track = usePlayerSelector(getPlayerCurrentTrack);
   const rawAudio = usePlayerAudio();
 
   useEffect(() => {
@@ -43,15 +46,15 @@ export const MediaSessionManager: FC = ({ children }) => {
     if (state !== PlayerState.Paused) return;
 
     return setHandler("play", () => {
-      setState(PlayerState.Playing);
+      dispatch(play());
     });
-  }, [state, setState]);
+  }, [state, dispatch]);
 
   useEffect(() => {
     if (state !== PlayerState.Playing) return;
 
-    return setHandler("pause", () => setState(PlayerState.Paused));
-  }, [state, setState]);
+    return setHandler("pause", () => dispatch(pause()));
+  }, [state, dispatch]);
 
   useEffect(() => {
     if (state === PlayerState.Playing) {
@@ -64,16 +67,16 @@ export const MediaSessionManager: FC = ({ children }) => {
   }, [state]);
 
   useEffect(() => {
-    if (!canSkipBackward()) return;
+    if (!canSkipBackward) return;
 
-    return setHandler("previoustrack", skipBackward1Track);
-  }, [canSkipBackward, skipBackward1Track]);
+    return setHandler("previoustrack", () => dispatch(skipBackward1Track));
+  }, [canSkipBackward, dispatch]);
 
   useEffect(() => {
-    if (!canSkipForward()) return;
+    if (!canSkipForward) return;
 
-    return setHandler("nexttrack", skipForward1Track);
-  }, [canSkipForward, skipForward1Track]);
+    return setHandler("nexttrack", () => dispatch(skipForward1Track));
+  }, [canSkipForward, dispatch]);
 
   useEffect(() => {
     return setHandler("seekto", (details) => {

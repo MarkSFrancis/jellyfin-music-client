@@ -1,8 +1,8 @@
+import { PlayerState } from "../../utils";
 import {
-  PlayerState,
-  usePlayerCurrentTrack,
-  usePlayerState,
-} from "../../utils";
+  getPlayerCurrentTrack,
+  usePlayerSelector,
+} from "../../utils/player/PlayerContext/playerSelectors";
 
 export const appName = "Jellyfin Music";
 const divider = "∙";
@@ -17,8 +17,8 @@ export const usePageTitle = (...breadcrumb: string[]) => {
     .reverse()
     .join(` ${divider} `);
 
-  const state = usePlayerState();
-  const track = usePlayerCurrentTrack();
+  const state = usePlayerSelector((state) => state.state);
+  const track = usePlayerSelector(getPlayerCurrentTrack);
 
   if (!formattedPath) {
     if (track && state === PlayerState.Playing) {

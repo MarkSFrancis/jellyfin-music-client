@@ -1,13 +1,14 @@
 import React, { FC } from "react";
 import { useEffect } from "react";
-import { useSkipBackward1Track, useSkipForward1Track } from "./PlayerCommands";
-import { useSetPlayerState } from "./PlayerState";
-import { PlayerState } from "./types";
+import { useAppDispatch } from "../../../store";
+import {
+  skipBackward1Track,
+  skipForward1Track,
+  togglePlayPause,
+} from "./playerSlice";
 
 export const KeyboardShortcuts: FC = ({ children }) => {
-  const skipForward1Track = useSkipForward1Track();
-  const skipBackward1Track = useSkipBackward1Track();
-  const setState = useSetPlayerState();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -17,23 +18,15 @@ export const KeyboardShortcuts: FC = ({ children }) => {
       if (e.key === " ") {
         e.preventDefault();
 
-        setState((s) => {
-          if (s === PlayerState.Paused) {
-            return PlayerState.Playing;
-          } else if (s === PlayerState.Playing) {
-            return PlayerState.Paused;
-          } else {
-            return s;
-          }
-        });
+        dispatch(togglePlayPause());
       } else if (e.key === "ArrowRight") {
         e.preventDefault();
 
-        skipForward1Track();
+        dispatch(skipForward1Track());
       } else if (e.key === "ArrowLeft") {
         e.preventDefault();
 
-        skipBackward1Track();
+        dispatch(skipBackward1Track());
       }
     };
 

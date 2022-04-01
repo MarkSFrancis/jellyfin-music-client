@@ -1,10 +1,11 @@
 import { Howl } from "howler";
-import { useApi, ApiAuthContext } from "../../components/Jellyfin";
+import { useApiConfig } from "../../components/Jellyfin";
 import { Track } from "../trackTypes";
 import { useMemo } from "react";
 import { usePreloadTracks } from "./usePreloadTracks";
+import { ApiConfig } from "../apiConfig/apiConfigSlice";
 
-// Hoist into recoil atoms
+// Hoist into redux
 
 export interface LoadedAudio {
   track: Track;
@@ -13,24 +14,24 @@ export interface LoadedAudio {
 
 export const useAudioLoader = () => {
   const tracks = usePreloadTracks();
-  const { auth } = useApi();
+  const apiConfig = useApiConfig();
 
   const loadedTracks = useMemo(() => {
     let tracksToLoad = tracks;
-    if (!auth || !tracks) {
+    if (!apiConfig || !tracks) {
       tracksToLoad = [];
     }
 
-    const newHowls = updateLoadedAudio(auth, loadedTracks, tracksToLoad);
+    const newHowls = updateLoadedAudio(apiConfig, loadedTracks, tracksToLoad);
 
     return newHowls;
-  }, [auth, tracks]);
+  }, [apiConfig, tracks]);
 
   return loadedTracks;
 };
 
 const updateLoadedAudio = (
-  auth: ApiAuthContext,
+  auth: ApiConfig,
   existingLoadedTracks: LoadedAudio[] | undefined,
   tracksToLoad: Track[]
 ) => {

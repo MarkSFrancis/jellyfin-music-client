@@ -59,7 +59,7 @@ export const useQuery = <
 
   const [state, setState] = useSafeState<QueryState<T>>({ status: "loading" });
   const currentRequest = useRef<CancelTokenSource>();
-  const { api } = useApi();
+  const api = useApi();
   const paramsCache = useCache(params);
 
   const fetch = useCallback(() => {

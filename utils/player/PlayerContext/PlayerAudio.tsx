@@ -1,25 +1,19 @@
-import { FC, useEffect } from "react";
+import { createContext, FC, useContext } from "react";
 import { useAudio } from "../useAudio";
 import { useAudioLoader } from "../useAudioLoader";
-import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import { Howl } from "howler";
 
-const playerAudioAtom = atom<Howl | undefined>({
-  key: "player-audio",
-  default: undefined,
-  dangerouslyAllowMutability: true,
-});
+const playerAudioContext = createContext<Howl | undefined>(undefined);
 
-export const usePlayerAudio = () => useRecoilValue(playerAudioAtom);
+export const usePlayerAudio = () => useContext(playerAudioContext);
 
 export const PlayerAudioProvider: FC = ({ children }) => {
   const currentTracks = useAudioLoader();
   const audio = useAudio(currentTracks);
-  const setAudio = useSetRecoilState(playerAudioAtom);
 
-  useEffect(() => {
-    setAudio(audio);
-  }, [setAudio, audio]);
-
-  return <>{children}</>;
+  return (
+    <playerAudioContext.Provider value={audio}>
+      {children}
+    </playerAudioContext.Provider>
+  );
 };
