@@ -79,7 +79,7 @@ const unloadUnusedAudio = (
   return cleanedTracks;
 };
 
-const createHowl = (auth: ApiAuthContext, track: Track) => {
+const createHowl = (auth: ApiConfig, track: Track) => {
   const src = getTrackSrc(auth, track);
 
   return new Howl({
@@ -88,7 +88,7 @@ const createHowl = (auth: ApiAuthContext, track: Track) => {
   });
 };
 
-const getTrackSrc = (auth: ApiAuthContext, track: Track) => {
+const getTrackSrc = (auth: ApiConfig, track: Track) => {
   const stream = track.MediaSources[0];
   if (!stream) {
     throw new Error("Cannot generate streaming URL");
