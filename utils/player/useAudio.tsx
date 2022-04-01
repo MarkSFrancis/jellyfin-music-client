@@ -27,7 +27,7 @@ export const useAudio = (loadedTracks: LoadedAudio[]) => {
 
   useEffect(() => {
     const trackEndHandler = () => {
-      dispatchRef.current(skipForward1Track);
+      dispatchRef.current(skipForward1Track());
     };
 
     audioRef.current = audio;
