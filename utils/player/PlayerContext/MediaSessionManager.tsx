@@ -69,13 +69,13 @@ export const MediaSessionManager: FC = ({ children }) => {
   useEffect(() => {
     if (!canSkipBackward) return;
 
-    return setHandler("previoustrack", () => dispatch(skipBackward1Track));
+    return setHandler("previoustrack", () => dispatch(skipBackward1Track()));
   }, [canSkipBackward, dispatch]);
 
   useEffect(() => {
     if (!canSkipForward) return;
 
-    return setHandler("nexttrack", () => dispatch(skipForward1Track));
+    return setHandler("nexttrack", () => dispatch(skipForward1Track()));
   }, [canSkipForward, dispatch]);
 
   useEffect(() => {
