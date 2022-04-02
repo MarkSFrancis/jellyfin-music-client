@@ -39,7 +39,7 @@
     "@types/howler": "^2.2.7",
     "@types/jest": "^27.4.1",
     "@types/react": "^17.0.43",
-    "@types/react-infinite-scroller": "^1.2.2",
+    "@types/react-infinite-scroller": "^1.2.3",
     "@types/react-virtualized": "^9.21.20",
     "@types/react-window": "^1.8.5",
     "@types/uuid": "^8.3.4",
