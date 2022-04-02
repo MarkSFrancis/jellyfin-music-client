@@ -1,39 +1,34 @@
 import { Howl } from "howler";
 import { useEffect, useRef, useState } from "react";
+import { useAppDispatch } from "../../store";
 import { Track } from "../trackTypes";
+import { PlayerState, skipForward1Track } from "./PlayerContext";
 import {
-  usePlayerState,
-  PlayerState,
-  usePlayerCurrentTrack,
-  usePlayerCommands,
-} from "./PlayerContext";
+  getPlayerCurrentTrack,
+  usePlayerSelector,
+} from "./PlayerContext/playerSelectors";
 import { LoadedAudio } from "./useAudioLoader";
 
+// Hoist into recoil selectors
+
 export const useAudio = (loadedTracks: LoadedAudio[]) => {
-  const { track } = usePlayerCurrentTrack();
-  const { state } = usePlayerState();
-  const { skipForward1Track } = usePlayerCommands();
+  const track = usePlayerSelector(getPlayerCurrentTrack);
+  const state = usePlayerSelector((state) => state.state);
+  const dispatch = useAppDispatch();
 
   const audioTrack = useRef<Track | undefined>();
   const audioRef = useRef<Howl | undefined>();
   const [audio, setAudio] = useState<Howl | undefined>();
-  const skipForward1TrackRef =
-    useRef<typeof skipForward1Track>(skipForward1Track);
+  const dispatchRef = useRef<typeof dispatch>(dispatch);
 
   useEffect(() => {
-    skipForward1TrackRef.current = skipForward1Track;
-  }, [skipForward1Track]);
+    dispatchRef.current = dispatch;
+  }, [dispatch]);
 
   useEffect(() => {
     const trackEndHandler = () => {
-      skipForward1TrackRef.current();
+      dispatchRef.current(skipForward1Track());
     };
-
-    let previousAudio = audioRef.current;
-    if (previousAudio) {
-      previousAudio.stop();
-      previousAudio.off("end", trackEndHandler);
-    }
 
     audioRef.current = audio;
 
@@ -42,11 +37,13 @@ export const useAudio = (loadedTracks: LoadedAudio[]) => {
     }
 
     audioRef.current.on("end", trackEndHandler);
-    previousAudio = audioRef.current;
+    const previousAudio = audioRef.current;
 
     return () => {
       if (previousAudio) {
-        previousAudio.stop();
+        if (previousAudio !== audioRef.current) {
+          previousAudio.stop();
+        }
         previousAudio.off("end", trackEndHandler);
       }
     };
@@ -61,11 +58,13 @@ export const useAudio = (loadedTracks: LoadedAudio[]) => {
 
     if (!playing) {
       audioTrack.current = undefined;
+      audioRef.current = undefined;
       setAudio(undefined);
       return;
     }
 
     audioTrack.current = playing.track;
+    audioRef.current = playing.rawAudio;
     setAudio(playing.rawAudio);
   }, [loadedTracks, track]);
 

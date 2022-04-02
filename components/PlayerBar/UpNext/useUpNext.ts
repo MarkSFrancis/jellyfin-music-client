@@ -1,13 +1,17 @@
 import { useMemo } from "react";
-import { usePlayerQueue, usePlayerCurrentTrack, Track } from "../../../utils";
+import { Track } from "../../../utils";
+import {
+  getPlayerCurrentTrack,
+  usePlayerSelector,
+} from "../../../utils/player/PlayerContext/playerSelectors";
 
 export type UpNextQueue = Readonly<
   [previous: Track[], current: Track | undefined, next: Track[]]
 >;
 
 export const useUpNext = (): UpNextQueue => {
-  const { queue } = usePlayerQueue();
-  const { track } = usePlayerCurrentTrack();
+  const queue = usePlayerSelector((state) => state.queue);
+  const track = usePlayerSelector(getPlayerCurrentTrack);
 
   const upNext: UpNextQueue = useMemo(() => {
     let previous: Track[];

@@ -15,7 +15,7 @@ import {
 import { PublicSystemInfo } from "@jellyfin/client-axios";
 import { useEffect } from "react";
 import { SlimPageContainer } from "../../Layout";
-import { Server } from "../ApiContext";
+import { Server } from "../../../utils/apiConfig/apiConfigSlice";
 
 export interface SetServerProps {
   onSetServer: (server: Server) => void;

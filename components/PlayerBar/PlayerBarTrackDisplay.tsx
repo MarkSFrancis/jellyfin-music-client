@@ -1,10 +1,13 @@
 import { Text } from "@chakra-ui/react";
 import React, { FC } from "react";
-import { usePlayerCurrentTrack } from "../../utils";
+import {
+  getPlayerCurrentTrack,
+  usePlayerSelector,
+} from "../../utils/player/PlayerContext/playerSelectors";
 import { SecondaryText } from "../Typography";
 
 export const PlayerBarTrackDisplay: FC = () => {
-  const { track } = usePlayerCurrentTrack();
+  const track = usePlayerSelector(getPlayerCurrentTrack);
 
   if (!track) {
     return <></>;

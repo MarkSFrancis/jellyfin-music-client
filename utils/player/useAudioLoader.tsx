@@ -1,9 +1,11 @@
 import { Howl } from "howler";
-import { useApi, ApiAuthContext } from "../../components/Jellyfin";
+import { useApiConfig } from "../../components/Jellyfin";
 import { Track } from "../trackTypes";
-import { useEffect } from "react";
+import { useMemo } from "react";
 import { usePreloadTracks } from "./usePreloadTracks";
-import { useState } from "react";
+import { ApiConfig } from "../apiConfig/apiConfigSlice";
+
+// Hoist into redux
 
 export interface LoadedAudio {
   track: Track;
@@ -12,26 +14,24 @@ export interface LoadedAudio {
 
 export const useAudioLoader = () => {
   const tracks = usePreloadTracks();
-  const { auth } = useApi();
+  const apiConfig = useApiConfig();
 
-  const [loadedTracks, setLoadedTracks] = useState<LoadedAudio[]>([]);
-
-  useEffect(() => {
+  const loadedTracks = useMemo(() => {
     let tracksToLoad = tracks;
-    if (!auth || !tracks) {
+    if (!apiConfig || !tracks) {
       tracksToLoad = [];
     }
 
-    const newHowls = updateLoadedAudio(auth, loadedTracks, tracksToLoad);
+    const newHowls = updateLoadedAudio(apiConfig, loadedTracks, tracksToLoad);
 
-    setLoadedTracks(newHowls);
-  }, [auth, loadedTracks, tracks]);
+    return newHowls;
+  }, [apiConfig, tracks]);
 
   return loadedTracks;
 };
 
 const updateLoadedAudio = (
-  auth: ApiAuthContext,
+  auth: ApiConfig,
   existingLoadedTracks: LoadedAudio[] | undefined,
   tracksToLoad: Track[]
 ) => {
@@ -60,22 +60,26 @@ const unloadUnusedAudio = (
   existingLoadedTracks: LoadedAudio[] | undefined,
   tracksToKeep: Track[]
 ) => {
-  const cleanedTracks = (existingLoadedTracks ?? []).filter((h) => {
-    if (tracksToKeep.includes(h.track)) {
-      return h;
+  existingLoadedTracks = existingLoadedTracks ?? [];
+
+  const cleanedTracks = existingLoadedTracks.filter((h) => {
+    if (tracksToKeep.find((t) => t.Id === h.track.Id)) {
+      return true;
     }
 
     h.rawAudio.unload();
+    return false;
   });
 
   if (cleanedTracks.length === existingLoadedTracks.length) {
+    // Tracks are unchanged
     return existingLoadedTracks;
   }
 
   return cleanedTracks;
 };
 
-const createHowl = (auth: ApiAuthContext, track: Track) => {
+const createHowl = (auth: ApiConfig, track: Track) => {
   const src = getTrackSrc(auth, track);
 
   return new Howl({
@@ -84,7 +88,7 @@ const createHowl = (auth: ApiAuthContext, track: Track) => {
   });
 };
 
-const getTrackSrc = (auth: ApiAuthContext, track: Track) => {
+const getTrackSrc = (auth: ApiConfig, track: Track) => {
   const stream = track.MediaSources[0];
   if (!stream) {
     throw new Error("Cannot generate streaming URL");

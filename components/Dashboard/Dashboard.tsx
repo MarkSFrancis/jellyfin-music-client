@@ -2,13 +2,13 @@ import { Box, Button, ButtonGroup, Heading, VStack } from "@chakra-ui/react";
 import { ItemFields } from "@jellyfin/client-axios";
 import { useCallback } from "react";
 import { FC } from "react";
-import { useGetTracks } from "../../utils";
-import { usePlayerCommands } from "../../utils";
+import { useDispatch } from "react-redux";
+import { startNewQueue, useGetTracks } from "../../utils";
 import { Logo } from "../Layout";
 import { LibraryTracks } from "../TracksDisplay";
 
 export const Dashboard: FC = () => {
-  const { startNewQueue } = usePlayerCommands();
+  const dispatch = useDispatch();
   const [getTracks, getTracksState] = useGetTracks();
 
   const handlePlayMostRecent = useCallback(async () => {
@@ -17,16 +17,16 @@ export const Dashboard: FC = () => {
       sortBy: ItemFields.DateCreated,
       sortOrder: "Descending",
     });
-    startNewQueue(library.tracks);
-  }, [getTracks, startNewQueue]);
+    dispatch(startNewQueue({ newQueue: library.tracks }));
+  }, [getTracks, dispatch]);
 
   const handleShuffleAll = useCallback(async () => {
     const library = await getTracks({
       limit: 300,
       sortBy: "Random",
     });
-    startNewQueue(library.tracks);
-  }, [getTracks, startNewQueue]);
+    dispatch(startNewQueue({ newQueue: library.tracks }));
+  }, [getTracks, dispatch]);
 
   return (
     <VStack spacing={4}>

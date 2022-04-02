@@ -1,8 +1,21 @@
 export * from "./types";
 export * from "./PlayerContext";
-export { usePlayerSettings } from "./PlayerSettings";
-export { usePlayerCurrentTrack } from "./PlayerCurrentTrack";
-export { usePlayerQueue } from "./PlayerQueue";
 export { usePlayerAudio } from "./PlayerAudio";
-export { usePlayerCommands } from "./PlayerCommands";
-export { usePlayerState } from "./PlayerState";
+export {
+  pause,
+  play,
+  playerSlice,
+  setCurrentTrack,
+  setCurrentTrackIndex,
+  setMuted,
+  setRepeating,
+  setShuffling,
+  setVolume,
+  togglePlayPause,
+  addToQueue,
+  addToUpNext,
+  removeFromQueue,
+  skipBackward1Track,
+  skipForward1Track,
+  startNewQueue,
+} from "./playerSlice";

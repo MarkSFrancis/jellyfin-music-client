@@ -1,22 +1,30 @@
 import { useEffect } from "react";
 import { FC } from "react";
+import { useAppDispatch } from "../../../store";
 import { usePlayerAudio } from "./PlayerAudio";
-import { usePlayerCommands } from "./PlayerCommands";
-import { usePlayerCurrentTrack } from "./PlayerCurrentTrack";
-import { usePlayerState } from "./PlayerState";
+import {
+  getCanSkipBackward,
+  getCanSkipForward,
+  getPlayerCurrentTrack,
+  usePlayerSelector,
+} from "./playerSelectors";
+import {
+  pause,
+  play,
+  skipBackward1Track,
+  skipForward1Track,
+} from "./playerSlice";
 import { PlayerState } from "./types";
 
 const hasMediaSession = () => "mediaSession" in navigator;
 
 export const MediaSessionManager: FC = ({ children }) => {
-  const {
-    canSkipBackward,
-    skipBackward1Track,
-    canSkipForward,
-    skipForward1Track,
-  } = usePlayerCommands();
-  const { state, setState } = usePlayerState();
-  const { track } = usePlayerCurrentTrack();
+  const dispatch = useAppDispatch();
+  const canSkipBackward = usePlayerSelector(getCanSkipBackward);
+  const canSkipForward = usePlayerSelector(getCanSkipForward);
+  const state = usePlayerSelector((state) => state.state);
+
+  const track = usePlayerSelector(getPlayerCurrentTrack);
   const rawAudio = usePlayerAudio();
 
   useEffect(() => {
@@ -37,26 +45,38 @@ export const MediaSessionManager: FC = ({ children }) => {
   useEffect(() => {
     if (state !== PlayerState.Paused) return;
 
-    return setHandler("play", () => setState(PlayerState.Playing));
-  }, [state, setState]);
+    return setHandler("play", () => {
+      dispatch(play());
+    });
+  }, [state, dispatch]);
 
   useEffect(() => {
     if (state !== PlayerState.Playing) return;
 
-    return setHandler("pause", () => setState(PlayerState.Paused));
-  }, [state, setState]);
+    return setHandler("pause", () => dispatch(pause()));
+  }, [state, dispatch]);
 
   useEffect(() => {
-    if (!canSkipBackward()) return;
-
-    return setHandler("previoustrack", skipBackward1Track);
-  }, [canSkipBackward, skipBackward1Track]);
+    if (state === PlayerState.Playing) {
+      navigator.mediaSession.playbackState = "playing";
+    } else if (state === PlayerState.Paused) {
+      navigator.mediaSession.playbackState = "paused";
+    } else {
+      navigator.mediaSession.playbackState = "none";
+    }
+  }, [state]);
 
   useEffect(() => {
-    if (!canSkipForward()) return;
+    if (!canSkipBackward) return;
 
-    return setHandler("nexttrack", skipForward1Track);
-  }, [canSkipForward, skipForward1Track]);
+    return setHandler("previoustrack", () => dispatch(skipBackward1Track()));
+  }, [canSkipBackward, dispatch]);
+
+  useEffect(() => {
+    if (!canSkipForward) return;
+
+    return setHandler("nexttrack", () => dispatch(skipForward1Track()));
+  }, [canSkipForward, dispatch]);
 
   useEffect(() => {
     return setHandler("seekto", (details) => {

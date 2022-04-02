@@ -4,9 +4,9 @@ import {
   PlayerState,
   Track,
   useIsCurrentTrack,
-  usePlayerState,
   usePlayTrack,
 } from "../../../../utils";
+import { usePlayerSelector } from "../../../../utils/player/PlayerContext/playerSelectors";
 import { TrackIndexPlayButton, TrackPlayButton } from "../../../TrackDisplay";
 import { trackColumnWidths } from "../trackCellWidths";
 
@@ -21,7 +21,7 @@ export const TrackPlayCell: FC<TrackPlayCellProps> = ({
   tracks,
   index,
 }) => {
-  const { state } = usePlayerState();
+  const state = usePlayerSelector((state) => state.state);
   const playTrack = usePlayTrack();
   const isCurrentTrack = useIsCurrentTrack();
   const isPlaying = state === PlayerState.Playing;

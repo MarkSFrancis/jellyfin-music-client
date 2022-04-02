@@ -16,7 +16,7 @@ import { SlimPageContainer } from "../../Layout";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import { initApi } from "../../../utils/jellyfinClient";
-import { Server } from "../ApiContext";
+import { Server } from "../../../utils/apiConfig/apiConfigSlice";
 
 export interface SignInProps {
   server: Server;

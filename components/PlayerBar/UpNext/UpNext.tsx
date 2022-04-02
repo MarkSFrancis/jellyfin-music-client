@@ -8,12 +8,12 @@ import {
 } from "@chakra-ui/react";
 import { IconPlaylist } from "@tabler/icons";
 import React, { FC } from "react";
-import { usePlayerQueue } from "../../../utils";
+import { usePlayerSelector } from "../../../utils/player/PlayerContext/playerSelectors";
 import { UpNextTracks } from "./UpNextTracks";
 
 export const UpNext: FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { queue } = usePlayerQueue();
+  const queue = usePlayerSelector((state) => state.queue);
 
   return (
     <>

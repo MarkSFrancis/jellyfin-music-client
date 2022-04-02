@@ -3,7 +3,7 @@ import axios, {
   AxiosResponse,
   CancelTokenSource,
 } from "axios";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useRef } from "react";
 import { useApi } from "../../../components/Jellyfin";
 import { ApiClient } from "../../jellyfinClient";
 import { ApiParams, ApiResult, PickNever } from "../../types";
@@ -66,7 +66,7 @@ export const useMutation = <
     status: "idle",
   });
   const currentRequest = useRef<CancelTokenSource>();
-  const { api } = useApi();
+  const api = useApi();
 
   const fetch: MutateRequest<ApiId, ApiMethod> = useCallback(
     async (params, requestOptions) => {

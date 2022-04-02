@@ -1,16 +1,24 @@
 import { ButtonGroup, IconButton, Tooltip } from "@chakra-ui/react";
 import React, { FC } from "react";
-import { PlayerState, usePlayerCommands, usePlayerState } from "../../utils";
+import {
+  pause,
+  play,
+  PlayerState,
+  skipBackward1Track,
+  skipForward1Track,
+} from "../../utils";
 import {
   IconPlayerPlay,
   IconPlayerPause,
   IconPlayerSkipBack,
   IconPlayerSkipForward,
 } from "@tabler/icons";
+import { useAppDispatch } from "../../store";
+import { usePlayerSelector } from "../../utils/player/PlayerContext/playerSelectors";
 
 export const PlayerButtons: FC = () => {
-  const { skipForward1Track, skipBackward1Track } = usePlayerCommands();
-  const { state, setState } = usePlayerState();
+  const dispatch = useAppDispatch();
+  const state = usePlayerSelector((state) => state.state);
 
   return (
     <ButtonGroup alignSelf="center">
@@ -21,7 +29,7 @@ export const PlayerButtons: FC = () => {
           isDisabled={state === PlayerState.Stopped}
           icon={<IconPlayerSkipBack />}
           aria-label="Skip back"
-          onClick={skipBackward1Track}
+          onClick={() => dispatch(skipBackward1Track())}
         />
       </Tooltip>
       {state === PlayerState.Playing ? (
@@ -30,7 +38,7 @@ export const PlayerButtons: FC = () => {
             isRound
             icon={<IconPlayerPause />}
             aria-label="Pause"
-            onClick={() => setState(PlayerState.Paused)}
+            onClick={() => dispatch(pause())}
           />
         </Tooltip>
       ) : (
@@ -42,7 +50,7 @@ export const PlayerButtons: FC = () => {
             }
             icon={<IconPlayerPlay />}
             aria-label="Play"
-            onClick={() => setState(PlayerState.Playing)}
+            onClick={() => dispatch(play())}
           />
         </Tooltip>
       )}
@@ -53,7 +61,7 @@ export const PlayerButtons: FC = () => {
           isRound
           icon={<IconPlayerSkipForward />}
           aria-label="Skip forward"
-          onClick={skipForward1Track}
+          onClick={() => dispatch(skipForward1Track())}
         />
       </Tooltip>
     </ButtonGroup>

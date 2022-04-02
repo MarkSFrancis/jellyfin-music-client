@@ -1,22 +1,22 @@
 import { useCallback } from "react";
-import { usePlayerCommands, usePlayerState } from "../player";
+import { useAppDispatch } from "../../store";
+import { startNewQueue, togglePlayPause } from "../player";
 import { Track } from "../trackTypes";
 import { useIsCurrentTrack } from "./useIsCurrentTrack";
 
 export const usePlayTrack = () => {
-  const { startNewQueue } = usePlayerCommands();
-  const { togglePlayPause } = usePlayerState();
+  const dispatch = useAppDispatch();
   const isCurrentTrack = useIsCurrentTrack();
 
   const handlePlayPauseTrack = useCallback(
     (track: Track, trackPlaylist: Track[]) => {
       if (isCurrentTrack(track)) {
-        togglePlayPause();
+        dispatch(togglePlayPause());
       } else {
-        startNewQueue(trackPlaylist, track);
+        dispatch(startNewQueue({ newQueue: trackPlaylist, startTrack: track }));
       }
     },
-    [startNewQueue, togglePlayPause, isCurrentTrack]
+    [isCurrentTrack, dispatch]
   );
 
   return handlePlayPauseTrack;

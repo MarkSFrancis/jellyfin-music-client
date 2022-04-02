@@ -1,17 +1,14 @@
-import { FC, useState, useContext, createContext } from "react";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Track } from "../../trackTypes";
-import { PlayerQueueContext } from "./types";
 
-const playerQueueContext = createContext<PlayerQueueContext>(undefined);
+export const playerQueueSlice = createSlice({
+  name: "player-queue",
+  initialState: [] as Track[],
+  reducers: {
+    setPlayerQueue: (_, action: PayloadAction<Track[]>) => {
+      return action.payload;
+    },
+  },
+});
 
-export const usePlayerQueue = () => useContext(playerQueueContext);
-
-export const PlayerQueueProvider: FC = ({ children }) => {
-  const [queue, setQueue] = useState<Track[]>([]);
-
-  return (
-    <playerQueueContext.Provider value={{ queue, setQueue }}>
-      {children}
-    </playerQueueContext.Provider>
-  );
-};
+export const { setPlayerQueue } = playerQueueSlice.actions;
