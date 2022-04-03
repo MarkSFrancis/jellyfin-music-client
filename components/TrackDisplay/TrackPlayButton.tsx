@@ -1,9 +1,4 @@
-import {
-  IconButton,
-  IconButtonProps,
-  forwardRef,
-  Button,
-} from "@chakra-ui/react";
+import { IconButton, IconButtonProps, forwardRef } from "@chakra-ui/react";
 import { IconPlayerPause, IconPlayerPlay } from "@tabler/icons";
 import React from "react";
 

@@ -1,12 +1,4 @@
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-  Button,
-  Center,
-  Spinner,
-} from "@chakra-ui/react";
+import { Center, Spinner } from "@chakra-ui/react";
 import React from "react";
 import { FC, useCallback } from "react";
 import InfiniteScroll from "react-infinite-scroller";

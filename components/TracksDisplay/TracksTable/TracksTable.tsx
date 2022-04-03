@@ -1,11 +1,7 @@
 import { Table, Tbody } from "@chakra-ui/react";
 import React, { FC, MutableRefObject } from "react";
 import { Track } from "../../../utils";
-import {
-  TrackCellsDisplay,
-  TrackHeadersDisplay,
-  trackTableWidth,
-} from "./TrackCells";
+import { TrackHeadersDisplay, trackTableWidth } from "./TrackCells";
 import { TrackRowDisplay } from "./TrackRowDisplay";
 import { List as FixedSizeList, WindowScroller } from "react-virtualized";
 
