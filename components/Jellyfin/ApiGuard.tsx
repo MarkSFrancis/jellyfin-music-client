@@ -1,5 +1,5 @@
 import { Center, Spinner } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { PropsWithChildren, useState } from "react";
 import { useEffect } from "react";
 import { FC } from "react";
 import { useLocalStorage } from "../../utils";
@@ -11,7 +11,7 @@ import { Server, setApiConfig } from "../../utils/apiConfig/apiConfigSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { ApiProvider } from "./ApiContext";
 
-export const ApiGuard: FC = (props) => {
+export const ApiGuard: FC<PropsWithChildren<unknown>> = (props) => {
   const [server, setServer] = useLocalStorage<Server>("jellyfin-server-url");
   const [token, setToken] = useLocalStorage<string>("jellyfin-auth-token");
   const [api, setApi] = useState<ApiClient>();

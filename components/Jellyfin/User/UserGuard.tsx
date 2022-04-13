@@ -1,5 +1,5 @@
 import { Button, Center, Spinner, Text } from "@chakra-ui/react";
-import React, { FC, useEffect } from "react";
+import React, { FC, PropsWithChildren, useEffect } from "react";
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { useMutation, useQuery } from "../../../utils";
@@ -10,7 +10,9 @@ export interface GetUserDetailsProps {
   onSignOut: () => void;
 }
 
-export const UserGuard: FC<GetUserDetailsProps> = (props) => {
+export const UserGuard: FC<PropsWithChildren<GetUserDetailsProps>> = (
+  props
+) => {
   const [getUserState] = useQuery("user", "getCurrentUser", []);
   const [signOut, signOutState] = useMutation("session", "reportSessionEnded");
   const user = useUser();
