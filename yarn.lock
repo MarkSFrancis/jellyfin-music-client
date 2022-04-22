@@ -1377,10 +1377,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@tabler/icons@^1.65.0":
-  version "1.65.0"
-  resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-1.65.0.tgz#53d0ec68bceeb15fe038c186eed9478aa8f068bf"
-  integrity sha512-xax2W/vgjPDEh1/fN2hFuSiwC9a9eFxl3oD4XnGrYVHf177+LLj4+on7O2WCGXnHnsIftPsqARnvbga1dGpu0g==
+"@tabler/icons@^1.66.0":
+  version "1.66.0"
+  resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-1.66.0.tgz#411630b5c8997e42d7f4fe920054bb7750975b50"
+  integrity sha512-lSm1uDymlWdBbGN3TuqvzQbV3kIwcTJo0QTJJbSb5py+ivxSI/Fat/t+pA7/JqLm9rUU+CXuVj3PONSUTanxpg==
 
 "@testing-library/dom@^8.0.0":
   version "8.0.0"
