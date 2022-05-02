@@ -1377,10 +1377,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@tabler/icons@^1.67.1":
-  version "1.67.1"
-  resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-1.67.1.tgz#ffab87700ef0872b647c1f22e686190f928325c0"
-  integrity sha512-1z9FMQiLHTwHWjAuL1nXhCv+puvApDfKcGv6PajYHnZbMJv2PYXUktMCCWLotv5Xo8EVimQGs8RDKfrLa/rm6Q==
+"@tabler/icons@^1.68.0":
+  version "1.68.0"
+  resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-1.68.0.tgz#047bd88966cc24ef957b3c429a13bb82cca95561"
+  integrity sha512-UseBEEhv7r+Drl3iZih7rkwqkfJJZscjd5ZvK1WdIIulQsBa+qE8WBDGdAO0RtjkCclEK88z9kC0s5wiVPIvkw==
 
 "@testing-library/dom@^8.0.0":
   version "8.0.0"
@@ -6570,10 +6570,10 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-typescript@^4.6.3:
-  version "4.6.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.3.tgz#eefeafa6afdd31d725584c67a0eaba80f6fc6c6c"
-  integrity sha512-yNIatDa5iaofVozS/uQJEl3JRWLKKGJKh6Yaiv0GLGSuhpFJe7P3SbHZ8/yjAHRQwKRoA6YZqlfjXWmVzoVSMw==
+typescript@^4.6.4:
+  version "4.6.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.4.tgz#caa78bbc3a59e6a5c510d35703f6a09877ce45e9"
+  integrity sha512-9ia/jWHIEbo49HfjrLGfKbZSuWo9iTMwXO+Ca3pRsSpbsMbc7/IU8NKdCZVRRBafVPGnoJeFL76ZOAA84I9fEg==
 
 unbox-primitive@^1.0.1:
   version "1.0.1"
