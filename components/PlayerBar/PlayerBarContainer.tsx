@@ -1,11 +1,13 @@
 import { Box } from "@chakra-ui/react";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { useRef } from "react";
 import { FC } from "react";
 import { PlayerBar } from "./PlayerBar";
 import { PlayerBarProvider } from "./PlayerBarContext";
 
-export const PlayerBarContainer: FC = ({ children }) => {
+export const PlayerBarContainer: FC<PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   const scrollContainerRef = useRef<HTMLDivElement>();
 
   return (

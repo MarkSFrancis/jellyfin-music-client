@@ -1,5 +1,5 @@
 import { Center, Spinner } from "@chakra-ui/react";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { FC, useCallback } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { MutationState } from "../../utils";
@@ -13,7 +13,7 @@ export interface LazyDisplayProps {
   scrollRef?: React.MutableRefObject<HTMLElement>;
 }
 
-export const LazyDisplay: FC<LazyDisplayProps> = (props) => {
+export const LazyDisplay: FC<PropsWithChildren<LazyDisplayProps>> = (props) => {
   const { scrollRef: playerScrollRef } = usePlayerBar();
 
   const handleLoadMore = useCallback(
