@@ -37,7 +37,7 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^12.1.5",
     "@types/howler": "^2.2.7",
-    "@types/jest": "^27.4.1",
+    "@types/jest": "^27.5.0",
     "@types/react": "^17.0.43",
     "@types/react-infinite-scroller": "^1.2.3",
     "@types/react-virtualized": "^9.21.21",
