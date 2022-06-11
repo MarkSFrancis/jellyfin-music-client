@@ -11,7 +11,7 @@ export default function SearchPage() {
   return (
     <PageContainer>
       <Search />
-      <SearchResults searchFor={searchQuery} />
+      <SearchResults key={searchQuery} searchFor={searchQuery} />
     </PageContainer>
   );
 }

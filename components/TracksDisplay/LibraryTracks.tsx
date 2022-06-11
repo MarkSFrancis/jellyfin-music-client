@@ -6,6 +6,8 @@ import { LazyDisplay } from "../LazyDisplay/LazyDisplay";
 import { usePlayerBar } from "../PlayerBar";
 import { TracksDisplay } from "./TracksDisplay";
 
+export const DEFAULT_LIBRARY_PAGE_SIZE = 100;
+
 export interface LibraryTracksProps
   extends Omit<ItemsApiGetItemsRequest, "limit" | "startIndex"> {
   pageSize?: number;
@@ -23,7 +25,7 @@ export const LibraryTracks: FC<LibraryTracksProps> = ({
   const handleLoadMore = useCallback(async () => {
     const nextPage = await getTracksPage({
       ...searchProps,
-      limit: pageSize || 100,
+      limit: pageSize || DEFAULT_LIBRARY_PAGE_SIZE,
       startIndex: tracks.length,
     });
 

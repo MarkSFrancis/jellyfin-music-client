@@ -57,16 +57,6 @@ export const MediaSessionManager: FC = ({ children }) => {
   }, [state, dispatch]);
 
   useEffect(() => {
-    if (state === PlayerState.Playing) {
-      navigator.mediaSession.playbackState = "playing";
-    } else if (state === PlayerState.Paused) {
-      navigator.mediaSession.playbackState = "paused";
-    } else {
-      navigator.mediaSession.playbackState = "none";
-    }
-  }, [state]);
-
-  useEffect(() => {
     if (!canSkipBackward) return;
 
     return setHandler("previoustrack", () => dispatch(skipBackward1Track()));
