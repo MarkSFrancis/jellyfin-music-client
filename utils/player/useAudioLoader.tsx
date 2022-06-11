@@ -1,7 +1,7 @@
 import { Howl } from "howler";
 import { useApiConfig } from "../../components/Jellyfin";
 import { Track } from "../trackTypes";
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import { usePreloadTracks } from "./usePreloadTracks";
 import { ApiConfig } from "../apiConfig/apiConfigSlice";
 
@@ -13,19 +13,25 @@ export interface LoadedAudio {
 }
 
 export const useAudioLoader = () => {
-  const tracks = usePreloadTracks();
+  const preloadTracks = usePreloadTracks();
   const apiConfig = useApiConfig();
+  const loadedTracksRef = useRef<LoadedAudio[]>([]);
 
   const loadedTracks = useMemo(() => {
-    let tracksToLoad = tracks;
-    if (!apiConfig || !tracks) {
+    let tracksToLoad = preloadTracks;
+    if (!apiConfig || !preloadTracks) {
       tracksToLoad = [];
     }
 
-    const newHowls = updateLoadedAudio(apiConfig, loadedTracks, tracksToLoad);
+    const newHowls = updateLoadedAudio(
+      apiConfig,
+      loadedTracksRef.current,
+      tracksToLoad
+    );
 
+    loadedTracksRef.current = newHowls;
     return newHowls;
-  }, [apiConfig, tracks]);
+  }, [apiConfig, preloadTracks]);
 
   return loadedTracks;
 };
@@ -82,10 +88,12 @@ const unloadUnusedAudio = (
 const createHowl = (auth: ApiConfig, track: Track) => {
   const src = getTrackSrc(auth, track);
 
-  return new Howl({
+  const howl = new Howl({
     src,
     html5: true,
   });
+
+  return howl;
 };
 
 const getTrackSrc = (auth: ApiConfig, track: Track) => {
@@ -120,7 +128,7 @@ const generateAudioSrc = (options: GenerateTrackSrcOptions) => {
 
   switch (QUALITY_MODE) {
     case "MEDIUM_QUALITY":
-      src = new URL(`Audio/${options.trackId}/stream`, options.serverUrl);
+      src = new URL(`Audio/${options.trackId}/stream.aac`, options.serverUrl);
       src.searchParams.set("audioCodec", "aac");
       src.searchParams.set("audioBitRate", "128000");
       src.searchParams.set("context", "static");
