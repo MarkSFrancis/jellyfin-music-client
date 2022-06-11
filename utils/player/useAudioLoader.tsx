@@ -111,13 +111,33 @@ interface GenerateTrackSrcOptions {
   trackTag?: string;
 }
 
-const generateAudioSrc = (options: GenerateTrackSrcOptions) => {
-  const src = new URL(
-    `Audio/${options.trackId}/stream.${options.trackContainer}`,
-    options.serverUrl
-  );
+// TODO migrate to some local settings so that the user can configure this
+type QualityMode = "MEDIUM_QUALITY" | "ORIGINAL_QUALITY";
+const QUALITY_MODE: QualityMode = "MEDIUM_QUALITY" as QualityMode;
 
-  src.searchParams.set("Static", "true");
+const generateAudioSrc = (options: GenerateTrackSrcOptions) => {
+  let src: URL;
+
+  switch (QUALITY_MODE) {
+    case "MEDIUM_QUALITY":
+      src = new URL(`Audio/${options.trackId}/stream`, options.serverUrl);
+      src.searchParams.set("audioCodec", "aac");
+      src.searchParams.set("audioBitRate", "128000");
+      src.searchParams.set("context", "static");
+      break;
+    case "ORIGINAL_QUALITY":
+      src = new URL(
+        `Audio/${options.trackId}/stream.${options.trackContainer}`,
+        options.serverUrl
+      );
+      src.searchParams.set("static", "true");
+      break;
+    default:
+      throw new Error(
+        `Unrecognised audio format quality mode: ${QUALITY_MODE}`
+      );
+  }
+
   src.searchParams.set("mediaSourceId", options.trackId);
 
   if (options.deviceId) {
