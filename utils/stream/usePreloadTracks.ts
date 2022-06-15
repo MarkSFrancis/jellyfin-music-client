@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Track } from "../trackTypes";
-import { usePlayerSelector } from "./PlayerContext/playerSelectors";
+import { usePlayerSelector } from "../player/PlayerContext/playerSelectors";
 import { getPreloadTracks } from "./trackPreloader";
 
 export const usePreloadTracks = () => {

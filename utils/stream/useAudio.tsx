@@ -2,11 +2,11 @@ import { Howl } from "howler";
 import { useEffect, useRef, useState } from "react";
 import { useAppDispatch } from "../../store";
 import { Track } from "../trackTypes";
-import { PlayerState, skipForward1Track } from "./PlayerContext";
+import { PlayerState, skipForward1Track } from "../player/PlayerContext";
 import {
   getPlayerCurrentTrack,
   usePlayerSelector,
-} from "./PlayerContext/playerSelectors";
+} from "../player/PlayerContext/playerSelectors";
 import { LoadedAudio } from "./useAudioLoader";
 
 // Hoist into recoil selectors

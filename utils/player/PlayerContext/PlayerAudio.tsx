@@ -1,6 +1,6 @@
 import { createContext, FC, useContext } from "react";
-import { useAudio } from "../useAudio";
-import { useAudioLoader } from "../useAudioLoader";
+import { useAudio } from "../../stream/useAudio";
+import { useAudioLoader } from "../../stream/useAudioLoader";
 import { Howl } from "howler";
 
 const playerAudioContext = createContext<Howl | undefined>(undefined);
