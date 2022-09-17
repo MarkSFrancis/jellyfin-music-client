@@ -9,7 +9,7 @@ export const Search: FC = () => {
     (query: string) => {
       const searchParams = new URLSearchParams({ q: query });
 
-      if (router.pathname === "search") {
+      if (router.pathname === "/search") {
         router.replace(`/search?${searchParams}`);
       } else {
         router.push(`/search?${searchParams}`);
