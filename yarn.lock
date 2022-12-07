@@ -1497,10 +1497,10 @@
   dependencies:
     tslib "^2.4.0"
 
-"@tabler/icons@^1.115.0":
-  version "1.115.0"
-  resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-1.115.0.tgz#6c4a9e6087fcdc33e5aae2e5785090147bed7ebe"
-  integrity sha512-Eo1xMuG/+QpUk6QrtiAsmTSjc+A9IIBDauwPT4hVD/XKmnvh0UCCOuK8Zo/jZDIShcJdEcBA4p0wKgt7dbd1GA==
+"@tabler/icons@^1.116.0":
+  version "1.116.0"
+  resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-1.116.0.tgz#232df8995a593b9a88e2c7b8890ba3cc274e1468"
+  integrity sha512-uVGBj0ZBklXfzvdUq2yYmLpzsXxe0s5pgbkLGZJNLnoBoDHGaXk96uITF3yRJn9fyJu3HnOEQ14ZPP6GrUPtSg==
 
 "@testing-library/dom@^8.0.0":
   version "8.0.0"
