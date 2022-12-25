@@ -9,34 +9,55 @@ export interface UseSearchProps {
 }
 
 export const useSearch = (props: UseSearchProps) => {
-  const { results: titleMatches, state: titleSearchState } =
+  const { results: titleMatches, status: titleSearchState } =
     useTrackTitleSearch(props);
-  const { results: artistMatches, state: artistSearchState } =
+  const { results: artistMatches, status: artistSearchState } =
     useSearchTracksByArtist(props);
+  const { results: genreMatches, status: genreSearchState } =
+    useSearchTracksByGenre(props);
 
   const allResults = useMemo(() => {
-    const results: Track[] = [];
-    if (titleSearchState.status === "success") {
+    let results: Track[] = [];
+    if (titleSearchState === "success") {
       results.push(...titleMatches);
     }
-    if (artistSearchState.status === "success") {
+    if (artistSearchState === "success") {
       results.push(...artistMatches);
     }
+    if (genreSearchState === "success") {
+      results.push(...genreMatches);
+    }
+
+    results = results.filter((r, rIdx) => {
+      const firstOcurrenceIndex = results.findIndex((r2) => r2.Id === r.Id);
+      return firstOcurrenceIndex === rIdx;
+    });
 
     return results;
-  }, [titleSearchState, titleMatches, artistSearchState, artistMatches]);
+  }, [
+    titleSearchState,
+    titleMatches,
+    artistSearchState,
+    artistMatches,
+    genreSearchState,
+    genreMatches,
+  ]);
 
-  const state = useMemo(() => {
-    if (titleSearchState.status !== "success") {
+  const status = useMemo(() => {
+    if (titleSearchState !== "success") {
       return titleSearchState;
     }
 
-    return artistSearchState;
-  }, [titleSearchState, artistSearchState]);
+    if (artistSearchState !== "success") {
+      return artistSearchState;
+    }
+
+    return genreSearchState;
+  }, [titleSearchState, artistSearchState, genreSearchState]);
 
   return {
     allResults,
-    state,
+    status,
   };
 };
 
@@ -66,7 +87,7 @@ export const useTrackTitleSearch = (props: UseSearchProps) => {
   ]);
 
   return {
-    state: results,
+    status: results.status,
     results: results.data?.Items as Track[] | undefined,
   };
 };
@@ -84,6 +105,7 @@ export const useSearchTracksByArtist = (props: UseSearchProps) => {
 
   const [getTracks, getTracksState] = useMutation("items", "getItems");
   const [tracks, setTracks] = useSafeState<Track[]>([]);
+  const [emptyResults, setEmptyResults] = useSafeState(false);
 
   useEffect(() => {
     if (getArtists.status !== "success") {
@@ -95,6 +117,7 @@ export const useSearchTracksByArtist = (props: UseSearchProps) => {
         getArtists.data.Items?.map((a) => a.Id).filter((a) => !!a) ?? [];
 
       if (artistIds.length === 0) {
+        setEmptyResults(true);
         setTracks([]);
       } else {
         const result = await getTracks([
@@ -121,10 +144,70 @@ export const useSearchTracksByArtist = (props: UseSearchProps) => {
         setTracks(result.data.Items as Track[]);
       }
     })();
-  }, [getTracks, user, setTracks, musicLibrary, getArtists]);
+  }, [getTracks, user, setTracks, musicLibrary, getArtists, setEmptyResults]);
 
   return {
     results: tracks,
-    state: getTracksState,
+    status: emptyResults ? "success" : getTracksState.status,
+  };
+};
+
+export const useSearchTracksByGenre = (props: UseSearchProps) => {
+  const user = useUser();
+  const musicLibrary = useMusicLibraryConfig();
+  const [getGenres] = useQuery("musicGenres", "getMusicGenres", [
+    {
+      searchTerm: props.searchFor,
+      userId: user.Id,
+      parentId: musicLibrary.id,
+    },
+  ]);
+
+  const [emptyResults, setEmptyResults] = useSafeState(false);
+  const [getTracks, getTracksState] = useMutation("items", "getItems");
+  const [tracks, setTracks] = useSafeState<Track[]>([]);
+
+  useEffect(() => {
+    if (getGenres.status !== "success") {
+      return;
+    }
+
+    (async () => {
+      const genreIds =
+        getGenres.data.Items?.map((a) => a.Id).filter((a) => !!a) ?? [];
+
+      if (genreIds.length === 0) {
+        setEmptyResults(true);
+        setTracks([]);
+      } else {
+        const result = await getTracks([
+          {
+            parentId: musicLibrary.id,
+            userId: user.Id,
+            genreIds: genreIds,
+            recursive: true,
+            fields: [
+              ItemFields.CanDelete,
+              ItemFields.CanDownload,
+              ItemFields.CustomRating,
+              ItemFields.DateCreated,
+              ItemFields.Etag,
+              ItemFields.Genres,
+              ItemFields.MediaSources,
+              ItemFields.Path,
+              ItemFields.Tags,
+              ItemFields.MediaStreams,
+            ],
+          },
+        ]);
+
+        setTracks(result.data.Items as Track[]);
+      }
+    })();
+  }, [getTracks, user, setTracks, musicLibrary, getGenres, setEmptyResults]);
+
+  return {
+    results: tracks,
+    status: emptyResults ? "success" : getTracksState.status,
   };
 };

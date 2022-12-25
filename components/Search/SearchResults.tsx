@@ -1,5 +1,9 @@
-import React, { FC } from "react";
-import { LazyDisplay, TracksDisplay } from "../TracksDisplay";
+import { Box, Button, Center, Spinner, VStack } from "@chakra-ui/react";
+import React, { FC, useCallback } from "react";
+import { useDispatch } from "react-redux";
+import { startNewQueue } from "../../utils";
+import { shuffleArray } from "../../utils/shuffle";
+import { TracksDisplay } from "../TracksDisplay";
 import { useSearch } from "./useSearch";
 
 export interface SearchResultsProps {
@@ -7,16 +11,33 @@ export interface SearchResultsProps {
 }
 
 export const SearchResults: FC<SearchResultsProps> = (props) => {
-  const { allResults, state } = useSearch(props);
+  const dispatch = useDispatch();
+  const { allResults, status } = useSearch(props);
+
+  const handleShuffleAll = useCallback(() => {
+    dispatch(startNewQueue({ newQueue: shuffleArray([...allResults]) }));
+  }, [dispatch, allResults]);
+
+  if (allResults.length === 0 && status !== "success") {
+    return (
+      <Center>
+        <Spinner size="xl" mt={4} />
+      </Center>
+    );
+  }
 
   return (
-    <LazyDisplay
-      loadedCount={allResults.length}
-      getPageStatus={state.status}
-      onGetPage={() => void 0}
-      totalItems={allResults.length}
-    >
-      <TracksDisplay key="tracks" tracks={allResults} />
-    </LazyDisplay>
+    <VStack spacing={4}>
+      {allResults.length === 0 ? (
+        <></>
+      ) : (
+        <Button onClick={handleShuffleAll}>
+          Shuffle {status === "success" ? allResults.length : ""} results
+        </Button>
+      )}
+      <Box width="100%">
+        <TracksDisplay key={allResults.length} tracks={allResults} />
+      </Box>
+    </VStack>
   );
 };
