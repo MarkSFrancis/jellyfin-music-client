@@ -6,7 +6,7 @@ import { TracksList } from "./TracksList";
 
 export interface TracksDisplayProps {
   tracks: Track[];
-  scrollRef?: MutableRefObject<HTMLElement>;
+  scrollRef: MutableRefObject<HTMLElement>;
 }
 
 export const TracksDisplay: FC<TracksDisplayProps> = ({
