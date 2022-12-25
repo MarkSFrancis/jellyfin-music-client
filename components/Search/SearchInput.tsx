@@ -1,13 +1,16 @@
 import { Search2Icon } from "@chakra-ui/icons";
 import { Input, IconButton, HStack } from "@chakra-ui/react";
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 
 export interface SearchInputProps {
+  urlQuery: string;
   onSubmit: (searchFor: string) => void;
 }
 
 export const SearchInput: FC<SearchInputProps> = (props) => {
-  const [searchFor, setSearchFor] = useState("");
+  const [searchFor, setSearchFor] = useState(props.urlQuery);
+
+  useEffect(() => setSearchFor(props.urlQuery), [props.urlQuery]);
 
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
@@ -23,6 +26,7 @@ export const SearchInput: FC<SearchInputProps> = (props) => {
         <Input
           flexGrow={1}
           onChange={(e) => setSearchFor(e.target.value)}
+          value={searchFor}
           maxW="container.sm"
           placeholder="Search by song title"
         />
