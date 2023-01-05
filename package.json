@@ -46,7 +46,7 @@
     "@types/wicg-mediasession": "^1.1.4",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
-    "babel-loader": "^9.1.0",
+    "babel-loader": "^9.1.2",
     "eslint": "^7.32.0",
     "eslint-config-next": "^13.1.1",
     "eslint-config-prettier": "^8.6.0",
