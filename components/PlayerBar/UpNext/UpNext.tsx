@@ -6,7 +6,7 @@ import {
   Tooltip,
   useDisclosure,
 } from "@chakra-ui/react";
-import { IconPlaylist } from "@tabler/icons";
+import { IconPlaylist } from "@tabler/icons-react";
 import React, { FC } from "react";
 import { usePlayerSelector } from "../../../utils/player/PlayerContext/playerSelectors";
 import { UpNextTracks } from "./UpNextTracks";

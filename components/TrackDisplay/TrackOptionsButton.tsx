@@ -7,7 +7,7 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
-import { IconDots } from "@tabler/icons";
+import { IconDots } from "@tabler/icons-react";
 import React, { useCallback } from "react";
 import { useAppDispatch } from "../../store";
 import { addToUpNext, Track } from "../../utils";

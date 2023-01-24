@@ -12,7 +12,7 @@ import {
   IconPlayerPause,
   IconPlayerSkipBack,
   IconPlayerSkipForward,
-} from "@tabler/icons";
+} from "@tabler/icons-react";
 import { useAppDispatch } from "../../store";
 import { usePlayerSelector } from "../../utils/player/PlayerContext/playerSelectors";
 
