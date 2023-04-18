@@ -30,7 +30,7 @@
     "react-redux": "^8.0.5",
     "react-virtualized": "^9.22.5",
     "react-virtualized-auto-sizer": "^1.0.14",
-    "react-window": "^1.8.8",
+    "react-window": "^1.8.9",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
