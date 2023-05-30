@@ -5978,10 +5978,10 @@ react-style-singleton@^2.1.0:
     invariant "^2.2.4"
     tslib "^1.0.0"
 
-react-virtualized-auto-sizer@^1.0.18:
-  version "1.0.18"
-  resolved "https://registry.yarnpkg.com/react-virtualized-auto-sizer/-/react-virtualized-auto-sizer-1.0.18.tgz#ccb15d2ad0fdd23444b3d706ea671e415532d2bf"
-  integrity sha512-GQ+F6z6+upBGmoed5SyiAT3ZBLOeOJr4xH76dsARfRf4vmjspexsnSrMayDg7+xXmnW+BrKppqGh64s79w2xuA==
+react-virtualized-auto-sizer@^1.0.19:
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/react-virtualized-auto-sizer/-/react-virtualized-auto-sizer-1.0.19.tgz#1117147dbec3f23db94ded1f0ddd9f1fd0692aef"
+  integrity sha512-jAPNLjG1DBnLQUMZz1py/5z7/wC8Gn8G+WAXQplDdVr9zO/xdTWLtDM3aPHm8e2gLT2xQxMql507IMuLA6himw==
 
 react-virtualized@^9.22.5:
   version "9.22.5"
