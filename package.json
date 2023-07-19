@@ -34,7 +34,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^12.1.5",
     "@types/howler": "^2.2.7",
     "@types/jest": "^27.5.0",
