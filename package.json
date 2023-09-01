@@ -42,7 +42,7 @@
     "@types/react-infinite-scroller": "^1.2.3",
     "@types/react-virtualized": "^9.21.22",
     "@types/react-window": "^1.8.5",
-    "@types/uuid": "^9.0.2",
+    "@types/uuid": "^9.0.3",
     "@types/wicg-mediasession": "^1.1.4",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
