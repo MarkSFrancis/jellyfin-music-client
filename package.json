@@ -43,7 +43,7 @@
     "@types/react-virtualized": "^9.21.22",
     "@types/react-window": "^1.8.5",
     "@types/uuid": "^9.0.4",
-    "@types/wicg-mediasession": "^1.1.4",
+    "@types/wicg-mediasession": "^1.1.5",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "babel-loader": "^9.1.3",
