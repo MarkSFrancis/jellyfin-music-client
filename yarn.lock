@@ -1758,10 +1758,10 @@
   resolved "https://registry.yarnpkg.com/@types/warning/-/warning-3.0.0.tgz#0d2501268ad8f9962b740d387c4654f5f8e23e52"
   integrity sha1-DSUBJorY+ZYrdA04fEZU9fjiPlI=
 
-"@types/wicg-mediasession@^1.1.7":
-  version "1.1.7"
-  resolved "https://registry.yarnpkg.com/@types/wicg-mediasession/-/wicg-mediasession-1.1.7.tgz#fa5384f82d3ef3be5ba0df1088b489c42d3bce01"
-  integrity sha512-A/e8myB0kSMMI7E7Qs3lZ2rLoKFSNcb/yTNkcmqy4ht7KeTxhYZ2UT9y/dCQ2YoLT9Ytv52aostpHVJXSEQkPQ==
+"@types/wicg-mediasession@^1.1.8":
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/@types/wicg-mediasession/-/wicg-mediasession-1.1.8.tgz#b305dfe53c4ff131993438523e478bb6df82c0ae"
+  integrity sha512-gUP5M+GG4d4V6kg14wAF7qcdwjmwKbumpM7Sw1MNxnu9uQQpaRHMjuluajSXwtDpnd1FSFpLKEu1B/LPtnhxKw==
 
 "@types/yargs-parser@*":
   version "20.2.0"
