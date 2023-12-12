@@ -19,7 +19,7 @@
     "@jellyfin/client-axios": "10.7.0",
     "@reduxjs/toolkit": "^1.9.7",
     "@tabler/icons-react": "^2.44.0",
-    "@types/react-virtualized-auto-sizer": "^1.0.3",
+    "@types/react-virtualized-auto-sizer": "^1.0.4",
     "dequal": "^2.0.3",
     "framer-motion": "^6",
     "howler": "^2.2.4",
