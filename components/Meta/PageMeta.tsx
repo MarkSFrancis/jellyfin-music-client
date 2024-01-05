@@ -1,6 +1,6 @@
 import Head from "next/head";
-import React, { FC } from "react";
+import React, { FC, PropsWithChildren } from "react";
 
-export const PageMeta: FC = (props) => {
+export const PageMeta: FC<PropsWithChildren> = (props) => {
   return <Head>{props.children}</Head>;
 };

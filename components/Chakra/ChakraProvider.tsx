@@ -3,9 +3,9 @@ import {
   extendTheme,
   withDefaultColorScheme,
 } from "@chakra-ui/react";
-import React, { FC } from "react";
+import React, { FC, PropsWithChildren } from "react";
 
-export const ChakraProvider: FC = ({ children }) => {
+export const ChakraProvider: FC<PropsWithChildren> = ({ children }) => {
   const theme = extendTheme(withDefaultColorScheme({ colorScheme: "blue" }), {
     config: {
       initialColorMode: "dark",

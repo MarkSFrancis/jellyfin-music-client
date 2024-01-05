@@ -54,8 +54,10 @@ export const TracksList: FC<TracksListProps> = ({ tracks, scrollRef }) => {
 
   return (
     <Box height="100vh" width="100vw">
+      {/* @ts-expect-error bad render types https://github.com/bvaughn/react-virtualized/issues/1763 */}
       <WindowScroller scrollElement={scrollRef?.current}>
         {({ height, width, isScrolling, onChildScroll, scrollTop }) => (
+          // @ts-expect-error bad render types
           <FixedSizeList
             autoHeight
             height={height}

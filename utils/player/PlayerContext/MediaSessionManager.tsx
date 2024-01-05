@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { PropsWithChildren, useEffect } from "react";
 import { FC } from "react";
 import { useAppDispatch } from "../../../store";
 import { usePlayerAudio } from "./PlayerAudio";
@@ -18,7 +18,7 @@ import { PlayerState } from "./types";
 
 const hasMediaSession = () => "mediaSession" in navigator;
 
-export const MediaSessionManager: FC = ({ children }) => {
+export const MediaSessionManager: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useAppDispatch();
   const canSkipBackward = usePlayerSelector(getCanSkipBackward);
   const canSkipForward = usePlayerSelector(getCanSkipForward);
