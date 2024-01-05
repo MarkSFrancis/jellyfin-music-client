@@ -40,8 +40,10 @@ export const TracksTable: FC<TracksTableProps> = ({ tracks, scrollRef }) => {
         <TrackHeadersDisplay />
       </div>
       <Tbody as="div">
+        {/* @ts-expect-error bad render types https://github.com/bvaughn/react-virtualized/issues/1763 */}
         <WindowScroller scrollElement={scrollRef?.current}>
           {({ height, isScrolling, onChildScroll, scrollTop }) => (
+            // @ts-expect-error bad render types
             <FixedSizeList
               autoHeight
               height={height}

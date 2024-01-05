@@ -1,11 +1,11 @@
 import { Center, Spinner } from "@chakra-ui/react";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { FC, useCallback } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { MutationState } from "../../utils";
 import { usePlayerBar } from "../PlayerBar";
 
-export interface LazyDisplayProps {
+export interface LazyDisplayProps extends PropsWithChildren {
   loadedCount: number;
   getPageStatus: MutationState<unknown>["status"];
   onGetPage: () => void;
@@ -41,6 +41,7 @@ export const LazyDisplay: FC<LazyDisplayProps> = (props) => {
   }
 
   return (
+    // @ts-expect-error Does not support React v18 types https://github.com/danbovey/react-infinite-scroller/issues/307
     <InfiniteScroll
       pageStart={0}
       loadMore={() => handleLoadMore(false)}

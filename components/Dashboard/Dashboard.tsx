@@ -1,13 +1,13 @@
 import { Box, Button, ButtonGroup, Heading, VStack } from "@chakra-ui/react";
 import { ItemFields } from "@jellyfin/client-axios";
-import { useCallback } from "react";
+import { PropsWithChildren, useCallback } from "react";
 import { FC } from "react";
 import { useDispatch } from "react-redux";
 import { startNewQueue, useGetTracks } from "../../utils";
 import { Logo } from "../Layout";
 import { LibraryTracks } from "../TracksDisplay";
 
-export const Dashboard: FC = () => {
+export const Dashboard: FC<PropsWithChildren> = () => {
   const dispatch = useDispatch();
   const [getTracks, getTracksState] = useGetTracks();
 

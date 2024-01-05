@@ -1,12 +1,12 @@
 import { Button, Center, Spinner, Text } from "@chakra-ui/react";
-import React, { FC, useEffect } from "react";
+import React, { FC, PropsWithChildren, useEffect } from "react";
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { useMutation, useQuery } from "../../../utils";
 import { setUser } from "../../../utils/user/userSlice";
 import { useUser } from "./UserContext";
 
-export interface GetUserDetailsProps {
+export interface GetUserDetailsProps extends PropsWithChildren {
   onSignOut: () => void;
 }
 

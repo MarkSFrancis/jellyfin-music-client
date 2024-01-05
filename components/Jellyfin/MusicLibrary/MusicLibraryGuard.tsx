@@ -1,5 +1,5 @@
 import { Center, Spinner, Text } from "@chakra-ui/react";
-import React, { FC } from "react";
+import React, { FC, PropsWithChildren } from "react";
 import { useMemo } from "react";
 import { SlimPageContainer } from "../../Layout";
 import { MusicLibraryConfigProvider } from "./MusicLibraryContext";
@@ -7,7 +7,7 @@ import { SelectMusicLibrary } from "./SelectMusicLibrary";
 import { getMusicLibraries, useLibraries } from "./useLibraries";
 import { useStoredMusicLibrary } from "./useStoredMusicLibrary";
 
-export interface MusicLibraryGuardProps {
+export interface MusicLibraryGuardProps extends PropsWithChildren {
   onSignOut: () => void;
 }
 

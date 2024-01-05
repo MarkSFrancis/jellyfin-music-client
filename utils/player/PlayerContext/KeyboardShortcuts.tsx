@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, PropsWithChildren } from "react";
 import { useEffect } from "react";
 import { useAppDispatch } from "../../../store";
 import {
@@ -7,7 +7,7 @@ import {
   togglePlayPause,
 } from "./playerSlice";
 
-export const KeyboardShortcuts: FC = ({ children }) => {
+export const KeyboardShortcuts: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
