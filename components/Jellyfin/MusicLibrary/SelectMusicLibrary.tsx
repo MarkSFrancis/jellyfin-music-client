@@ -1,5 +1,5 @@
 import React, { FC, FormEvent } from "react";
-import { SlimPageContainer } from "../../Layout";
+import { SlimPageContainer } from "../../Layout/SlimPageContainer";
 import {
   Button,
   ButtonGroup,
@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { useState } from "react";
-import { Library } from "./MusicLibraryContext";
+import { Library } from "./MusicLibraryConfig";
 
 export interface SelectMusicLibraryProps {
   libraries: Library[] | undefined;

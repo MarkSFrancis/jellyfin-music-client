@@ -4,7 +4,7 @@ import axios, {
   CancelTokenSource,
 } from "axios";
 import { useCallback, useEffect, useRef } from "react";
-import { useApi } from "../../../components/Jellyfin";
+import { useApi } from "../../../components/Jellyfin/useApi";
 import { ApiClient } from "../../jellyfinClient";
 import { ApiParams, ApiResult, PickNever } from "../../types";
 import { useCache } from "../useCache";
@@ -47,7 +47,7 @@ export type QueryState<T> =
 
 export const useQuery = <
   ApiId extends keyof ApiClient,
-  ApiMethod extends keyof ApiClient[ApiId]
+  ApiMethod extends keyof ApiClient[ApiId],
 >(
   apiId: ApiId,
   apiMethod: ApiMethod,

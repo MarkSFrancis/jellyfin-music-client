@@ -7,6 +7,7 @@ import { PlayerBarProvider } from "./PlayerBarContext";
 
 export const PlayerBarContainer: FC<PropsWithChildren> = ({ children }) => {
   const scrollContainerRef = useRef<HTMLDivElement>();
+  console.info("Rendered playerbar container");
 
   return (
     <Box h="100vh">

@@ -4,7 +4,7 @@ import { PropsWithChildren, useCallback } from "react";
 import { FC } from "react";
 import { useDispatch } from "react-redux";
 import { startNewQueue, useGetTracks } from "../../utils";
-import { Logo } from "../Layout";
+import { Logo } from "../Layout/Logo";
 import { LibraryTracks } from "../TracksDisplay";
 
 export const Dashboard: FC<PropsWithChildren> = () => {

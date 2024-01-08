@@ -5,11 +5,12 @@ import { FC } from "react";
 import { useLocalStorage } from "../../utils";
 import { ApiClient, initApi } from "../../utils/jellyfinClient";
 import { UserGuard } from "./User/UserGuard";
-import { SetServer, SignIn } from "./SignIn";
-import { MusicLibraryGuard } from "./MusicLibrary";
+import { SignIn } from "./SignIn/SignIn";
+import { MusicLibraryGuard } from "./MusicLibrary/MusicLibraryGuard";
 import { Server, setApiConfig } from "../../utils/apiConfig/apiConfigSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { ApiProvider } from "./ApiContext";
+import { ApiProvider } from "./useApi";
+import { SetServer } from "./SignIn/SetServer";
 
 export const ApiGuard: FC<PropsWithChildren> = (props) => {
   const [server, setServer] = useLocalStorage<Server>("jellyfin-server-url");
@@ -56,6 +57,8 @@ export const ApiGuard: FC<PropsWithChildren> = (props) => {
       </Center>
     );
   }
+
+  console.info("Rendered children");
 
   return (
     <ApiProvider value={api}>

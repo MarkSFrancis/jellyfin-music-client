@@ -4,7 +4,7 @@ import axios, {
   CancelTokenSource,
 } from "axios";
 import { useCallback, useRef } from "react";
-import { useApi } from "../../../components/Jellyfin";
+import { useApi } from "../../../components/Jellyfin/useApi";
 import { ApiClient } from "../../jellyfinClient";
 import { ApiParams, ApiResult, PickNever } from "../../types";
 import { useSafeState } from "../useSafeState";
@@ -12,7 +12,7 @@ import { marshalRequestArgs, marshalResponse } from "./utils";
 
 export type MutateRequest<
   ApiId extends keyof ApiClient,
-  ApiMethod extends keyof ApiClient[ApiId]
+  ApiMethod extends keyof ApiClient[ApiId],
 > = (
   params: ApiParams<ApiId, ApiMethod>,
   requestOptions?: Omit<AxiosRequestConfig, "cancelToken">
@@ -52,13 +52,13 @@ export type MutationState<T> =
 
 export const useMutation = <
   ApiId extends keyof ApiClient,
-  ApiMethod extends keyof ApiClient[ApiId]
+  ApiMethod extends keyof ApiClient[ApiId],
 >(
   apiId: ApiId,
   apiMethod: ApiMethod
 ): [
   MutateRequest<ApiId, ApiMethod>,
-  MutationState<ApiResult<ApiId, ApiMethod>>
+  MutationState<ApiResult<ApiId, ApiMethod>>,
 ] => {
   const [state, setState] = useSafeState<
     MutationState<ApiResult<ApiId, ApiMethod>>

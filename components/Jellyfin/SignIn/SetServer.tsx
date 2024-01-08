@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { PublicSystemInfo } from "@jellyfin/client-axios";
 import { useEffect } from "react";
-import { SlimPageContainer } from "../../Layout";
+import { SlimPageContainer } from "../../Layout/SlimPageContainer";
 import { Server } from "../../../utils/apiConfig/apiConfigSlice";
 
 export interface SetServerProps {

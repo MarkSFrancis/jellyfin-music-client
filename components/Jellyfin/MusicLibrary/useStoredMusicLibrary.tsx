@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useCallback } from "react";
 import { useEffect } from "react";
 import { QueryState, useLocalStorage } from "../../../utils";
-import { Library } from "./MusicLibraryContext";
+import { Library } from "./MusicLibraryConfig";
 import { getMusicLibraries } from "./useLibraries";
 
 export const useStoredMusicLibrary = (

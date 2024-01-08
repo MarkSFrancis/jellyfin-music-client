@@ -12,7 +12,7 @@ import {
 import { AuthenticationResult } from "@jellyfin/client-axios";
 import React, { FC, FormEvent } from "react";
 import { useCallback } from "react";
-import { SlimPageContainer } from "../../Layout";
+import { SlimPageContainer } from "../../Layout/SlimPageContainer";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import { initApi } from "../../../utils/jellyfinClient";

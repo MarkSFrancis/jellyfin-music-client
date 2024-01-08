@@ -1,8 +1,8 @@
 import { Center, Spinner, Text } from "@chakra-ui/react";
 import React, { FC, PropsWithChildren } from "react";
 import { useMemo } from "react";
-import { SlimPageContainer } from "../../Layout";
-import { MusicLibraryConfigProvider } from "./MusicLibraryContext";
+import { SlimPageContainer } from "../../Layout/SlimPageContainer";
+import { MusicLibraryConfigProvider } from "./MusicLibraryConfig";
 import { SelectMusicLibrary } from "./SelectMusicLibrary";
 import { getMusicLibraries, useLibraries } from "./useLibraries";
 import { useStoredMusicLibrary } from "./useStoredMusicLibrary";

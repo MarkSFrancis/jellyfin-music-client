@@ -3,7 +3,7 @@ import React, { PropsWithChildren } from "react";
 import { FC, useCallback } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { MutationState } from "../../utils";
-import { usePlayerBar } from "../PlayerBar";
+import { usePlayerBar } from "../PlayerBar/PlayerBarContext";
 
 export interface LazyDisplayProps extends PropsWithChildren {
   loadedCount: number;

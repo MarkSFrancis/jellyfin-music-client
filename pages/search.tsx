@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React from "react";
-import { PageContainer } from "../components/Layout";
+import { PageContainer } from "../components/Layout/PageContainer";
 import { Search, SearchResults } from "../components/Search";
 
 export default function SearchPage() {

@@ -12,6 +12,8 @@ import { PlayerButtons } from "./PlayerButtons";
 import { UpNext } from "./UpNext";
 
 export const PlayerBar: FC = () => {
+  console.log("Render playerbar");
+
   const playerTrackDisplay = useBreakpointValue({ base: "none", md: "block" });
   const playerProgressGrow = useBreakpointValue({ base: 1, md: 0 });
   const widths = useBreakpointValue<[string, string, string]>({

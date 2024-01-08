@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { FC, useCallback } from "react";
 import { Track, useGetTracks } from "../../utils";
 import { LazyDisplay } from "../LazyDisplay/LazyDisplay";
-import { usePlayerBar } from "../PlayerBar";
+import { usePlayerBar } from "../PlayerBar/PlayerBarContext";
 import { TracksDisplay } from "./TracksDisplay";
 
 export const DEFAULT_LIBRARY_PAGE_SIZE = 100;

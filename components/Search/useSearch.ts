@@ -1,7 +1,7 @@
 import { ItemFields } from "@jellyfin/client-axios";
 import { useEffect, useMemo } from "react";
 import { Track, useMutation, useQuery, useSafeState } from "../../utils";
-import { useMusicLibraryConfig } from "../Jellyfin";
+import { useMusicLibraryConfig } from "../Jellyfin/MusicLibrary/MusicLibraryConfig";
 import { useUser } from "../Jellyfin/User/UserContext";
 
 export interface UseSearchProps {

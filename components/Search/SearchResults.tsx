@@ -3,7 +3,7 @@ import React, { FC, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { startNewQueue } from "../../utils";
 import { shuffleArray } from "../../utils/shuffle";
-import { usePlayerBar } from "../PlayerBar";
+import { usePlayerBar } from "../PlayerBar/PlayerBarContext";
 import { TracksDisplay } from "../TracksDisplay";
 import { useSearch } from "./useSearch";
 

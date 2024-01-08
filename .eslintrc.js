@@ -8,6 +8,7 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "plugin:react-hooks/recommended",
     "prettier",
+    "next/core-web-vitals",
   ],
   parserOptions: {
     ecmaVersion: 2020,

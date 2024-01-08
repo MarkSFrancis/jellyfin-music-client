@@ -1,7 +1,8 @@
 import React from "react";
 import { Provider } from "react-redux";
-import { ChakraProvider } from "../components/Chakra";
-import { PageMeta, PageTitle } from "../components/Meta";
+import { ChakraProvider } from "../components/Chakra/ChakraProvider";
+import { PageMeta } from "../components/Meta/PageMeta";
+import { PageTitle } from "../components/Meta/PageTitle";
 import { PlayerBarContainer } from "../components/PlayerBar/PlayerBarContainer";
 import { store } from "../store";
 import { PlayerProvider } from "../utils/player";

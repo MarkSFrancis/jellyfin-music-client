@@ -1,5 +1,5 @@
 import { Howl } from "howler";
-import { useApiConfig } from "../../components/Jellyfin";
+import { useApiConfig } from "../../components/Jellyfin/useApiConfig";
 import { Track } from "../trackTypes";
 import { useMemo, useRef } from "react";
 import { usePreloadTracks } from "./usePreloadTracks";
