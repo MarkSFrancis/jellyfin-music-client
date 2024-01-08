@@ -41,7 +41,6 @@ export const LazyDisplay: FC<LazyDisplayProps> = (props) => {
   }
 
   return (
-    // @ts-expect-error Does not support React v18 types https://github.com/danbovey/react-infinite-scroller/issues/307
     <InfiniteScroll
       pageStart={0}
       loadMore={() => handleLoadMore(false)}
