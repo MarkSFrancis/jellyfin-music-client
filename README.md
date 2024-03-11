@@ -30,7 +30,7 @@ To request a new feature or report a bug, [create an issue](https://github.com/M
 
 ### Pre-requisites
 
-This project requires [Node 20](https://nodejs.org/en/) and uses [pnpm]([https://classic.yarnpkg.com/en/docs/install](https://pnpm.io/)) as a package manager. You'll need to have both of these installed
+This project requires [Node 20](https://nodejs.org/en/) and uses [pnpm](https://pnpm.io/) as a package manager. You'll need to have both of these installed
 
 You also need the following Jellyfin server version:
 
@@ -48,20 +48,20 @@ cd jellyfin-music-client
 
 ```bash
 # Install application dependencies
-yarn install
+pnpm install
 ```
 
 ### Running the app
 
 #### Development mode
 ```bash
-yarn start
+pnpm start
 ```
 
 #### Production mode
 ```bash
-yarn build
-yarn start:prod
+pnpm build
+pnpm start:prod
 ```
 
 You can now access the client by navigating your browser to http://localhost:4000/
