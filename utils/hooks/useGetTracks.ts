@@ -1,9 +1,10 @@
-import { ItemFields, ItemsApiGetItemsRequest } from "@jellyfin/client-axios";
 import { useCallback } from "react";
 import { useMusicLibraryConfig } from "../../components/Jellyfin/MusicLibrary/MusicLibraryConfig";
 import { useUser } from "../../components/Jellyfin/User/UserContext";
 import { Track } from "../trackTypes";
 import { useMutation } from "./jellyfin";
+import { ItemFields } from "@jellyfin/sdk/lib/generated-client/models";
+import { ItemsApiGetItemsRequest } from "@jellyfin/sdk/lib/generated-client/api/items-api";
 
 export interface MusicLibraryResult {
   tracks: Track[];

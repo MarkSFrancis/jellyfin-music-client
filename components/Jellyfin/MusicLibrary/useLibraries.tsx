@@ -1,4 +1,4 @@
-import { BaseItemDtoQueryResult } from "@jellyfin/client-axios";
+import { BaseItemDtoQueryResult } from "@jellyfin/sdk/lib/generated-client/models";
 import { QueryState, useQuery } from "../../../utils";
 import { useUser } from "../User/UserContext";
 

@@ -1,13 +1,13 @@
+// TODO Add support for album art
+
 import {
   BaseItemDto,
   LocationType,
-  MediaProtocol,
   MediaSourceInfo,
+  MediaProtocol,
   MediaSourceType,
   MediaStreamType,
-} from "@jellyfin/client-axios";
-
-// TODO Add support for album art
+} from "@jellyfin/sdk/lib/generated-client/models";
 
 export interface Track extends BaseItemDto {
   Name: string;
@@ -23,7 +23,6 @@ export interface Track extends BaseItemDto {
   Genres: string[];
   RunTimeTicks: number;
   IsFolder: boolean;
-  Type: string;
   GenreItems: AlbumArtist[];
   UserData: UserData;
   Tags: string[];

@@ -1,10 +1,10 @@
-import { BaseItemDtoQueryResult } from "@jellyfin/client-axios";
 import { useState } from "react";
 import { useCallback } from "react";
 import { useEffect } from "react";
 import { QueryState, useLocalStorage } from "../../../utils";
 import { Library } from "./MusicLibraryConfig";
 import { getMusicLibraries } from "./useLibraries";
+import { BaseItemDtoQueryResult } from "@jellyfin/sdk/lib/generated-client/models";
 
 export const useStoredMusicLibrary = (
   state: QueryState<BaseItemDtoQueryResult>

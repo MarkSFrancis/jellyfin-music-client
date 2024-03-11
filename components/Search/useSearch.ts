@@ -1,8 +1,8 @@
-import { ItemFields } from "@jellyfin/client-axios";
 import { useEffect, useMemo } from "react";
 import { Track, useMutation, useQuery, useSafeState } from "../../utils";
 import { useMusicLibraryConfig } from "../Jellyfin/MusicLibrary/MusicLibraryConfig";
 import { useUser } from "../Jellyfin/User/UserContext";
+import { ItemFields } from "@jellyfin/sdk/lib/generated-client/models";
 
 export interface UseSearchProps {
   searchFor: string;
