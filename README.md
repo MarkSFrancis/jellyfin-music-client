@@ -30,7 +30,7 @@ To request a new feature or report a bug, [create an issue](https://github.com/M
 
 ### Pre-requisites
 
-This project requires [Node 14](https://nodejs.org/en/) and uses [yarn](https://classic.yarnpkg.com/en/docs/install) as a package manager. You'll need to have both of these installed
+This project requires [Node 20](https://nodejs.org/en/) and uses [pnpm]([https://classic.yarnpkg.com/en/docs/install](https://pnpm.io/)) as a package manager. You'll need to have both of these installed
 
 You also need the following Jellyfin server version:
 
