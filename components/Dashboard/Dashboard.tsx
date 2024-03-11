@@ -1,11 +1,14 @@
 import { Box, Button, ButtonGroup, Heading, VStack } from "@chakra-ui/react";
-import { ItemFields } from "@jellyfin/client-axios";
 import { PropsWithChildren, useCallback } from "react";
 import { FC } from "react";
 import { useDispatch } from "react-redux";
 import { startNewQueue, useGetTracks } from "../../utils";
 import { Logo } from "../Layout/Logo";
 import { LibraryTracks } from "../TracksDisplay";
+import {
+  ItemFields,
+  SortOrder,
+} from "@jellyfin/sdk/lib/generated-client/models";
 
 export const Dashboard: FC<PropsWithChildren> = () => {
   const dispatch = useDispatch();
@@ -14,8 +17,8 @@ export const Dashboard: FC<PropsWithChildren> = () => {
   const handlePlayMostRecent = useCallback(async () => {
     const library = await getTracks({
       limit: 300,
-      sortBy: ItemFields.DateCreated,
-      sortOrder: "Descending",
+      sortBy: [ItemFields.DateCreated],
+      sortOrder: [SortOrder.Descending],
     });
     dispatch(startNewQueue({ newQueue: library.tracks }));
   }, [getTracks, dispatch]);
@@ -23,7 +26,7 @@ export const Dashboard: FC<PropsWithChildren> = () => {
   const handleShuffleAll = useCallback(async () => {
     const library = await getTracks({
       limit: 300,
-      sortBy: "Random",
+      sortBy: ["Random"],
     });
     dispatch(startNewQueue({ newQueue: library.tracks }));
   }, [getTracks, dispatch]);
@@ -50,7 +53,10 @@ export const Dashboard: FC<PropsWithChildren> = () => {
         </ButtonGroup>
       </Box>
       <Box width="100%">
-        <LibraryTracks sortBy={ItemFields.DateCreated} sortOrder="Descending" />
+        <LibraryTracks
+          sortBy={[ItemFields.DateCreated]}
+          sortOrder={[SortOrder.Descending]}
+        />
       </Box>
     </VStack>
   );

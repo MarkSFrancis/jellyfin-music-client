@@ -12,10 +12,10 @@ import {
   VStack,
   Heading,
 } from "@chakra-ui/react";
-import { PublicSystemInfo } from "@jellyfin/client-axios";
 import { useEffect } from "react";
 import { SlimPageContainer } from "../../Layout/SlimPageContainer";
 import { Server } from "../../../utils/apiConfig/apiConfigSlice";
+import { PublicSystemInfo } from "@jellyfin/sdk/lib/generated-client/models";
 
 export interface SetServerProps {
   onSetServer: (server: Server) => void;

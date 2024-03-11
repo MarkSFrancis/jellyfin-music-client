@@ -1,3 +1,4 @@
+import { expect, it } from "vitest";
 import { getQualityDiff } from "./getQualityDiff";
 
 it("should return 1 for original diff against medium", () => {

@@ -1,9 +1,10 @@
-import { ItemFields, ItemsApiGetItemsRequest } from "@jellyfin/client-axios";
 import { useCallback } from "react";
 import { useMusicLibraryConfig } from "../../components/Jellyfin/MusicLibrary/MusicLibraryConfig";
 import { useUser } from "../../components/Jellyfin/User/UserContext";
 import { Track } from "../trackTypes";
 import { useMutation } from "./jellyfin";
+import { ItemFields } from "@jellyfin/sdk/lib/generated-client/models";
+import { ItemsApiGetItemsRequest } from "@jellyfin/sdk/lib/generated-client/api/items-api";
 
 export interface MusicLibraryResult {
   tracks: Track[];
@@ -25,7 +26,7 @@ export const useGetTracks = () => {
     ): Promise<MusicLibraryResult> => {
       const result = await fetch([
         {
-          ...getDefaultOptions(user.Id, musicLibrary.id),
+          ...getTracksFromLibaryDefaultOptions(user.Id, musicLibrary.id),
           ...options,
         },
       ]);
@@ -41,13 +42,14 @@ export const useGetTracks = () => {
   return [fetchWithDefaults, state] as const;
 };
 
-const getDefaultOptions = (
+export const getTracksFromLibaryDefaultOptions = (
   userId: string,
   libraryId: string
 ): ItemsApiGetItemsRequest => ({
   userId: userId,
-  recursive: true,
   parentId: libraryId,
+  mediaTypes: ["Audio"],
+  recursive: true,
   fields: [
     ItemFields.CanDelete,
     ItemFields.CanDownload,

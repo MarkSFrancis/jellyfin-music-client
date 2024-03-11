@@ -1,4 +1,4 @@
-import { UserDto } from "@jellyfin/client-axios";
+import { UserDto } from "@jellyfin/sdk/lib/generated-client/models";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const userSlice = createSlice({

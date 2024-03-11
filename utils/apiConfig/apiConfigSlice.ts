@@ -1,4 +1,4 @@
-import { PublicSystemInfo } from "@jellyfin/client-axios";
+import { PublicSystemInfo } from "@jellyfin/sdk/lib/generated-client/models";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface Server extends PublicSystemInfo {
