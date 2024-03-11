@@ -1,3 +1,4 @@
+import { expect, it } from "vitest";
 import { Track } from "../trackTypes";
 import { getPreloadTracks } from "./trackPreloader";
 
