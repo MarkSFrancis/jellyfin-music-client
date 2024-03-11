@@ -10,6 +10,7 @@
     "start:prod": "next start -p 4000",
     "test": "vitest --changed main",
     "test:all": "vitest",
+    "test:ci": "vitest run",
     "prepare": "husky install"
   },
   "dependencies": {
