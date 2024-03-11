@@ -1,8 +1,13 @@
 import { useEffect, useMemo } from "react";
-import { Track, useMutation, useQuery, useSafeState } from "../../utils";
+import {
+  Track,
+  getTracksFromLibaryDefaultOptions,
+  useMutation,
+  useQuery,
+  useSafeState,
+} from "../../utils";
 import { useMusicLibraryConfig } from "../Jellyfin/MusicLibrary/MusicLibraryConfig";
 import { useUser } from "../Jellyfin/User/UserContext";
-import { ItemFields } from "@jellyfin/sdk/lib/generated-client/models";
 
 export interface UseSearchProps {
   searchFor: string;
@@ -67,21 +72,7 @@ export const useTrackTitleSearch = (props: UseSearchProps) => {
 
   const [results] = useQuery("items", "getItems", [
     {
-      userId: user.Id,
-      recursive: true,
-      parentId: musicLibrary.id,
-      fields: [
-        ItemFields.CanDelete,
-        ItemFields.CanDownload,
-        ItemFields.CustomRating,
-        ItemFields.DateCreated,
-        ItemFields.Etag,
-        ItemFields.Genres,
-        ItemFields.MediaSources,
-        ItemFields.Path,
-        ItemFields.Tags,
-        ItemFields.MediaStreams,
-      ],
+      ...getTracksFromLibaryDefaultOptions(user.Id, musicLibrary.id),
       searchTerm: props.searchFor,
     },
   ]);
@@ -122,22 +113,8 @@ export const useSearchTracksByArtist = (props: UseSearchProps) => {
       } else {
         const result = await getTracks([
           {
-            parentId: musicLibrary.id,
-            userId: user.Id,
+            ...getTracksFromLibaryDefaultOptions(user.Id, musicLibrary.id),
             artistIds: artistIds,
-            recursive: true,
-            fields: [
-              ItemFields.CanDelete,
-              ItemFields.CanDownload,
-              ItemFields.CustomRating,
-              ItemFields.DateCreated,
-              ItemFields.Etag,
-              ItemFields.Genres,
-              ItemFields.MediaSources,
-              ItemFields.Path,
-              ItemFields.Tags,
-              ItemFields.MediaStreams,
-            ],
           },
         ]);
 
@@ -182,22 +159,8 @@ export const useSearchTracksByGenre = (props: UseSearchProps) => {
       } else {
         const result = await getTracks([
           {
-            parentId: musicLibrary.id,
-            userId: user.Id,
+            ...getTracksFromLibaryDefaultOptions(user.Id, musicLibrary.id),
             genreIds: genreIds,
-            recursive: true,
-            fields: [
-              ItemFields.CanDelete,
-              ItemFields.CanDownload,
-              ItemFields.CustomRating,
-              ItemFields.DateCreated,
-              ItemFields.Etag,
-              ItemFields.Genres,
-              ItemFields.MediaSources,
-              ItemFields.Path,
-              ItemFields.Tags,
-              ItemFields.MediaStreams,
-            ],
           },
         ]);
 

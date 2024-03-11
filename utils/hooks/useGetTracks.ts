@@ -26,7 +26,7 @@ export const useGetTracks = () => {
     ): Promise<MusicLibraryResult> => {
       const result = await fetch([
         {
-          ...getDefaultOptions(user.Id, musicLibrary.id),
+          ...getTracksFromLibaryDefaultOptions(user.Id, musicLibrary.id),
           ...options,
         },
       ]);
@@ -42,13 +42,14 @@ export const useGetTracks = () => {
   return [fetchWithDefaults, state] as const;
 };
 
-const getDefaultOptions = (
+export const getTracksFromLibaryDefaultOptions = (
   userId: string,
   libraryId: string
 ): ItemsApiGetItemsRequest => ({
   userId: userId,
-  recursive: true,
   parentId: libraryId,
+  mediaTypes: ["Audio"],
+  recursive: true,
   fields: [
     ItemFields.CanDelete,
     ItemFields.CanDownload,
