@@ -24,8 +24,8 @@ dependencies:
     specifier: ^2.2.1
     version: 2.2.1(react-redux@9.1.0)(react@18.2.0)
   '@tabler/icons-react':
-    specifier: ^3.0.0
-    version: 3.0.0(react@18.2.0)
+    specifier: ^3.0.1
+    version: 3.0.1(react@18.2.0)
   '@types/react-virtualized-auto-sizer':
     specifier: ^1.0.4
     version: 1.0.4
@@ -2146,17 +2146,17 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@tabler/icons-react@3.0.0(react@18.2.0):
-    resolution: {integrity: sha512-KI3rFTvH6k/4fJVVegvqdqiaaPyo2YZ4X/4A0HExwJKfqZrUeZZHB2/iCTXnvecI9REWrexmFlyYMpthA9dEDw==}
+  /@tabler/icons-react@3.0.1(react@18.2.0):
+    resolution: {integrity: sha512-CaB72mZo3t+DCYfwelPHBp3dCfghocSKESau0AZZGKLozNnh7nOtVk4riH0+UBN2Gu0hKq9DZzIU4dUW8uq+mw==}
     peerDependencies:
-      react: ^16.5.1 || ^17.0.0 || ^18.0.0
+      react: '>= 16'
     dependencies:
-      '@tabler/icons': 3.0.0
+      '@tabler/icons': 3.0.1
       react: 18.2.0
     dev: false
 
-  /@tabler/icons@3.0.0:
-    resolution: {integrity: sha512-DT27tfUt7v6wqn+NVBp5zSxYwfVuyImdgih0ULTbs0qQrAANmjobyMSrD+ATWvIsS5QuhbA+lX4hv8pEe7Lm/w==}
+  /@tabler/icons@3.0.1:
+    resolution: {integrity: sha512-K/ZgJkxWcrMWdkgvS7VmgZ4F6SXM5UPolh2Y/dPTJnRpjMSySzfi93+XvfP2YfAzH7bd4ilqmTp7TADPLHrn0A==}
     dev: false
 
   /@testing-library/dom@9.3.4:
