@@ -86,8 +86,8 @@ devDependencies:
     specifier: ^1.2.5
     version: 1.2.5
   '@types/react-virtualized':
-    specifier: ^9.21.29
-    version: 9.21.29
+    specifier: ^9.21.30
+    version: 9.21.30
   '@types/react-window':
     specifier: ^1.8.8
     version: 1.8.8
@@ -2290,8 +2290,8 @@ packages:
       '@types/react': 18.2.75
     dev: false
 
-  /@types/react-virtualized@9.21.29:
-    resolution: {integrity: sha512-+ODVQ+AyKngenj4OPpg43Hz4B9Rdjuz1Naxu9ypNc3Cjo0WVZTYhqXfF/Nm38i8PV/YXECRIl4mTAZK5hq2B+g==}
+  /@types/react-virtualized@9.21.30:
+    resolution: {integrity: sha512-4l2TFLQ8BCjNDQlvH85tU6gctuZoEdgYzENQyZHpgTHU7hoLzYgPSOALMAeA58LOWua8AzC6wBivPj1lfl6JgQ==}
     dependencies:
       '@types/prop-types': 15.7.11
       '@types/react': 18.2.75
