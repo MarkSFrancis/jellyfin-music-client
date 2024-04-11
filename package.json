@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.2",
-    "@testing-library/react": "^15.0.0",
+    "@testing-library/react": "^15.0.1",
     "@types/howler": "^2.2.11",
     "@types/react": "^18.2.75",
     "@types/react-infinite-scroller": "^1.2.5",
