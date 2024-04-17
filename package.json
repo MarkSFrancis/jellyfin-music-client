@@ -40,7 +40,7 @@
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^15.0.2",
     "@types/howler": "^2.2.11",
-    "@types/react": "^18.2.77",
+    "@types/react": "^18.2.79",
     "@types/react-infinite-scroller": "^1.2.5",
     "@types/react-virtualized": "^9.21.30",
     "@types/react-window": "^1.8.8",
