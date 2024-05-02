@@ -74,8 +74,8 @@ devDependencies:
     specifier: ^6.4.2
     version: 6.4.2(vitest@1.5.3)
   '@testing-library/react':
-    specifier: ^15.0.5
-    version: 15.0.5(react-dom@18.3.1)(react@18.3.1)
+    specifier: ^15.0.6
+    version: 15.0.6(@types/react@18.3.1)(react-dom@18.3.1)(react@18.3.1)
   '@types/howler':
     specifier: ^2.2.11
     version: 2.2.11
@@ -2206,15 +2206,20 @@ packages:
       vitest: 1.5.3(jsdom@24.0.0)
     dev: true
 
-  /@testing-library/react@15.0.5(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-ttodVWYA2i2w4hRa6krKrmS1vKxAEkwDz34y+CwbcrbZUxFzUYN3a5xZyFKo+K6LBseCRCUkwcjATpaNn/UsIA==}
+  /@testing-library/react@15.0.6(@types/react@18.3.1)(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-UlbazRtEpQClFOiYp+1BapMT+xyqWMnE+hh9tn5DQ6gmlE7AIZWcGpzZukmDZuFk3By01oiqOf8lRedLS4k6xQ==}
     engines: {node: '>=18'}
     peerDependencies:
+      '@types/react': ^18.0.0
       react: ^18.0.0
       react-dom: ^18.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
     dependencies:
       '@babel/runtime': 7.24.0
       '@testing-library/dom': 10.0.0
+      '@types/react': 18.3.1
       '@types/react-dom': 18.2.21
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
