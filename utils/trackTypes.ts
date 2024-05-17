@@ -33,7 +33,6 @@ export interface Track extends BaseItemDto {
   MediaStreams: MediaStream[];
   BackdropImageTags: string[];
   LocationType: LocationType;
-  MediaType: string;
 }
 
 export interface AlbumArtist {
