@@ -20,7 +20,7 @@
     "@emotion/styled": "^11",
     "@jellyfin/sdk": "^0.10.0",
     "@reduxjs/toolkit": "^2.2.5",
-    "@tabler/icons-react": "^3.6.0",
+    "@tabler/icons-react": "^3.7.0",
     "@types/react-virtualized-auto-sizer": "^1.0.4",
     "axios": "^1.7.2",
     "dequal": "^2.0.3",
