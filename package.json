@@ -14,7 +14,7 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@chakra-ui/icons": "^2.2.2",
+    "@chakra-ui/icons": "^2.2.3",
     "@chakra-ui/react": "^2.9.4",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
