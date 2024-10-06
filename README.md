@@ -2,7 +2,7 @@
 
 [![Deployment status](https://img.shields.io/github/deployments/marksfrancis/jellyfin-music-client/production?label=Production&logo=vercel&logoColor=white)](https://github.com/MarkSFrancis/jellyfin-music-client/deployments/activity_log?environment=Production)
 
-This is an unofficial music client for [Jellyfin](https://jellyfin.org/)  
+This is an unofficial music client for [Jellyfin](https://jellyfin.org/)
 
 It is not intended as a replacement for the Jellyfin Web Client.  
 Advanced features like editing track metadata and managing libraries are not in this client.
@@ -17,10 +17,10 @@ Advanced features like editing track metadata and managing libraries are not in 
 
 ## Features
 
-* Audio streaming (no need to wait for the whole track to load before starting playback)
-* Gapless playback
-* Audio caching
-* No need to host your own instance of the music client - just log on to your server using the [demo instance](https://jellyfin-music-client.vercel.app/). Your Jellyfin server must be at least version 10.7.0
+- Audio streaming (no need to wait for the whole track to load before starting playback)
+- Gapless playback
+- Audio caching
+- No need to host your own instance of the music client - just log on to your server using the [demo instance](https://jellyfin-music-client.vercel.app/). Your Jellyfin server must be at least version 10.7.0
 
 For upcoming features, [check out the roadmap](https://github.com/MarkSFrancis/jellyfin-music-client/projects/1)
 
@@ -30,7 +30,7 @@ To request a new feature or report a bug, [create an issue](https://github.com/M
 
 ### Pre-requisites
 
-This project requires [Node 20](https://nodejs.org/en/) and uses [pnpm](https://pnpm.io/) as a package manager. You'll need to have both of these installed
+This project requires [Node 20](https://nodejs.org/en/).
 
 You also need the following Jellyfin server version:
 
@@ -48,20 +48,22 @@ cd jellyfin-music-client
 
 ```bash
 # Install application dependencies
-pnpm install
+npm install
 ```
 
 ### Running the app
 
 #### Development mode
+
 ```bash
-pnpm start
+npm run dev
 ```
 
 #### Production mode
+
 ```bash
-pnpm build
-pnpm start:prod
+npm run build
+npm run start
 ```
 
 You can now access the client by navigating your browser to http://localhost:4000/

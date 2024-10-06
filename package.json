@@ -4,10 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "next dev -p 4000",
+    "dev": "next dev -p 4000",
     "build": "next build",
     "build:static": "next build && next export",
-    "start:prod": "next start -p 4000",
+    "start": "next start -p 4000",
     "test": "vitest --changed main",
     "test:all": "vitest",
     "test:ci": "vitest run",
