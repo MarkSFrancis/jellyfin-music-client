@@ -47,7 +47,7 @@
     "@types/uuid": "^10.0.0",
     "@types/wicg-mediasession": "^1.1.8",
     "@typescript-eslint/eslint-plugin": "^8.8.0",
-    "@typescript-eslint/parser": "^8.8.0",
+    "@typescript-eslint/parser": "^8.8.1",
     "babel-loader": "^9.2.1",
     "eslint": "^8.57.1",
     "eslint-config-next": "^14.2.14",
