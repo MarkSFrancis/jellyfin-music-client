@@ -26,14 +26,17 @@ export const useGetTracks = () => {
     ): Promise<MusicLibraryResult> => {
       const result = await fetch([
         {
-          ...getTracksFromLibaryDefaultOptions(user.Id, musicLibrary.id),
+          ...getTracksFromLibaryDefaultOptions(
+            String(user.Id),
+            String(musicLibrary.id)
+          ),
           ...options,
         },
       ]);
 
       return {
-        totalTracks: result.data.TotalRecordCount as number,
-        tracks: result.data.Items as Track[],
+        totalTracks: result?.data.TotalRecordCount as number,
+        tracks: result?.data.Items as Track[],
       };
     },
     [user, musicLibrary, fetch]
@@ -43,8 +46,8 @@ export const useGetTracks = () => {
 };
 
 export const getTracksFromLibaryDefaultOptions = (
-  userId: string,
-  libraryId: string
+  userId: string | undefined,
+  libraryId: string | undefined
 ): ItemsApiGetItemsRequest => ({
   userId: userId,
   parentId: libraryId,

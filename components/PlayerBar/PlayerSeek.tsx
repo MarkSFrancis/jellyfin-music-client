@@ -15,7 +15,7 @@ export interface PlayerSeekProps {
 
 export const PlayerSeek: FC<PlayerSeekProps> = ({ progress, duration }) => {
   const rawAudio = usePlayerAudio();
-  const sliderRef = useRef<HTMLDivElement>();
+  const sliderRef = useRef<HTMLDivElement>(null);
 
   return (
     <div ref={sliderRef} style={{ width: '100%' }}>

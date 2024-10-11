@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useMutation, useQuery } from '../../../utils';
 import { setUser } from '../../../utils/user/userSlice';
-import { useUser } from './UserContext';
+import { useUserState } from './UserContext';
 
 export interface GetUserDetailsProps extends PropsWithChildren {
   onSignOut: () => void;
@@ -13,7 +13,7 @@ export interface GetUserDetailsProps extends PropsWithChildren {
 export const UserGuard: FC<GetUserDetailsProps> = (props) => {
   const [getUserState] = useQuery('user', 'getCurrentUser', []);
   const [signOut, signOutState] = useMutation('session', 'reportSessionEnded');
-  const user = useUser();
+  const user = useUserState();
   const dispatch = useDispatch();
 
   const handleSignOut = useCallback(async () => {

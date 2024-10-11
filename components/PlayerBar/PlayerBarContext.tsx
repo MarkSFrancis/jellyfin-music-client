@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { createContext } from 'react';
 
 export interface PlayerBarContext {
-  scrollRef: React.MutableRefObject<HTMLDivElement>;
+  scrollRef: React.MutableRefObject<HTMLDivElement | null>;
 }
 
 const playerBarContext = createContext<PlayerBarContext | undefined>(undefined);

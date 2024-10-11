@@ -33,6 +33,8 @@ export const SetServer: FC<SetServerProps> = (props) => {
   }, [server]);
 
   const validateServer = useCallback(async () => {
+    if (!server) return;
+
     setValidating(true);
     const apiClient = initApi(server, undefined);
 
@@ -56,6 +58,8 @@ export const SetServer: FC<SetServerProps> = (props) => {
   const handleSetServer = useCallback(
     async (e: FormEvent) => {
       e.preventDefault();
+
+      if (!server) return;
 
       const serverInfo = await validateServer();
       if (!serverInfo) return;

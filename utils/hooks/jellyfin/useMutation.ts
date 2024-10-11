@@ -16,7 +16,7 @@ export type MutateRequest<
 > = (
   params: ApiParams<ApiId, ApiMethod>,
   requestOptions?: Omit<AxiosRequestConfig, 'cancelToken'>
-) => Promise<AxiosResponse<ApiResult<ApiId, ApiMethod>>>;
+) => Promise<AxiosResponse<ApiResult<ApiId, ApiMethod>> | undefined>;
 
 interface MutationStateBaseType<T> {
   data: T;

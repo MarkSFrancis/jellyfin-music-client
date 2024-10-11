@@ -36,7 +36,7 @@ export const useAudio = (loadedTracks: LoadedAudio[]) => {
       return;
     }
 
-    audioRef.current.on('end', trackEndHandler);
+    audioRef.current?.on('end', trackEndHandler);
     const previousAudio = audioRef.current;
 
     return () => {
@@ -54,7 +54,9 @@ export const useAudio = (loadedTracks: LoadedAudio[]) => {
       return;
     }
 
-    const playing = loadedTracks.find((t) => t.track.Id === track.Id);
+    const playing = track
+      ? loadedTracks.find((t) => t.track.Id === track.Id)
+      : undefined;
 
     if (!playing) {
       audioTrack.current = undefined;

@@ -7,7 +7,7 @@ import { List as FixedSizeList, WindowScroller } from 'react-virtualized';
 
 export interface TracksTableProps {
   tracks: Track[];
-  scrollRef?: MutableRefObject<HTMLElement>;
+  scrollRef?: MutableRefObject<HTMLElement | null>;
 }
 
 export const TracksTable: FC<TracksTableProps> = ({ tracks, scrollRef }) => {
@@ -40,7 +40,7 @@ export const TracksTable: FC<TracksTableProps> = ({ tracks, scrollRef }) => {
         <TrackHeadersDisplay />
       </div>
       <Tbody as="div">
-        <WindowScroller scrollElement={scrollRef?.current}>
+        <WindowScroller scrollElement={scrollRef?.current ?? undefined}>
           {({ height, isScrolling, onChildScroll, scrollTop }) => (
             <FixedSizeList
               autoHeight

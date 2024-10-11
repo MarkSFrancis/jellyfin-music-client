@@ -15,7 +15,7 @@ import { useState } from 'react';
 import { Library } from './MusicLibraryConfig';
 
 export interface SelectMusicLibraryProps {
-  libraries: Library[] | undefined;
+  libraries: Library[];
   onSubmit: (library: Library) => void;
   onSignOut: () => void;
 }
@@ -59,7 +59,7 @@ export const SelectMusicLibrary: FC<SelectMusicLibraryProps> = (props) => {
               onChange={(e) => setLibraryId(e.target.value)}
             >
               {props.libraries.map((l) => (
-                <option value={l.id} key={l.id}>
+                <option value={l.id ?? undefined} key={l.id}>
                   {l.name}
                 </option>
               ))}

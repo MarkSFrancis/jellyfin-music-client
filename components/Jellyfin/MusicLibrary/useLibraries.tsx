@@ -4,7 +4,7 @@ import { useUser } from '../User/UserContext';
 
 export const useLibraries = () => {
   const user = useUser();
-  const [state] = useQuery('userViews', 'getUserViews', [{ userId: user?.Id }]);
+  const [state] = useQuery('userViews', 'getUserViews', [{ userId: user.Id }]);
 
   return state;
 };

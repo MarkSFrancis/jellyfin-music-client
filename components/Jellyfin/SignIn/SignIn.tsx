@@ -98,14 +98,14 @@ export const SignIn: FC<SignInProps> = (props) => {
   );
 };
 
-const createToken = (authResult: AuthenticationResult) => {
+const createToken = (authResult: AuthenticationResult | undefined) => {
   const clientName = 'Jellyfin Music Client';
   const deviceName = 'Unknown'; // Could be replaced with a friendly name (like Android or Chrome)
   const deviceId = uuidv4();
   const clientVersion = '0.0.0'; // Could pull this from package.json, or some sort of release version
 
   const token = `MediaBrowser Client="${clientName}", Device="${deviceName}", DeviceId="${deviceId}", Version="${clientVersion}", Token="${
-    authResult.AccessToken ?? ''
+    authResult?.AccessToken ?? ''
   }"`;
 
   return token;

@@ -19,7 +19,7 @@ export const LibraryTracks: FC<LibraryTracksProps> = ({
 }) => {
   const [getTracksPage, getTracksPageState] = useGetTracks();
   const [tracks, setTracks] = useState<Track[]>([]);
-  const [totalTracks, setTotalTracks] = useState<number>(undefined);
+  const [totalTracks, setTotalTracks] = useState<number>();
   const { scrollRef } = usePlayerBar();
 
   const handleLoadMore = useCallback(async () => {

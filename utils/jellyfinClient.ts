@@ -5,7 +5,7 @@ import { v4 } from 'uuid';
 
 export type ApiClient = ReturnType<typeof initApi>;
 
-export const initApi = (baseUrl: string, token: string) => {
+export const initApi = (baseUrl: string, token: string | undefined) => {
   const jellyfin = new Jellyfin({
     clientInfo: {
       name: 'Jellyfin Music Client',
@@ -18,7 +18,9 @@ export const initApi = (baseUrl: string, token: string) => {
   });
 
   const contextAxios = axios.create();
-  contextAxios.defaults.headers['X-Emby-Authorization'] = token;
+  if (token) {
+    contextAxios.defaults.headers['X-Emby-Authorization'] = token;
+  }
 
   const client = jellyfin.createApi(baseUrl, token, contextAxios);
 

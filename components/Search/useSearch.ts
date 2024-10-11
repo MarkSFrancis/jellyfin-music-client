@@ -72,7 +72,10 @@ export const useTrackTitleSearch = (props: UseSearchProps) => {
 
   const [results] = useQuery('items', 'getItems', [
     {
-      ...getTracksFromLibaryDefaultOptions(user!.Id as string, musicLibrary.id),
+      ...getTracksFromLibaryDefaultOptions(
+        user.Id,
+        musicLibrary.id ?? undefined
+      ),
       searchTerm: props.searchFor,
     },
   ]);
@@ -89,8 +92,8 @@ export const useSearchTracksByArtist = (props: UseSearchProps) => {
   const [getArtists] = useQuery('artists', 'getArtists', [
     {
       searchTerm: props.searchFor,
-      userId: user!.Id,
-      parentId: musicLibrary.id,
+      userId: user.Id,
+      parentId: musicLibrary.id ?? undefined,
     },
   ]);
 
@@ -116,14 +119,20 @@ export const useSearchTracksByArtist = (props: UseSearchProps) => {
         const result = await getTracks([
           {
             ...getTracksFromLibaryDefaultOptions(
-              user!.Id as string,
-              musicLibrary.id
+              user.Id,
+              musicLibrary.id ?? undefined
             ),
             artistIds: artistIds,
           },
         ]);
 
-        setTracks(result.data.Items as Track[]);
+        if (!result?.data.Items) {
+          setEmptyResults(true);
+          setTracks([]);
+        } else {
+          setEmptyResults(false);
+          setTracks(result.data.Items as Track[]);
+        }
       }
     })();
   }, [getTracks, user, setTracks, musicLibrary, getArtists, setEmptyResults]);
@@ -140,8 +149,8 @@ export const useSearchTracksByGenre = (props: UseSearchProps) => {
   const [getGenres] = useQuery('musicGenres', 'getMusicGenres', [
     {
       searchTerm: props.searchFor,
-      userId: user!.Id,
-      parentId: musicLibrary.id,
+      userId: user.Id,
+      parentId: musicLibrary.id ?? undefined,
     },
   ]);
 
@@ -167,14 +176,20 @@ export const useSearchTracksByGenre = (props: UseSearchProps) => {
         const result = await getTracks([
           {
             ...getTracksFromLibaryDefaultOptions(
-              user?.Id as string,
-              musicLibrary.id
+              user.Id,
+              musicLibrary.id ?? undefined
             ),
             genreIds: genreIds,
           },
         ]);
 
-        setTracks(result.data.Items as Track[]);
+        if (!result?.data.Items) {
+          setEmptyResults(true);
+          setTracks([]);
+        } else {
+          setEmptyResults(false);
+          setTracks(result.data.Items as Track[]);
+        }
       }
     })();
   }, [getTracks, user, setTracks, musicLibrary, getGenres, setEmptyResults]);

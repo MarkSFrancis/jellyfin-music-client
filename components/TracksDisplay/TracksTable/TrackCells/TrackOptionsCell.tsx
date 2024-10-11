@@ -11,7 +11,7 @@ import { TrackOptionsButton } from '../../../TrackDisplay/TrackOptionsButton';
 import { trackColumnWidths } from '../trackCellWidths';
 
 export interface TrackOptionsCellProps {
-  rowRef?: MutableRefObject<HTMLElement>;
+  rowRef?: MutableRefObject<HTMLElement | undefined>;
   track: Track;
 }
 

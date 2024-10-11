@@ -15,7 +15,7 @@ import { useAppDispatch } from '../../store';
 
 export interface TracksListProps {
   tracks: Track[];
-  scrollRef?: MutableRefObject<HTMLElement>;
+  scrollRef?: MutableRefObject<HTMLElement | null>;
 }
 
 export const TracksList: FC<TracksListProps> = ({ tracks, scrollRef }) => {
@@ -54,7 +54,7 @@ export const TracksList: FC<TracksListProps> = ({ tracks, scrollRef }) => {
 
   return (
     <Box height="100vh" width="100vw">
-      <WindowScroller scrollElement={scrollRef?.current}>
+      <WindowScroller scrollElement={scrollRef?.current ?? undefined}>
         {({ height, width, isScrolling, onChildScroll, scrollTop }) => (
           <FixedSizeList
             autoHeight

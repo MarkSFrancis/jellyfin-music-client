@@ -9,7 +9,7 @@ export interface TrackCellsDisplayProps {
   tracks: Track[];
   track: Track;
   index: number;
-  rowRef: MutableRefObject<HTMLElement>;
+  rowRef: MutableRefObject<HTMLElement | undefined>;
 }
 
 export const TrackCellsDisplay: FC<TrackCellsDisplayProps> = (props) => {

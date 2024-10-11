@@ -22,7 +22,7 @@ export const PlayerBarProgress: FC = () => {
         return;
       }
 
-      let seek = rawAudio.seek();
+      let seek: number | undefined = rawAudio.seek();
       if (isNaN(seek) || !isFinite(seek)) seek = undefined;
       setProgressSeconds(seek);
     }, 100);
@@ -57,7 +57,9 @@ const formatSeconds = (seconds: number) => {
     .padStart(2, '0')}`;
 };
 
-const ticksToSeconds = (ticks: number) => {
+const ticksToSeconds = (ticks: number | undefined) => {
+  if (!ticks) return undefined;
+
   if (isNaN(ticks) || !isFinite(ticks)) return ticks;
 
   const ticksPerMillisecond = 10000;
