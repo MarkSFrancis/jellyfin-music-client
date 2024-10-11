@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction, useCallback, useState } from "react";
-import { useIsMounted } from "./useIsMounted";
+import { Dispatch, SetStateAction, useCallback, useState } from 'react';
+import { useIsMounted } from './useIsMounted';
 
 export const useSafeState = <S>(
   initialState?: S | (() => S)

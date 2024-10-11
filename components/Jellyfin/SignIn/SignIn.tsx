@@ -8,15 +8,15 @@ import {
   Input,
   Text,
   VStack,
-} from "@chakra-ui/react";
-import React, { FC, FormEvent } from "react";
-import { useCallback } from "react";
-import { SlimPageContainer } from "../../Layout/SlimPageContainer";
-import { v4 as uuidv4 } from "uuid";
-import { useState } from "react";
-import { initApi } from "../../../utils/jellyfinClient";
-import { Server } from "../../../utils/apiConfig/apiConfigSlice";
-import { AuthenticationResult } from "@jellyfin/sdk/lib/generated-client/models";
+} from '@chakra-ui/react';
+import React, { FC, FormEvent } from 'react';
+import { useCallback } from 'react';
+import { SlimPageContainer } from '../../Layout/SlimPageContainer';
+import { v4 as uuidv4 } from 'uuid';
+import { useState } from 'react';
+import { initApi } from '../../../utils/jellyfinClient';
+import { Server } from '../../../utils/apiConfig/apiConfigSlice';
+import { AuthenticationResult } from '@jellyfin/sdk/lib/generated-client/models';
 
 export interface SignInProps {
   server: Server;
@@ -25,9 +25,9 @@ export interface SignInProps {
 }
 
 export const SignIn: FC<SignInProps> = (props) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const signIn = useCallback(
     async (e: FormEvent) => {
@@ -49,7 +49,7 @@ export const SignIn: FC<SignInProps> = (props) => {
         props.onSetToken(token);
       } catch (ex) {
         console.error(ex);
-        setError("Login failed. Please check your username and password");
+        setError('Login failed. Please check your username and password');
       }
     },
     [props, username, password]
@@ -99,13 +99,13 @@ export const SignIn: FC<SignInProps> = (props) => {
 };
 
 const createToken = (authResult: AuthenticationResult) => {
-  const clientName = "Jellyfin Music Client";
-  const deviceName = "Unknown"; // Could be replaced with a friendly name (like Android or Chrome)
+  const clientName = 'Jellyfin Music Client';
+  const deviceName = 'Unknown'; // Could be replaced with a friendly name (like Android or Chrome)
   const deviceId = uuidv4();
-  const clientVersion = "0.0.0"; // Could pull this from package.json, or some sort of release version
+  const clientVersion = '0.0.0'; // Could pull this from package.json, or some sort of release version
 
   const token = `MediaBrowser Client="${clientName}", Device="${deviceName}", DeviceId="${deviceId}", Version="${clientVersion}", Token="${
-    authResult?.AccessToken ?? ""
+    authResult.AccessToken ?? ''
   }"`;
 
   return token;

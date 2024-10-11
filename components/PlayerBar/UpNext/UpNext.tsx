@@ -5,11 +5,11 @@ import {
   IconButton,
   Tooltip,
   useDisclosure,
-} from "@chakra-ui/react";
-import { IconPlaylist } from "@tabler/icons-react";
-import React, { FC } from "react";
-import { usePlayerSelector } from "../../../utils/player/PlayerContext/playerSelectors";
-import { UpNextTracks } from "./UpNextTracks";
+} from '@chakra-ui/react';
+import { IconPlaylist } from '@tabler/icons-react';
+import React, { FC } from 'react';
+import { usePlayerSelector } from '../../../utils/player/PlayerContext/playerSelectors';
+import { UpNextTracks } from './UpNextTracks';
 
 export const UpNext: FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -23,7 +23,7 @@ export const UpNext: FC = () => {
           icon={<IconPlaylist />}
           aria-label="Up next"
           onClick={onOpen}
-          isDisabled={!queue?.length}
+          isDisabled={!queue.length}
         />
       </Tooltip>
       <Drawer

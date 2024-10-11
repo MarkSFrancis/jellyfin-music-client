@@ -1,26 +1,26 @@
-import { Center, Spinner } from "@chakra-ui/react";
-import React, { PropsWithChildren } from "react";
-import { FC, useCallback } from "react";
-import InfiniteScroll from "react-infinite-scroller";
-import { MutationState } from "../../utils";
-import { usePlayerBar } from "../PlayerBar/PlayerBarContext";
+import { Center, Spinner } from '@chakra-ui/react';
+import React, { PropsWithChildren } from 'react';
+import { FC, useCallback } from 'react';
+import InfiniteScroll from 'react-infinite-scroller';
+import { MutationState } from '../../utils';
+import { usePlayerBar } from '../PlayerBar/PlayerBarContext';
 
 export interface LazyDisplayProps extends PropsWithChildren {
   loadedCount: number;
-  getPageStatus: MutationState<unknown>["status"];
+  getPageStatus: MutationState<unknown>['status'];
   onGetPage: () => void;
   totalItems: number | undefined;
-  scrollRef?: React.MutableRefObject<HTMLElement>;
+  scrollRef?: React.MutableRefObject<HTMLElement | null>;
 }
 
 export const LazyDisplay: FC<LazyDisplayProps> = (props) => {
   const { scrollRef: playerScrollRef } = usePlayerBar();
 
   const handleLoadMore = useCallback(
-    async (continueOnError: boolean) => {
+    (continueOnError: boolean) => {
       if (
-        (!continueOnError && props.getPageStatus === "error") ||
-        props.getPageStatus === "loading"
+        (!continueOnError && props.getPageStatus === 'error') ||
+        props.getPageStatus === 'loading'
       ) {
         return;
       }
@@ -31,11 +31,12 @@ export const LazyDisplay: FC<LazyDisplayProps> = (props) => {
   );
 
   const hasMore =
-    (props.getPageStatus === "success" &&
-      props.loadedCount < props.totalItems) ||
-    props.getPageStatus === "idle";
+    (props.getPageStatus === 'success' &&
+      (props.totalItems === undefined ||
+        props.loadedCount < props.totalItems)) ||
+    props.getPageStatus === 'idle';
 
-  if (props.loadedCount === 0 && props.getPageStatus === "loading") {
+  if (props.loadedCount === 0 && props.getPageStatus === 'loading') {
     handleLoadMore(false);
     return <Loader />;
   }

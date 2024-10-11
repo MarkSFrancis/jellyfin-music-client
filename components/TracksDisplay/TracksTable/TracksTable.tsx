@@ -1,18 +1,18 @@
-import { Table, Tbody } from "@chakra-ui/react";
-import React, { FC, MutableRefObject } from "react";
-import { Track } from "../../../utils";
-import { TrackHeadersDisplay, trackTableWidth } from "./TrackCells";
-import { TrackRowDisplay } from "./TrackRowDisplay";
-import { List as FixedSizeList, WindowScroller } from "react-virtualized";
+import { Table, Tbody } from '@chakra-ui/react';
+import React, { CSSProperties, FC, MutableRefObject } from 'react';
+import { Track } from '../../../utils';
+import { TrackHeadersDisplay, trackTableWidth } from './TrackCells';
+import { TrackRowDisplay } from './TrackRowDisplay';
+import { List as FixedSizeList, WindowScroller } from 'react-virtualized';
 
 export interface TracksTableProps {
   tracks: Track[];
-  scrollRef: MutableRefObject<HTMLElement>;
+  scrollRef?: MutableRefObject<HTMLElement>;
 }
 
 export const TracksTable: FC<TracksTableProps> = ({ tracks, scrollRef }) => {
   const RenderRow = React.useCallback(
-    ({ index, style }) => {
+    ({ index, style }: { index: number; style?: CSSProperties }) => {
       const track = tracks[index];
 
       return (
@@ -33,7 +33,7 @@ export const TracksTable: FC<TracksTableProps> = ({ tracks, scrollRef }) => {
       variant="simple"
       size="sm"
       colorScheme="gray"
-      css={{ display: "inline-block", borderSpacing: 0 }}
+      css={{ display: 'inline-block', borderSpacing: 0 }}
       width={trackTableWidth}
     >
       <div>

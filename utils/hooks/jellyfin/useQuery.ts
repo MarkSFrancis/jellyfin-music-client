@@ -2,14 +2,14 @@ import axios, {
   AxiosRequestConfig,
   AxiosResponse,
   CancelTokenSource,
-} from "axios";
-import { useCallback, useEffect, useRef } from "react";
-import { useApi } from "../../../components/Jellyfin/useApi";
-import { ApiClient } from "../../jellyfinClient";
-import { ApiParams, ApiResult, PickNever } from "../../types";
-import { useCache } from "../useCache";
-import { useSafeState } from "../useSafeState";
-import { marshalRequestArgs, marshalResponse } from "./utils";
+} from 'axios';
+import { useCallback, useEffect, useRef } from 'react';
+import { useApi } from '../../../components/Jellyfin/useApi';
+import { ApiClient } from '../../jellyfinClient';
+import { ApiParams, ApiResult, PickNever } from '../../types';
+import { useCache } from '../useCache';
+import { useSafeState } from '../useSafeState';
+import { marshalRequestArgs, marshalResponse } from './utils';
 
 export interface QueryMetadata {
   refetch: () => void;
@@ -26,18 +26,18 @@ interface QueryBaseType<T> {
 }
 
 export interface QuerySuccessState<T>
-  extends PickNever<QueryBaseType<T>, "data" | "response"> {
-  status: "success";
+  extends PickNever<QueryBaseType<T>, 'data' | 'response'> {
+  status: 'success';
 }
 
 export interface QueryLoadingState<T>
   extends PickNever<QueryBaseType<T>, never> {
-  status: "loading";
+  status: 'loading';
 }
 
 export interface QueryErrorState<T>
-  extends PickNever<QueryBaseType<T>, "error"> {
-  status: "error";
+  extends PickNever<QueryBaseType<T>, 'error'> {
+  status: 'error';
 }
 
 export type QueryState<T> =
@@ -52,12 +52,12 @@ export const useQuery = <
   apiId: ApiId,
   apiMethod: ApiMethod,
   params: ApiParams<ApiId, ApiMethod>,
-  requestOptions?: Omit<AxiosRequestConfig, "cancelToken">,
+  requestOptions?: Omit<AxiosRequestConfig, 'cancelToken'>,
   options?: QueryOptions
 ): [QueryState<ApiResult<ApiId, ApiMethod>>, QueryMetadata] => {
   type T = ApiResult<ApiId, ApiMethod>;
 
-  const [state, setState] = useSafeState<QueryState<T>>({ status: "loading" });
+  const [state, setState] = useSafeState<QueryState<T>>({ status: 'loading' });
   const currentRequest = useRef<CancelTokenSource>();
   const api = useApi();
   const paramsCache = useCache(params);
@@ -72,7 +72,7 @@ export const useQuery = <
 
     if (!options?.preserveDataOnRefetch) {
       setState({
-        status: "loading",
+        status: 'loading',
       });
     }
 
@@ -85,7 +85,7 @@ export const useQuery = <
       api
     );
 
-    marshalResponse<T>(request, setState);
+    void marshalResponse<T>(request, setState);
   }, [options, requestOptions, apiMethod, paramsCache, apiId, setState, api]);
 
   useEffect(() => {
@@ -96,7 +96,7 @@ export const useQuery = <
     return () => {
       if (currentRequest.current) {
         currentRequest.current.cancel(
-          "query parameters updated or component unmounted"
+          'query parameters updated or component unmounted'
         );
 
         currentRequest.current = undefined;

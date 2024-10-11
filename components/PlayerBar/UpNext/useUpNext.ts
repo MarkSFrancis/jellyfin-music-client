@@ -1,9 +1,9 @@
-import { useMemo } from "react";
-import { Track } from "../../../utils";
+import { useMemo } from 'react';
+import { Track } from '../../../utils';
 import {
   getPlayerCurrentTrack,
   usePlayerSelector,
-} from "../../../utils/player/PlayerContext/playerSelectors";
+} from '../../../utils/player/PlayerContext/playerSelectors';
 
 export type UpNextQueue = Readonly<
   [previous: Track[], current: Track | undefined, next: Track[]]
@@ -19,7 +19,7 @@ export const useUpNext = (): UpNextQueue => {
     let next: Track[];
     let currentTrackIndex: number;
 
-    if (!queue || !track) {
+    if (!track) {
       currentTrackIndex = -1;
     } else {
       currentTrackIndex = queue.findIndex((q) => q.Id === track.Id);

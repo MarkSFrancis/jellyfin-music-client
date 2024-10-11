@@ -3,10 +3,10 @@ import {
   SliderTrack,
   SliderFilledTrack,
   SliderThumb,
-} from "@chakra-ui/react";
-import React, { FC } from "react";
-import { useRef } from "react";
-import { usePlayerAudio } from "../../utils";
+} from '@chakra-ui/react';
+import React, { FC } from 'react';
+import { useRef } from 'react';
+import { usePlayerAudio } from '../../utils';
 
 export interface PlayerSeekProps {
   progress: number | undefined;
@@ -18,7 +18,7 @@ export const PlayerSeek: FC<PlayerSeekProps> = ({ progress, duration }) => {
   const sliderRef = useRef<HTMLDivElement>();
 
   return (
-    <div ref={sliderRef} style={{ width: "100%" }}>
+    <div ref={sliderRef} style={{ width: '100%' }}>
       <Slider
         aria-label="Track progress"
         value={progress || 0}

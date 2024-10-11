@@ -1,6 +1,6 @@
-import { Search2Icon } from "@chakra-ui/icons";
-import { Input, IconButton, HStack } from "@chakra-ui/react";
-import React, { FC, useCallback, useEffect, useState } from "react";
+import { Search2Icon } from '@chakra-ui/icons';
+import { Input, IconButton, HStack } from '@chakra-ui/react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 
 export interface SearchInputProps {
   urlQuery: string;

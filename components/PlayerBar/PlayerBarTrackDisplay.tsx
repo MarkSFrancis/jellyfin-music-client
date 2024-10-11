@@ -1,10 +1,10 @@
-import { Text } from "@chakra-ui/react";
-import React, { FC } from "react";
+import { Text } from '@chakra-ui/react';
+import React, { FC } from 'react';
 import {
   getPlayerCurrentTrack,
   usePlayerSelector,
-} from "../../utils/player/PlayerContext/playerSelectors";
-import { SecondaryText } from "../Typography";
+} from '../../utils/player/PlayerContext/playerSelectors';
+import { SecondaryText } from '../Typography';
 
 export const PlayerBarTrackDisplay: FC = () => {
   const track = usePlayerSelector(getPlayerCurrentTrack);
@@ -17,9 +17,7 @@ export const PlayerBarTrackDisplay: FC = () => {
     <>
       <Text>{track.Name}</Text>
       <SecondaryText>
-        {track.ArtistItems?.map((a) => (
-          <span key={a.Id}>{a.Name}</span>
-        ))}
+        {track.ArtistItems?.map((a) => <span key={a.Id}>{a.Name}</span>)}
       </SecondaryText>
     </>
   );

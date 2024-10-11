@@ -1,11 +1,11 @@
-import { Center, Spinner, Text } from "@chakra-ui/react";
-import React, { FC, PropsWithChildren } from "react";
-import { useMemo } from "react";
-import { SlimPageContainer } from "../../Layout/SlimPageContainer";
-import { MusicLibraryConfigProvider } from "./MusicLibraryConfig";
-import { SelectMusicLibrary } from "./SelectMusicLibrary";
-import { getMusicLibraries, useLibraries } from "./useLibraries";
-import { useStoredMusicLibrary } from "./useStoredMusicLibrary";
+import { Center, Spinner, Text } from '@chakra-ui/react';
+import React, { FC, PropsWithChildren } from 'react';
+import { useMemo } from 'react';
+import { SlimPageContainer } from '../../Layout/SlimPageContainer';
+import { MusicLibraryConfigProvider } from './MusicLibraryConfig';
+import { SelectMusicLibrary } from './SelectMusicLibrary';
+import { getMusicLibraries, useLibraries } from './useLibraries';
+import { useStoredMusicLibrary } from './useStoredMusicLibrary';
 
 export interface MusicLibraryGuardProps extends PropsWithChildren {
   onSignOut: () => void;
@@ -25,7 +25,7 @@ export const MusicLibraryGuard: FC<MusicLibraryGuardProps> = (props) => {
     );
   }
 
-  if (state.status === "error") {
+  if (state.status === 'error') {
     return (
       <SlimPageContainer>
         <Text>Something went wrong fetching your music libraries</Text>
@@ -33,7 +33,7 @@ export const MusicLibraryGuard: FC<MusicLibraryGuardProps> = (props) => {
     );
   }
 
-  if (state.status === "loading") {
+  if (state.status === 'loading') {
     return (
       <Center>
         <Spinner />

@@ -1,20 +1,20 @@
-import { Center, Spinner } from "@chakra-ui/react";
-import React, { PropsWithChildren, useState } from "react";
-import { useEffect } from "react";
-import { FC } from "react";
-import { useLocalStorage } from "../../utils";
-import { ApiClient, initApi } from "../../utils/jellyfinClient";
-import { UserGuard } from "./User/UserGuard";
-import { SignIn } from "./SignIn/SignIn";
-import { MusicLibraryGuard } from "./MusicLibrary/MusicLibraryGuard";
-import { Server, setApiConfig } from "../../utils/apiConfig/apiConfigSlice";
-import { useAppDispatch, useAppSelector } from "../../store";
-import { ApiProvider } from "./useApi";
-import { SetServer } from "./SignIn/SetServer";
+import { Center, Spinner } from '@chakra-ui/react';
+import React, { PropsWithChildren, useState } from 'react';
+import { useEffect } from 'react';
+import { FC } from 'react';
+import { useLocalStorage } from '../../utils';
+import { ApiClient, initApi } from '../../utils/jellyfinClient';
+import { UserGuard } from './User/UserGuard';
+import { SignIn } from './SignIn/SignIn';
+import { MusicLibraryGuard } from './MusicLibrary/MusicLibraryGuard';
+import { Server, setApiConfig } from '../../utils/apiConfig/apiConfigSlice';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { ApiProvider } from './useApi';
+import { SetServer } from './SignIn/SetServer';
 
 export const ApiGuard: FC<PropsWithChildren> = (props) => {
-  const [server, setServer] = useLocalStorage<Server>("jellyfin-server-url");
-  const [token, setToken] = useLocalStorage<string>("jellyfin-auth-token");
+  const [server, setServer] = useLocalStorage<Server>('jellyfin-server-url');
+  const [token, setToken] = useLocalStorage<string>('jellyfin-auth-token');
   const [api, setApi] = useState<ApiClient>();
   const apiConfig = useAppSelector((state) => state.apiConfigState);
   const dispatch = useAppDispatch();
@@ -58,10 +58,10 @@ export const ApiGuard: FC<PropsWithChildren> = (props) => {
     );
   }
 
-  console.info("Rendered children");
+  console.info('Rendered children');
 
   return (
-    <ApiProvider value={api}>
+    <ApiProvider value={api as ApiClient}>
       <UserGuard onSignOut={() => setToken(undefined)}>
         <MusicLibraryGuard onSignOut={() => setToken(undefined)}>
           {props.children}

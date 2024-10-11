@@ -1,27 +1,27 @@
-import { expect, it } from "vitest";
-import { ApiConfig } from "../apiConfig/apiConfigSlice";
-import { Track } from "../trackTypes";
-import { getTrackSrc } from "./getTrackSrc";
+import { expect, it } from 'vitest';
+import { ApiConfig } from '../apiConfig/apiConfigSlice';
+import { Track } from '../trackTypes';
+import { getTrackSrc } from './getTrackSrc';
 
 const apiConfig: ApiConfig = {
-  authToken: "auth_token",
+  authToken: 'auth_token',
   server: {
-    url: "https://www.test.com",
+    url: 'https://www.test.com',
   },
 };
 
-it("should throw an error when no media stream is available", () => {
+it('should throw an error when no media stream is available', () => {
   expect(() => {
     getTrackSrc(apiConfig, {
-      Id: "1",
+      Id: '1',
     } as Track);
-  }).toThrowError("Cannot generate streaming URL");
+  }).toThrowError('Cannot generate streaming URL');
 });
 
-it("should throw an error when no media stream is available", () => {
+it('should throw an error when no media stream is available', () => {
   expect(() => {
     getTrackSrc(apiConfig, {
-      Id: "1",
+      Id: '1',
     } as Track);
-  }).toThrowError("Cannot generate streaming URL");
+  }).toThrowError('Cannot generate streaming URL');
 });

@@ -1,12 +1,12 @@
-import { IconButton, IconButtonProps, forwardRef } from "@chakra-ui/react";
-import { IconPlayerPause, IconPlayerPlay } from "@tabler/icons-react";
-import React from "react";
+import { IconButton, IconButtonProps, forwardRef } from '@chakra-ui/react';
+import { IconPlayerPause, IconPlayerPlay } from '@tabler/icons-react';
+import React from 'react';
 
 export interface TrackPlayButtonProps
-  extends Omit<IconButtonProps, "aria-label"> {
+  extends Omit<IconButtonProps, 'aria-label'> {
   isCurrentTrack: boolean;
   isPlaying: boolean;
-  "aria-label"?: string;
+  'aria-label'?: string;
 }
 
 export const TrackPlayButton = forwardRef<
@@ -18,7 +18,7 @@ export const TrackPlayButton = forwardRef<
       ref={ref}
       variant="ghost"
       isRound
-      aria-label={isCurrentTrack ? "Pause" : "Play"}
+      aria-label={isCurrentTrack ? 'Pause' : 'Play'}
       icon={
         isCurrentTrack && isPlaying ? <IconPlayerPause /> : <IconPlayerPlay />
       }

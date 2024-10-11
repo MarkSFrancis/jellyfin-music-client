@@ -1,18 +1,18 @@
-import { PlayerState } from "../../utils";
+import { PlayerState } from '../../utils';
 import {
   getPlayerCurrentTrack,
   usePlayerSelector,
-} from "../../utils/player/PlayerContext/playerSelectors";
+} from '../../utils/player/PlayerContext/playerSelectors';
 
-export const appName = "Jellyfin Music";
-const divider = "∙";
+export const appName = 'Jellyfin Music';
+const divider = '∙';
 
 /**
  * Use a formatted page title - useful for <title> tags
  * @param breadcrumb The breadcrumb that leads to the current page
  */
 export const usePageTitle = (...breadcrumb: string[]) => {
-  const formattedPath = (breadcrumb ?? [])
+  const formattedPath = breadcrumb
     .filter((p) => p)
     .reverse()
     .join(` ${divider} `);
@@ -22,9 +22,9 @@ export const usePageTitle = (...breadcrumb: string[]) => {
 
   if (!formattedPath) {
     if (track && state === PlayerState.Playing) {
-      return `${track.Name} ${divider} ${track.ArtistItems.map(
+      return `${track.Name} ${divider} ${track.ArtistItems?.map(
         (a) => a.Name
-      ).join(", ")}`;
+      ).join(', ')} ?? ''`;
     }
 
     return appName;

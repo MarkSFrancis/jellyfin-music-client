@@ -1,6 +1,6 @@
-import { expect, it } from "vitest";
-import { Track } from "../trackTypes";
-import { getPreloadTracks } from "./trackPreloader";
+import { expect, it } from 'vitest';
+import { Track } from '../trackTypes';
+import { getPreloadTracks } from './trackPreloader';
 
 const makeQueue = (length = 1) => {
   const tracks: Track[] = [];
@@ -11,7 +11,7 @@ const makeQueue = (length = 1) => {
   return tracks;
 };
 
-it("should request no tracks if the queue is empty", () => {
+it('should request no tracks if the queue is empty', () => {
   const tracks = getPreloadTracks({
     repeating: false,
     currentTrackIndex: -1,
@@ -21,7 +21,7 @@ it("should request no tracks if the queue is empty", () => {
   expect(tracks).toHaveLength(0);
 });
 
-it("should request only the last track if the queue is ended and not repeating", () => {
+it('should request only the last track if the queue is ended and not repeating', () => {
   const tracks = getPreloadTracks({
     repeating: false,
     currentTrackIndex: 1,
@@ -31,7 +31,7 @@ it("should request only the last track if the queue is ended and not repeating",
   expect(tracks).toHaveLength(1);
 });
 
-it("should request the last track and first two tracks if the queue is ended and repeating", () => {
+it('should request the last track and first two tracks if the queue is ended and repeating', () => {
   const tracks = getPreloadTracks({
     repeating: true,
     currentTrackIndex: 5,
@@ -39,12 +39,12 @@ it("should request the last track and first two tracks if the queue is ended and
   });
 
   expect(tracks).toHaveLength(3);
-  expect(tracks[0].Id).toBe("0");
-  expect(tracks[1].Id).toBe("1");
-  expect(tracks[2].Id).toBe("4");
+  expect(tracks[0].Id).toBe('0');
+  expect(tracks[1].Id).toBe('1');
+  expect(tracks[2].Id).toBe('4');
 });
 
-it("should request the current track and next two tracks if the queue is started and not repeating", () => {
+it('should request the current track and next two tracks if the queue is started and not repeating', () => {
   const tracks = getPreloadTracks({
     repeating: false,
     currentTrackIndex: 0,
@@ -52,12 +52,12 @@ it("should request the current track and next two tracks if the queue is started
   });
 
   expect(tracks).toHaveLength(3);
-  expect(tracks[0].Id).toBe("0");
-  expect(tracks[1].Id).toBe("1");
-  expect(tracks[2].Id).toBe("2");
+  expect(tracks[0].Id).toBe('0');
+  expect(tracks[1].Id).toBe('1');
+  expect(tracks[2].Id).toBe('2');
 });
 
-it("should request the current track, next two tracks, and last track if the queue is started and repeating", () => {
+it('should request the current track, next two tracks, and last track if the queue is started and repeating', () => {
   const tracks = getPreloadTracks({
     repeating: true,
     currentTrackIndex: 0,
@@ -65,13 +65,13 @@ it("should request the current track, next two tracks, and last track if the que
   });
 
   expect(tracks).toHaveLength(4);
-  expect(tracks[0].Id).toBe("0");
-  expect(tracks[1].Id).toBe("1");
-  expect(tracks[2].Id).toBe("2");
-  expect(tracks[3].Id).toBe("4");
+  expect(tracks[0].Id).toBe('0');
+  expect(tracks[1].Id).toBe('1');
+  expect(tracks[2].Id).toBe('2');
+  expect(tracks[3].Id).toBe('4');
 });
 
-it("should skip duplicates", () => {
+it('should skip duplicates', () => {
   const tracks = getPreloadTracks({
     repeating: true,
     currentTrackIndex: 0,
@@ -79,6 +79,6 @@ it("should skip duplicates", () => {
   });
 
   expect(tracks).toHaveLength(2);
-  expect(tracks[0].Id).toBe("0");
-  expect(tracks[1].Id).toBe("1");
+  expect(tracks[0].Id).toBe('0');
+  expect(tracks[1].Id).toBe('1');
 });

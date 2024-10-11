@@ -4,21 +4,21 @@ import {
   useBreakpointValue,
   useColorModeValue,
   VStack,
-} from "@chakra-ui/react";
-import React, { FC } from "react";
-import { PlayerBarProgress } from "./PlayerBarProgress";
-import { PlayerBarTrackDisplay } from "./PlayerBarTrackDisplay";
-import { PlayerButtons } from "./PlayerButtons";
-import { UpNext } from "./UpNext";
+} from '@chakra-ui/react';
+import React, { FC } from 'react';
+import { PlayerBarProgress } from './PlayerBarProgress';
+import { PlayerBarTrackDisplay } from './PlayerBarTrackDisplay';
+import { PlayerButtons } from './PlayerButtons';
+import { UpNext } from './UpNext';
 
 export const PlayerBar: FC = () => {
-  console.log("Render playerbar");
-
-  const playerTrackDisplay = useBreakpointValue({ base: "none", md: "block" });
+  const playerTrackDisplay = useBreakpointValue({ base: 'none', md: 'block' });
   const playerProgressGrow = useBreakpointValue({ base: 1, md: 0 });
-  const widths = useBreakpointValue<[string, string, string]>({
+  const widths = useBreakpointValue<
+    [string | undefined, string | undefined, string | undefined]
+  >({
     base: [undefined, undefined, undefined],
-    md: ["30%", "40%", "30%"],
+    md: ['30%', '40%', '30%'],
   }) ?? [undefined, undefined, undefined];
 
   return (
@@ -57,7 +57,7 @@ export const PlayerBar: FC = () => {
         >
           <Flex
             justifyContent="flex-end"
-            color={useColorModeValue("blackAlpha.700", "whiteAlpha.700")}
+            color={useColorModeValue('blackAlpha.700', 'whiteAlpha.700')}
           >
             <UpNext />
           </Flex>

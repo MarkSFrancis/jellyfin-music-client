@@ -2,20 +2,20 @@ import axios, {
   AxiosRequestConfig,
   CancelTokenSource,
   AxiosResponse,
-} from "axios";
-import { SetStateAction } from "react";
-import { MutationState } from ".";
-import { ApiClient } from "../../jellyfinClient";
-import { ApiParams, ApiResult } from "../../types";
+} from 'axios';
+import { SetStateAction } from 'react';
+import { MutationState } from '.';
+import { ApiClient } from '../../jellyfinClient';
+import { ApiParams, ApiResult } from '../../types';
 
 export const marshalRequestArgs = <
   ApiId extends keyof ApiClient,
-  ApiMethod extends keyof ApiClient[ApiId]
+  ApiMethod extends keyof ApiClient[ApiId],
 >(
   apiId: ApiId,
   apiMethod: ApiMethod,
   params: ApiParams<ApiId, ApiMethod>,
-  requestOptions: Omit<AxiosRequestConfig, "cancelToken">,
+  requestOptions: Omit<AxiosRequestConfig, 'cancelToken'> | undefined,
   cancellationSource: CancelTokenSource,
   api: ApiClient
 ): Promise<AxiosResponse<ApiResult<ApiId, ApiMethod>>> => {
@@ -28,6 +28,7 @@ export const marshalRequestArgs = <
     ...args: unknown[]
   ) => Promise<AxiosResponse<ApiResult<ApiId, ApiMethod>>>;
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return apiFunc.call(api[apiId], ...params, reqOpts);
 };
 
@@ -38,7 +39,7 @@ export const marshalResponse = async <T>(
   try {
     const res = await response;
     setState({
-      status: "success",
+      status: 'success',
       data: res.data,
       response: res,
     });
@@ -50,7 +51,7 @@ export const marshalResponse = async <T>(
     }
 
     setState({
-      status: "error",
+      status: 'error',
       error: err,
     });
   }

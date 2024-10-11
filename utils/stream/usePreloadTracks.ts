@@ -1,7 +1,7 @@
-import { useMemo } from "react";
-import { Track } from "../trackTypes";
-import { usePlayerSelector } from "../player/PlayerContext/playerSelectors";
-import { getPreloadTracks } from "./trackPreloader";
+import { useMemo } from 'react';
+import { Track } from '../trackTypes';
+import { usePlayerSelector } from '../player/PlayerContext/playerSelectors';
+import { getPreloadTracks } from './trackPreloader';
 
 export const usePreloadTracks = () => {
   const repeating = usePlayerSelector((state) => state.settings.repeating);

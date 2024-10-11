@@ -1,13 +1,13 @@
-import { Howl } from "howler";
-import { useEffect, useRef, useState } from "react";
-import { useAppDispatch } from "../../store";
-import { Track } from "../trackTypes";
-import { PlayerState, skipForward1Track } from "../player/PlayerContext";
+import { Howl } from 'howler';
+import { useEffect, useRef, useState } from 'react';
+import { useAppDispatch } from '../../store';
+import { Track } from '../trackTypes';
+import { PlayerState, skipForward1Track } from '../player/PlayerContext';
 import {
   getPlayerCurrentTrack,
   usePlayerSelector,
-} from "../player/PlayerContext/playerSelectors";
-import { LoadedAudio } from "./useAudioLoader";
+} from '../player/PlayerContext/playerSelectors';
+import { LoadedAudio } from './useAudioLoader';
 
 // Hoist into recoil selectors
 
@@ -36,7 +36,7 @@ export const useAudio = (loadedTracks: LoadedAudio[]) => {
       return;
     }
 
-    audioRef.current.on("end", trackEndHandler);
+    audioRef.current.on('end', trackEndHandler);
     const previousAudio = audioRef.current;
 
     return () => {
@@ -44,7 +44,7 @@ export const useAudio = (loadedTracks: LoadedAudio[]) => {
         if (previousAudio !== audioRef.current) {
           previousAudio.stop();
         }
-        previousAudio.off("end", trackEndHandler);
+        previousAudio.off('end', trackEndHandler);
       }
     };
   }, [audio]);

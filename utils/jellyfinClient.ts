@@ -1,24 +1,24 @@
-import { Jellyfin } from "@jellyfin/sdk";
-import * as jellyfinApi from "@jellyfin/sdk/lib/utils/api";
-import axios from "axios";
-import { v4 } from "uuid";
+import { Jellyfin } from '@jellyfin/sdk';
+import * as jellyfinApi from '@jellyfin/sdk/lib/utils/api';
+import axios from 'axios';
+import { v4 } from 'uuid';
 
 export type ApiClient = ReturnType<typeof initApi>;
 
 export const initApi = (baseUrl: string, token: string) => {
   const jellyfin = new Jellyfin({
     clientInfo: {
-      name: "Jellyfin Music Client",
-      version: "1.0.0",
+      name: 'Jellyfin Music Client',
+      version: '1.0.0',
     },
     deviceInfo: {
-      name: "Web browser",
+      name: 'Web browser',
       id: v4(),
     },
   });
 
   const contextAxios = axios.create();
-  contextAxios.defaults.headers["X-Emby-Authorization"] = token;
+  contextAxios.defaults.headers['X-Emby-Authorization'] = token;
 
   const client = jellyfin.createApi(baseUrl, token, contextAxios);
 

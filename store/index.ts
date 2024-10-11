@@ -1,12 +1,12 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
 import {
   TypedUseSelectorHook,
   useDispatch as useReduxDispatch,
   useSelector as useReduxSelector,
-} from "react-redux";
-import { apiConfigSlice } from "../utils/apiConfig/apiConfigSlice";
-import { playerSlice } from "../utils/player/PlayerContext/playerSlice";
-import { userSlice } from "../utils/user/userSlice";
+} from 'react-redux';
+import { apiConfigSlice } from '../utils/apiConfig/apiConfigSlice';
+import { playerSlice } from '../utils/player/PlayerContext/playerSlice';
+import { userSlice } from '../utils/user/userSlice';
 
 export const store = configureStore({
   reducer: {

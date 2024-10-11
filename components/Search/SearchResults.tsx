@@ -1,11 +1,11 @@
-import { Box, Button, Center, Spinner, VStack } from "@chakra-ui/react";
-import React, { FC, useCallback } from "react";
-import { useDispatch } from "react-redux";
-import { startNewQueue } from "../../utils";
-import { shuffleArray } from "../../utils/shuffle";
-import { usePlayerBar } from "../PlayerBar/PlayerBarContext";
-import { TracksDisplay } from "../TracksDisplay";
-import { useSearch } from "./useSearch";
+import { Box, Button, Center, Spinner, VStack } from '@chakra-ui/react';
+import React, { FC, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { startNewQueue } from '../../utils';
+import { shuffleArray } from '../../utils/shuffle';
+import { usePlayerBar } from '../PlayerBar/PlayerBarContext';
+import { TracksDisplay } from '../TracksDisplay';
+import { useSearch } from './useSearch';
 
 export interface SearchResultsProps {
   searchFor: string;
@@ -20,7 +20,7 @@ export const SearchResults: FC<SearchResultsProps> = (props) => {
     dispatch(startNewQueue({ newQueue: shuffleArray([...allResults]) }));
   }, [dispatch, allResults]);
 
-  if (allResults.length === 0 && status !== "success") {
+  if (allResults.length === 0 && status !== 'success') {
     return (
       <Center>
         <Spinner size="xl" mt={4} />
@@ -34,7 +34,7 @@ export const SearchResults: FC<SearchResultsProps> = (props) => {
         <></>
       ) : (
         <Button onClick={handleShuffleAll}>
-          Shuffle {status === "success" ? allResults.length : ""} results
+          Shuffle {status === 'success' ? allResults.length : ''} results
         </Button>
       )}
       <Box width="100%">

@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { AxiosError, AxiosResponse } from "axios";
-import { ApiClient } from "./jellyfinClient";
+import { AxiosError, AxiosResponse } from 'axios';
+import { ApiClient } from './jellyfinClient';
 
 /**
  * Picks certain properties from a type, but instead of removing other properties, it explicitly sets them to `never`
@@ -13,16 +12,12 @@ export type AsNever<T> = {
   [P in keyof T]?: never;
 };
 
-export type RemoveLast<T extends any[]> = Required<T> extends [
-  ...infer R,
-  infer _
-]
-  ? R
-  : never;
+export type RemoveLast<T extends any[]> =
+  Required<T> extends [...infer R, infer _] ? R : never;
 
 export type ApiResult<
   ApiId extends keyof ApiClient,
-  ApiMethod extends keyof ApiClient[ApiId]
+  ApiMethod extends keyof ApiClient[ApiId],
 > = ApiClient[ApiId][ApiMethod] extends (
   ...args: any[]
 ) => Promise<AxiosResponse<infer R>>
@@ -31,7 +26,7 @@ export type ApiResult<
 
 export type ApiParams<
   ApiId extends keyof ApiClient,
-  ApiMethod extends keyof ApiClient[ApiId]
+  ApiMethod extends keyof ApiClient[ApiId],
 > = ApiClient[ApiId][ApiMethod] extends (...args: infer U) => any
   ? RemoveLast<U>
   : never;

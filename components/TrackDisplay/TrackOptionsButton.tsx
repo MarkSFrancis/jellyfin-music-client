@@ -6,16 +6,16 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-} from "@chakra-ui/react";
-import { IconDots } from "@tabler/icons-react";
-import React, { useCallback } from "react";
-import { useAppDispatch } from "../../store";
-import { addToUpNext, Track } from "../../utils";
+} from '@chakra-ui/react';
+import { IconDots } from '@tabler/icons-react';
+import React, { useCallback } from 'react';
+import { useAppDispatch } from '../../store';
+import { addToUpNext, Track } from '../../utils';
 
 export interface TrackOptionsButton
-  extends Omit<IconButtonProps, "aria-label"> {
+  extends Omit<IconButtonProps, 'aria-label'> {
   track: Track;
-  "aria-label"?: string;
+  'aria-label'?: string;
 }
 
 export const TrackOptionsButton = forwardRef<

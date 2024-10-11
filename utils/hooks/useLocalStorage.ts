@@ -1,14 +1,14 @@
-import { SetStateAction, useCallback, useState } from "react";
+import { SetStateAction, useCallback, useState } from 'react';
 
 export const useLocalStorage = <T>(
   key: string,
   defaultValue?: T,
   fallbackToDefaultOnError = true
 ) => {
-  const [storedValue, setStoredValue] = useState<T>(() => {
+  const [storedValue, setStoredValue] = useState<T | undefined>(() => {
     try {
       const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : defaultValue;
+      return item ? (JSON.parse(item) as T) : defaultValue;
     } catch (error) {
       if (fallbackToDefaultOnError) {
         return defaultValue;
@@ -19,7 +19,7 @@ export const useLocalStorage = <T>(
   });
 
   const setValue = useCallback(
-    (value: SetStateAction<T>) => {
+    (value: SetStateAction<T | undefined>) => {
       const valueToStore =
         value instanceof Function ? value(storedValue) : value;
       setStoredValue(valueToStore);

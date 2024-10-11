@@ -1,5 +1,5 @@
-import { PublicSystemInfo } from "@jellyfin/sdk/lib/generated-client/models";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PublicSystemInfo } from '@jellyfin/sdk/lib/generated-client/models';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface Server extends PublicSystemInfo {
   url: string;
@@ -11,8 +11,8 @@ export interface ApiConfig {
 }
 
 export const apiConfigSlice = createSlice({
-  initialState: null as ApiConfig,
-  name: "apiConfig",
+  initialState: null as ApiConfig | null,
+  name: 'apiConfig',
   reducers: {
     setApiConfig(_state, action: PayloadAction<ApiConfig>) {
       return action.payload;

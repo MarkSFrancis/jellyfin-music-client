@@ -2,20 +2,20 @@ import axios, {
   AxiosRequestConfig,
   AxiosResponse,
   CancelTokenSource,
-} from "axios";
-import { useCallback, useRef } from "react";
-import { useApi } from "../../../components/Jellyfin/useApi";
-import { ApiClient } from "../../jellyfinClient";
-import { ApiParams, ApiResult, PickNever } from "../../types";
-import { useSafeState } from "../useSafeState";
-import { marshalRequestArgs, marshalResponse } from "./utils";
+} from 'axios';
+import { useCallback, useRef } from 'react';
+import { useApi } from '../../../components/Jellyfin/useApi';
+import { ApiClient } from '../../jellyfinClient';
+import { ApiParams, ApiResult, PickNever } from '../../types';
+import { useSafeState } from '../useSafeState';
+import { marshalRequestArgs, marshalResponse } from './utils';
 
 export type MutateRequest<
   ApiId extends keyof ApiClient,
   ApiMethod extends keyof ApiClient[ApiId],
 > = (
   params: ApiParams<ApiId, ApiMethod>,
-  requestOptions?: Omit<AxiosRequestConfig, "cancelToken">
+  requestOptions?: Omit<AxiosRequestConfig, 'cancelToken'>
 ) => Promise<AxiosResponse<ApiResult<ApiId, ApiMethod>>>;
 
 interface MutationStateBaseType<T> {
@@ -26,22 +26,22 @@ interface MutationStateBaseType<T> {
 
 export interface MutationIdleState<T>
   extends PickNever<MutationStateBaseType<T>, never> {
-  status: "idle";
+  status: 'idle';
 }
 
 export interface MutationSuccessState<T>
-  extends PickNever<MutationStateBaseType<T>, "data" | "response"> {
-  status: "success";
+  extends PickNever<MutationStateBaseType<T>, 'data' | 'response'> {
+  status: 'success';
 }
 
 export interface MutationLoadingState<T>
   extends PickNever<MutationStateBaseType<T>, never> {
-  status: "loading";
+  status: 'loading';
 }
 
 export interface MutationErrorState<T>
-  extends PickNever<MutationStateBaseType<T>, "error"> {
-  status: "error";
+  extends PickNever<MutationStateBaseType<T>, 'error'> {
+  status: 'error';
 }
 
 export type MutationState<T> =
@@ -63,7 +63,7 @@ export const useMutation = <
   const [state, setState] = useSafeState<
     MutationState<ApiResult<ApiId, ApiMethod>>
   >({
-    status: "idle",
+    status: 'idle',
   });
   const currentRequest = useRef<CancelTokenSource>();
   const api = useApi();
@@ -78,7 +78,7 @@ export const useMutation = <
       currentRequest.current = source;
 
       setState({
-        status: "loading",
+        status: 'loading',
       });
 
       const request = marshalRequestArgs<ApiId, ApiMethod>(

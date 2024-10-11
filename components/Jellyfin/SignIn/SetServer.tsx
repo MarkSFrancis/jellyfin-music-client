@@ -1,7 +1,7 @@
-import React, { FormEvent, useCallback } from "react";
-import { FC } from "react";
-import { useState } from "react";
-import { initApi } from "../../../utils/jellyfinClient";
+import React, { FormEvent, useCallback } from 'react';
+import { FC } from 'react';
+import { useState } from 'react';
+import { initApi } from '../../../utils/jellyfinClient';
 import {
   Button,
   ButtonGroup,
@@ -11,11 +11,11 @@ import {
   Input,
   VStack,
   Heading,
-} from "@chakra-ui/react";
-import { useEffect } from "react";
-import { SlimPageContainer } from "../../Layout/SlimPageContainer";
-import { Server } from "../../../utils/apiConfig/apiConfigSlice";
-import { PublicSystemInfo } from "@jellyfin/sdk/lib/generated-client/models";
+} from '@chakra-ui/react';
+import { useEffect } from 'react';
+import { SlimPageContainer } from '../../Layout/SlimPageContainer';
+import { Server } from '../../../utils/apiConfig/apiConfigSlice';
+import { PublicSystemInfo } from '@jellyfin/sdk/lib/generated-client/models';
 
 export interface SetServerProps {
   onSetServer: (server: Server) => void;
@@ -39,7 +39,7 @@ export const SetServer: FC<SetServerProps> = (props) => {
     try {
       return await apiClient.system.getPublicSystemInfo().then((r) => {
         if (!r.data.Version) {
-          throw new Error("Unrecognised server");
+          throw new Error('Unrecognised server');
         }
 
         setIsValid(r.data);

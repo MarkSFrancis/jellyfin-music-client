@@ -1,4 +1,4 @@
-import { QualityMode } from "./qualityMode";
+import { QualityMode } from './qualityMode';
 
 /**
  * @param sourceQuality

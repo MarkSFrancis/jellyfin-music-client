@@ -1,6 +1,6 @@
-import { Thead, Tr, Th } from "@chakra-ui/react";
-import React, { FC } from "react";
-import { trackColumnWidths } from "./trackCellWidths";
+import { Thead, Tr, Th } from '@chakra-ui/react';
+import React, { FC } from 'react';
+import { trackColumnWidths } from './trackCellWidths';
 
 export const TrackHeadersDisplay: FC = () => {
   return (

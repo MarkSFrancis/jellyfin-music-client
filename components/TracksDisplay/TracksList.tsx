@@ -1,17 +1,17 @@
-import { Box } from "@chakra-ui/react";
-import React, { FC, MutableRefObject } from "react";
-import { useCallback } from "react";
+import { Box } from '@chakra-ui/react';
+import React, { CSSProperties, FC, MutableRefObject } from 'react';
+import { useCallback } from 'react';
 import {
   PlayerState,
   startNewQueue,
   togglePlayPause,
   Track,
   useIsCurrentTrack,
-} from "../../utils";
-import { TrackDisplay } from "../TrackDisplay";
-import { List as FixedSizeList, WindowScroller } from "react-virtualized";
-import { usePlayerSelector } from "../../utils/player/PlayerContext/playerSelectors";
-import { useAppDispatch } from "../../store";
+} from '../../utils';
+import { TrackDisplay } from '../TrackDisplay/TrackDisplay';
+import { List as FixedSizeList, WindowScroller } from 'react-virtualized';
+import { usePlayerSelector } from '../../utils/player/PlayerContext/playerSelectors';
+import { useAppDispatch } from '../../store';
 
 export interface TracksListProps {
   tracks: Track[];
@@ -35,7 +35,7 @@ export const TracksList: FC<TracksListProps> = ({ tracks, scrollRef }) => {
   );
 
   const renderItem = useCallback(
-    ({ index, style }) => {
+    ({ index, style }: { index: number; style?: CSSProperties }) => {
       const t = tracks[index];
 
       return (

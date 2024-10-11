@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const config = {
-  transpilePackages: ["@jellyfin/sdk"],
+  transpilePackages: ['@jellyfin/sdk'],
 };
 
 export default config;

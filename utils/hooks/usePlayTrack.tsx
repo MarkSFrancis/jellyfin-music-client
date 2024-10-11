@@ -1,8 +1,8 @@
-import { useCallback } from "react";
-import { useAppDispatch } from "../../store";
-import { startNewQueue, togglePlayPause } from "../player";
-import { Track } from "../trackTypes";
-import { useIsCurrentTrack } from "./useIsCurrentTrack";
+import { useCallback } from 'react';
+import { useAppDispatch } from '../../store';
+import { startNewQueue, togglePlayPause } from '../player';
+import { Track } from '../trackTypes';
+import { useIsCurrentTrack } from './useIsCurrentTrack';
 
 export const usePlayTrack = () => {
   const dispatch = useAppDispatch();

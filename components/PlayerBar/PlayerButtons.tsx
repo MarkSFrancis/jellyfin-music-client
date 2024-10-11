@@ -1,20 +1,20 @@
-import { ButtonGroup, IconButton, Tooltip } from "@chakra-ui/react";
-import React, { FC } from "react";
+import { ButtonGroup, IconButton, Tooltip } from '@chakra-ui/react';
+import React, { FC } from 'react';
 import {
   pause,
   play,
   PlayerState,
   skipBackward1Track,
   skipForward1Track,
-} from "../../utils";
+} from '../../utils';
 import {
   IconPlayerPlay,
   IconPlayerPause,
   IconPlayerSkipBack,
   IconPlayerSkipForward,
-} from "@tabler/icons-react";
-import { useAppDispatch } from "../../store";
-import { usePlayerSelector } from "../../utils/player/PlayerContext/playerSelectors";
+} from '@tabler/icons-react';
+import { useAppDispatch } from '../../store';
+import { usePlayerSelector } from '../../utils/player/PlayerContext/playerSelectors';
 
 export const PlayerButtons: FC = () => {
   const dispatch = useAppDispatch();
@@ -42,7 +42,7 @@ export const PlayerButtons: FC = () => {
           />
         </Tooltip>
       ) : (
-        <Tooltip label={state === PlayerState.Paused ? "Play" : ""}>
+        <Tooltip label={state === PlayerState.Paused ? 'Play' : ''}>
           <IconButton
             isRound
             isDisabled={

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { dequal as deepEqual } from "dequal";
+import { useEffect, useState } from 'react';
+import { dequal as deepEqual } from 'dequal';
 
 export const useCache = <T>(dep: T) => {
   const [cached, updateCache] = useState(dep);

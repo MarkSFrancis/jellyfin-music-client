@@ -1,1 +1,1 @@
-export * from "./SecondaryText";
+export * from './SecondaryText';

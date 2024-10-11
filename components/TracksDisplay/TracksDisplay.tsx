@@ -1,8 +1,8 @@
-import { Flex, useBreakpointValue } from "@chakra-ui/react";
-import React, { FC, MutableRefObject } from "react";
-import { Track } from "../../utils";
-import { TracksTable } from "./TracksTable";
-import { TracksList } from "./TracksList";
+import { Flex, useBreakpointValue } from '@chakra-ui/react';
+import React, { FC, MutableRefObject } from 'react';
+import { Track } from '../../utils';
+import { TracksTable } from './TracksTable';
+import { TracksList } from './TracksList';
 
 export interface TracksDisplayProps {
   tracks: Track[];

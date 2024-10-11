@@ -1,14 +1,14 @@
-import { NextRouter, useRouter } from "next/router";
-import React, { FC, useCallback, useEffect, useState } from "react";
-import { SearchInput } from "./SearchInput";
+import { NextRouter, useRouter } from 'next/router';
+import React, { FC, useCallback, useEffect, useState } from 'react';
+import { SearchInput } from './SearchInput';
 
-const SEARCH_QUERY_KEY = "q";
-const SEARCH_PATH = "/search";
+const SEARCH_QUERY_KEY = 'q';
+const SEARCH_PATH = '/search';
 
 export const Search: FC = () => {
   const router = useRouter();
 
-  const [urlQuery, setUrlQuery] = useState(getSearchUrlValue(router) ?? "");
+  const [urlQuery, setUrlQuery] = useState(getSearchUrlValue(router) ?? '');
 
   useEffect(() => {
     setUrlQuery((q) => getSearchUrlValue(router) ?? q);
@@ -19,9 +19,9 @@ export const Search: FC = () => {
       const searchParams = new URLSearchParams({ [SEARCH_QUERY_KEY]: query });
 
       if (router.pathname === SEARCH_PATH) {
-        router.replace(`${SEARCH_PATH}?${searchParams}`);
+        void router.replace(`${SEARCH_PATH}?${searchParams}`);
       } else {
-        router.push(`${SEARCH_PATH}?${searchParams}`);
+        void router.push(`${SEARCH_PATH}?${searchParams}`);
       }
     },
     [router]

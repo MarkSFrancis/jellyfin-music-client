@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { FC, useCallback } from "react";
-import { Track, useGetTracks } from "../../utils";
-import { LazyDisplay } from "../LazyDisplay/LazyDisplay";
-import { usePlayerBar } from "../PlayerBar/PlayerBarContext";
-import { TracksDisplay } from "./TracksDisplay";
+import React, { useState } from 'react';
+import { FC, useCallback } from 'react';
+import { Track, useGetTracks } from '../../utils';
+import { LazyDisplay } from '../LazyDisplay/LazyDisplay';
+import { usePlayerBar } from '../PlayerBar/PlayerBarContext';
+import { TracksDisplay } from './TracksDisplay';
 import { ItemsApiGetItemsRequest } from '@jellyfin/sdk/lib/generated-client/api/items-api';
 
 export const DEFAULT_LIBRARY_PAGE_SIZE = 100;
 
 export interface LibraryTracksProps
-  extends Omit<ItemsApiGetItemsRequest, "limit" | "startIndex"> {
+  extends Omit<ItemsApiGetItemsRequest, 'limit' | 'startIndex'> {
   pageSize?: number;
 }
 

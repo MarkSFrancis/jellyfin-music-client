@@ -1,7 +1,7 @@
-import { QualityMode } from "./qualityMode";
-import { MediaSource } from "../../trackTypes";
-import { getAudioSrcQuality } from "./getAudioSrcQuality";
-import { getQualityDiff } from "./getQualityDiff";
+import { QualityMode } from './qualityMode';
+import { MediaSource } from '../../trackTypes';
+import { getAudioSrcQuality } from './getAudioSrcQuality';
+import { getQualityDiff } from './getQualityDiff';
 
 export interface StreamSrcOptions {
   trackId: string;
@@ -21,72 +21,72 @@ export const getStreamUrlAtQuality = (options: StreamSrcOptions) => {
   }
 
   switch (options.targetQuality) {
-    case "ORIGINAL_QUALITY":
+    case 'ORIGINAL_QUALITY':
       return getStreamUrlAsOriginalQuality(options);
-    case "HIGH_QUALITY":
+    case 'HIGH_QUALITY':
       return getStreamUrlAsHighQuality(options);
-    case "MEDIUM_QUALITY":
+    case 'MEDIUM_QUALITY':
       return getStreamUrlAsMediumQuality(options);
-    case "LOW_QUALITY":
+    case 'LOW_QUALITY':
       return getStreamUrlAsLowQuality(options);
     default:
       throw new Error(
-        `Unknown target quality level: "${options.targetQuality}"`
+        `Unknown target quality level: "${options.targetQuality as string}"`
       );
   }
 };
 
 const getStreamUrlAsOriginalQuality = (
-  options: Omit<StreamSrcOptions, "targetQuality">
+  options: Omit<StreamSrcOptions, 'targetQuality'>
 ) => {
   const src = new URL(
     `Audio/${options.trackId}/stream.${options.stream.Container}`,
     options.serverUrl
   );
 
-  src.searchParams.set("static", "true");
+  src.searchParams.set('static', 'true');
 
   return src;
 };
 
 const getStreamUrlAsLowQuality = (
-  options: Omit<StreamSrcOptions, "targetQuality">
+  options: Omit<StreamSrcOptions, 'targetQuality'>
 ) => {
   const src = new URL(
     `Audio/${options.trackId}/stream.opus`,
     options.serverUrl
   );
-  src.searchParams.set("audioCodec", "opus");
-  src.searchParams.set("audioBitRate", "128000");
-  src.searchParams.set("context", "static");
+  src.searchParams.set('audioCodec', 'opus');
+  src.searchParams.set('audioBitRate', '128000');
+  src.searchParams.set('context', 'static');
 
   return src;
 };
 
 const getStreamUrlAsMediumQuality = (
-  options: Omit<StreamSrcOptions, "targetQuality">
+  options: Omit<StreamSrcOptions, 'targetQuality'>
 ) => {
   const src = new URL(
     `Audio/${options.trackId}/stream.opus`,
     options.serverUrl
   );
-  src.searchParams.set("audioCodec", "opus");
-  src.searchParams.set("audioBitRate", "256000");
-  src.searchParams.set("context", "static");
+  src.searchParams.set('audioCodec', 'opus');
+  src.searchParams.set('audioBitRate', '256000');
+  src.searchParams.set('context', 'static');
 
   return src;
 };
 
 const getStreamUrlAsHighQuality = (
-  options: Omit<StreamSrcOptions, "targetQuality">
+  options: Omit<StreamSrcOptions, 'targetQuality'>
 ) => {
   const src = new URL(
     `Audio/${options.trackId}/stream.opus`,
     options.serverUrl
   );
-  src.searchParams.set("audioCodec", "opus");
-  src.searchParams.set("audioBitRate", "320000");
-  src.searchParams.set("context", "static");
+  src.searchParams.set('audioCodec', 'opus');
+  src.searchParams.set('audioBitRate', '320000');
+  src.searchParams.set('context', 'static');
 
   return src;
 };

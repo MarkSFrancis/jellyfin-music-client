@@ -1,22 +1,23 @@
-import { PropsWithChildren, useEffect } from "react";
-import { FC } from "react";
-import { useAppDispatch } from "../../../store";
-import { usePlayerAudio } from "./PlayerAudio";
+import { PropsWithChildren, useEffect } from 'react';
+import { FC } from 'react';
+import { useAppDispatch } from '../../../store';
+import { usePlayerAudio } from './PlayerAudio';
 import {
   getCanSkipBackward,
   getCanSkipForward,
   getPlayerCurrentTrack,
   usePlayerSelector,
-} from "./playerSelectors";
+} from './playerSelectors';
 import {
   pause,
   play,
   skipBackward1Track,
   skipForward1Track,
-} from "./playerSlice";
-import { PlayerState } from "./types";
+} from './playerSlice';
+import { PlayerState } from './types';
+import { AlbumArtist } from '../../trackTypes';
 
-const hasMediaSession = () => "mediaSession" in navigator;
+const hasMediaSession = () => 'mediaSession' in navigator;
 
 export const MediaSessionManager: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useAppDispatch();
@@ -35,8 +36,10 @@ export const MediaSessionManager: FC<PropsWithChildren> = ({ children }) => {
     } else {
       navigator.mediaSession.metadata = new MediaMetadata({
         title: track.Name,
-        artist: track.ArtistItems?.map((a) => a.Name).join("; "),
-        album: track.Album,
+        artist: (track.ArtistItems as AlbumArtist[] | null)
+          ?.map((a) => a.Name)
+          .join('; '),
+        album: track.Album ?? undefined,
         artwork: [],
       });
     }
@@ -45,7 +48,7 @@ export const MediaSessionManager: FC<PropsWithChildren> = ({ children }) => {
   useEffect(() => {
     if (state !== PlayerState.Paused) return;
 
-    return setHandler("play", () => {
+    return setHandler('play', () => {
       dispatch(play());
     });
   }, [state, dispatch]);
@@ -53,23 +56,23 @@ export const MediaSessionManager: FC<PropsWithChildren> = ({ children }) => {
   useEffect(() => {
     if (state !== PlayerState.Playing) return;
 
-    return setHandler("pause", () => dispatch(pause()));
+    return setHandler('pause', () => dispatch(pause()));
   }, [state, dispatch]);
 
   useEffect(() => {
     if (!canSkipBackward) return;
 
-    return setHandler("previoustrack", () => dispatch(skipBackward1Track()));
+    return setHandler('previoustrack', () => dispatch(skipBackward1Track()));
   }, [canSkipBackward, dispatch]);
 
   useEffect(() => {
     if (!canSkipForward) return;
 
-    return setHandler("nexttrack", () => dispatch(skipForward1Track()));
+    return setHandler('nexttrack', () => dispatch(skipForward1Track()));
   }, [canSkipForward, dispatch]);
 
   useEffect(() => {
-    return setHandler("seekto", (details) => {
+    return setHandler('seekto', (details) => {
       if (details.fastSeek) return;
 
       rawAudio?.seek(details.seekTime);

@@ -3,16 +3,16 @@ import {
   DrawerBody,
   DrawerCloseButton,
   DrawerHeader,
-} from "@chakra-ui/react";
-import React, { FC } from "react";
-import { useRef } from "react";
-import { useCallback } from "react";
-import { useState } from "react";
-import { useAppDispatch } from "../../../store";
-import { play, setCurrentTrack, Track } from "../../../utils";
-import { TrackDisplay } from "../../TrackDisplay";
-import { LazyDisplay } from "../../TracksDisplay";
-import { useUpNext } from "./useUpNext";
+} from '@chakra-ui/react';
+import React, { FC } from 'react';
+import { useRef } from 'react';
+import { useCallback } from 'react';
+import { useState } from 'react';
+import { useAppDispatch } from '../../../store';
+import { play, setCurrentTrack, Track } from '../../../utils';
+import { TrackDisplay } from '../../TrackDisplay/TrackDisplay';
+import { LazyDisplay } from '../../TracksDisplay';
+import { useUpNext } from './useUpNext';
 
 const nextPageSize = 30;
 
@@ -20,7 +20,7 @@ export const UpNextTracks: FC = () => {
   const [, , next] = useUpNext();
   const dispatch = useAppDispatch();
   const [totalToShow, setTotalToShow] = useState(nextPageSize);
-  const bodyRef = useRef<HTMLDivElement>();
+  const bodyRef = useRef<HTMLDivElement>(null);
 
   const onPlay = useCallback(
     (track: Track) => {
@@ -43,7 +43,7 @@ export const UpNextTracks: FC = () => {
         <LazyDisplay
           loadedCount={totalToShow}
           totalItems={next.length}
-          getPageStatus={"success"}
+          getPageStatus={'success'}
           onGetPage={() => setTotalToShow((t) => t + nextPageSize)}
           scrollRef={bodyRef}
         >

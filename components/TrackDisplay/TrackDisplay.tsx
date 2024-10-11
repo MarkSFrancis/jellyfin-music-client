@@ -1,11 +1,11 @@
-import { HStack, Box, VStack, forwardRef, StackProps } from "@chakra-ui/react";
-import React from "react";
-import { Track } from "../../utils";
-import { SecondaryText } from "../Typography";
-import { TrackOptionsButton } from "./TrackOptionsButton";
-import { TrackPlayButton } from "./TrackPlayButton";
+import { HStack, Box, VStack, forwardRef, StackProps } from '@chakra-ui/react';
+import React from 'react';
+import { Track } from '../../utils';
+import { SecondaryText } from '../Typography';
+import { TrackOptionsButton } from './TrackOptionsButton';
+import { TrackPlayButton } from './TrackPlayButton';
 
-interface TrackDisplayProps extends Omit<StackProps, "onPlay"> {
+interface TrackDisplayProps extends Omit<StackProps, 'onPlay'> {
   track: Track;
   isCurrentTrack: boolean;
   isPlaying: boolean;
@@ -28,12 +28,12 @@ const TrackDisplayInternal = forwardRef<TrackDisplayProps, typeof HStack>(
           <Box>{track.Name}</Box>
           <Box>
             <SecondaryText>
-              {track.ArtistItems?.map((a) => a.Name).join(", ")}
+              {track.ArtistItems?.map((a) => a.Name).join(', ')}
             </SecondaryText>
           </Box>
           <Box>
             <SecondaryText>
-              {track.GenreItems?.map((g) => g.Name).join(", ")}
+              {track.GenreItems?.map((g) => g.Name).join(', ')}
             </SecondaryText>
           </Box>
         </VStack>

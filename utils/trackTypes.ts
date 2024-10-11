@@ -7,7 +7,7 @@ import {
   MediaProtocol,
   MediaSourceType,
   MediaStreamType,
-} from "@jellyfin/sdk/lib/generated-client/models";
+} from '@jellyfin/sdk/lib/generated-client/models';
 
 export interface Track extends BaseItemDto {
   Name: string;
@@ -23,13 +23,13 @@ export interface Track extends BaseItemDto {
   Genres: string[];
   RunTimeTicks: number;
   IsFolder: boolean;
-  GenreItems: AlbumArtist[];
+  GenreItems?: AlbumArtist[];
   UserData: UserData;
   Tags: string[];
   Artists: string[];
-  ArtistItems: AlbumArtist[];
-  AlbumArtist: string;
-  AlbumArtists: AlbumArtist[];
+  ArtistItems?: AlbumArtist[];
+  AlbumArtist?: string;
+  AlbumArtists?: AlbumArtist[];
   MediaStreams: MediaStream[];
   BackdropImageTags: string[];
   LocationType: LocationType;

@@ -1,5 +1,5 @@
-import { useAppSelector } from "../../../store";
-import { PlayerSliceState } from "./playerSlice";
+import { useAppSelector } from '../../../store';
+import { PlayerSliceState } from './playerSlice';
 
 export const usePlayerSelector = <TSelected>(
   selector: (state: PlayerSliceState) => TSelected

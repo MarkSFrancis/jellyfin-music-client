@@ -1,11 +1,11 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Track } from "../../trackTypes";
-import { PlayerState } from "./types";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Track } from '../../trackTypes';
+import { PlayerState } from './types';
 
 export type PlayerSliceState = ReturnType<typeof playerSlice.getInitialState>;
 
 export const playerSlice = createSlice({
-  name: "player",
+  name: 'player',
   initialState: {
     queue: [] as Track[],
     settings: {
@@ -41,12 +41,12 @@ export const playerSlice = createSlice({
     setCurrentTrackIndex(state, action: PayloadAction<number>) {
       state.currentTrackIndex = action.payload;
     },
-    setCurrentTrack(state, action: PayloadAction<Track>) {
+    setCurrentTrack(state, action: PayloadAction<Track | undefined>) {
       if (!action.payload) {
         state.currentTrackIndex = -1;
       } else {
         state.currentTrackIndex = state.queue.findIndex(
-          (t) => t.Id === action.payload.Id
+          (t) => t.Id === action.payload!.Id
         );
       }
     },

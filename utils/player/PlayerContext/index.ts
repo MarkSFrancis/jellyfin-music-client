@@ -1,6 +1,6 @@
-export * from "./types";
-export * from "./PlayerContext";
-export { usePlayerAudio } from "./PlayerAudio";
+export * from './types';
+export * from './PlayerContext';
+export { usePlayerAudio } from './PlayerAudio';
 export {
   pause,
   play,
@@ -18,4 +18,4 @@ export {
   skipBackward1Track,
   skipForward1Track,
   startNewQueue,
-} from "./playerSlice";
+} from './playerSlice';

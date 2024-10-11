@@ -1,11 +1,11 @@
-import { HStack, Text } from "@chakra-ui/react";
-import React, { FC, useEffect, useState } from "react";
-import { usePlayerAudio } from "../../utils";
+import { HStack, Text } from '@chakra-ui/react';
+import React, { FC, useEffect, useState } from 'react';
+import { usePlayerAudio } from '../../utils';
 import {
   getPlayerCurrentTrack,
   usePlayerSelector,
-} from "../../utils/player/PlayerContext/playerSelectors";
-import { PlayerSeek } from "./PlayerSeek";
+} from '../../utils/player/PlayerContext/playerSelectors';
+import { PlayerSeek } from './PlayerSeek';
 
 export const PlayerBarProgress: FC = () => {
   const rawAudio = usePlayerAudio();
@@ -52,9 +52,9 @@ const formatSeconds = (seconds: number) => {
   const ticksInMinutes = Math.floor(seconds / 60);
   const ticksInSeconds = Math.floor(seconds % 60);
 
-  return `${ticksInMinutes.toString().padStart(2, "0")}:${ticksInSeconds
+  return `${ticksInMinutes.toString().padStart(2, '0')}:${ticksInSeconds
     .toString()
-    .padStart(2, "0")}`;
+    .padStart(2, '0')}`;
 };
 
 const ticksToSeconds = (ticks: number) => {

@@ -1,9 +1,9 @@
-import { Td } from "@chakra-ui/react";
-import React, { FC, MutableRefObject } from "react";
-import { Track } from "../../../../utils";
-import { trackColumnWidths } from "../trackCellWidths";
-import { TrackOptionsCell } from "./TrackOptionsCell";
-import { TrackPlayCell } from "./TrackPlayCell";
+import { Td } from '@chakra-ui/react';
+import React, { FC, MutableRefObject } from 'react';
+import { Track } from '../../../../utils';
+import { trackColumnWidths } from '../trackCellWidths';
+import { TrackOptionsCell } from './TrackOptionsCell';
+import { TrackPlayCell } from './TrackPlayCell';
 
 export interface TrackCellsDisplayProps {
   tracks: Track[];
@@ -34,7 +34,7 @@ export const TrackCellsDisplay: FC<TrackCellsDisplayProps> = (props) => {
         display="inline-block"
         border="none"
       >
-        {props.track.ArtistItems?.map((a) => a.Name).join(", ")}
+        {props.track.ArtistItems?.map((a) => a.Name).join(', ')}
       </Td>
       <Td
         as="div"
@@ -42,7 +42,7 @@ export const TrackCellsDisplay: FC<TrackCellsDisplayProps> = (props) => {
         display="inline-block"
         border="none"
       >
-        {props.track.GenreItems?.map((a) => a.Name).join(", ")}
+        {props.track.GenreItems?.map((a) => a.Name).join(', ')}
       </Td>
       <TrackOptionsCell track={props.track} rowRef={props.rowRef} />
     </>

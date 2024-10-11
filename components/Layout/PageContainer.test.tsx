@@ -1,11 +1,11 @@
-import { render, screen } from "@testing-library/react";
-import React from "react";
-import { ChakraProvider } from "../Chakra/ChakraProvider";
-import { PageContainer } from "./PageContainer";
-import { expect, it } from "vitest";
+import { render, screen } from '@testing-library/react';
+import React from 'react';
+import { ChakraProvider } from '../Chakra/ChakraProvider';
+import { PageContainer } from './PageContainer';
+import { expect, it } from 'vitest';
 
-it("should render children", async () => {
-  const childId = "test-id";
+it('should render children', async () => {
+  const childId = 'test-id';
 
   render(
     <ChakraProvider>

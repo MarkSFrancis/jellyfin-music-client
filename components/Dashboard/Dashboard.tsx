@@ -1,14 +1,14 @@
-import { Box, Button, ButtonGroup, Heading, VStack } from "@chakra-ui/react";
-import { PropsWithChildren, useCallback } from "react";
-import { FC } from "react";
-import { useDispatch } from "react-redux";
-import { startNewQueue, useGetTracks } from "../../utils";
-import { Logo } from "../Layout/Logo";
-import { LibraryTracks } from "../TracksDisplay";
+import { Box, Button, ButtonGroup, Heading, VStack } from '@chakra-ui/react';
+import { PropsWithChildren, useCallback } from 'react';
+import { FC } from 'react';
+import { useDispatch } from 'react-redux';
+import { startNewQueue, useGetTracks } from '../../utils';
+import { Logo } from '../Layout/Logo';
+import { LibraryTracks } from '../TracksDisplay';
 import {
   ItemFields,
   SortOrder,
-} from "@jellyfin/sdk/lib/generated-client/models";
+} from '@jellyfin/sdk/lib/generated-client/models';
 
 export const Dashboard: FC<PropsWithChildren> = () => {
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ export const Dashboard: FC<PropsWithChildren> = () => {
   const handleShuffleAll = useCallback(async () => {
     const library = await getTracks({
       limit: 300,
-      sortBy: ["Random"],
+      sortBy: ['Random'],
     });
     dispatch(startNewQueue({ newQueue: library.tracks }));
   }, [getTracks, dispatch]);
@@ -39,13 +39,13 @@ export const Dashboard: FC<PropsWithChildren> = () => {
       <Box>
         <ButtonGroup spacing={4}>
           <Button
-            isLoading={getTracksState.status === "loading"}
+            isLoading={getTracksState.status === 'loading'}
             onClick={handlePlayMostRecent}
           >
             Play most recent
           </Button>
           <Button
-            isLoading={getTracksState.status === "loading"}
+            isLoading={getTracksState.status === 'loading'}
             onClick={handleShuffleAll}
           >
             Shuffle all

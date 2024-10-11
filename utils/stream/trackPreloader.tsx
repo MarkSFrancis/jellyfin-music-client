@@ -1,4 +1,4 @@
-import { Track } from "../trackTypes";
+import { Track } from '../trackTypes';
 
 // If loading a total of more than 10 items (including the current track), you'll need to increase the HTML Audio box limit (via howler configuration)
 const LOOK_AHEAD_MAX = 2;

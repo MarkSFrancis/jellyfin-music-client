@@ -1,10 +1,10 @@
-import { useCallback } from "react";
-import { useMusicLibraryConfig } from "../../components/Jellyfin/MusicLibrary/MusicLibraryConfig";
-import { useUser } from "../../components/Jellyfin/User/UserContext";
-import { Track } from "../trackTypes";
-import { useMutation } from "./jellyfin";
-import { ItemFields } from "@jellyfin/sdk/lib/generated-client/models";
-import { ItemsApiGetItemsRequest } from "@jellyfin/sdk/lib/generated-client/api/items-api";
+import { useCallback } from 'react';
+import { useMusicLibraryConfig } from '../../components/Jellyfin/MusicLibrary/MusicLibraryConfig';
+import { useUser } from '../../components/Jellyfin/User/UserContext';
+import { Track } from '../trackTypes';
+import { useMutation } from './jellyfin';
+import { ItemFields } from '@jellyfin/sdk/lib/generated-client/models';
+import { ItemsApiGetItemsRequest } from '@jellyfin/sdk/lib/generated-client/api/items-api';
 
 export interface MusicLibraryResult {
   tracks: Track[];
@@ -18,7 +18,7 @@ export const useGetTracks = () => {
   const user = useUser();
   const musicLibrary = useMusicLibraryConfig();
 
-  const [fetch, state] = useMutation("items", "getItems");
+  const [fetch, state] = useMutation('items', 'getItems');
 
   const fetchWithDefaults = useCallback(
     async (
@@ -48,7 +48,7 @@ export const getTracksFromLibaryDefaultOptions = (
 ): ItemsApiGetItemsRequest => ({
   userId: userId,
   parentId: libraryId,
-  mediaTypes: ["Audio"],
+  mediaTypes: ['Audio'],
   recursive: true,
   fields: [
     ItemFields.CanDelete,

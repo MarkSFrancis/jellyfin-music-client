@@ -3,9 +3,9 @@ import {
   ContainerProps,
   forwardRef,
   VStack,
-} from "@chakra-ui/react";
-import React from "react";
-import { Logo } from "./Logo";
+} from '@chakra-ui/react';
+import React from 'react';
+import { Logo } from './Logo';
 
 export const SlimPageContainer = forwardRef<ContainerProps, typeof Container>(
   (props, ref) => (

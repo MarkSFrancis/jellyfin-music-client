@@ -1,14 +1,17 @@
-import { Td } from "@chakra-ui/react";
-import React, { FC } from "react";
+import { Td } from '@chakra-ui/react';
+import React, { FC } from 'react';
 import {
   PlayerState,
   Track,
   useIsCurrentTrack,
   usePlayTrack,
-} from "../../../../utils";
-import { usePlayerSelector } from "../../../../utils/player/PlayerContext/playerSelectors";
-import { TrackIndexPlayButton, TrackPlayButton } from "../../../TrackDisplay";
-import { trackColumnWidths } from "../trackCellWidths";
+} from '../../../../utils';
+import { usePlayerSelector } from '../../../../utils/player/PlayerContext/playerSelectors';
+import {
+  TrackIndexPlayButton,
+  TrackPlayButton,
+} from '../../../TrackDisplay/TrackPlayButton';
+import { trackColumnWidths } from '../trackCellWidths';
 
 export interface TrackPlayCellProps {
   track: Track;
@@ -42,7 +45,7 @@ export const TrackPlayCell: FC<TrackPlayCellProps> = ({
       />
       <TrackPlayButton
         isCurrentTrack={isCurrentTrack(track)}
-        isPlaying={isCurrentTrack && isPlaying}
+        isPlaying={isPlaying}
         onClick={() => playTrack(track, tracks)}
         className="display-on-hover"
       />

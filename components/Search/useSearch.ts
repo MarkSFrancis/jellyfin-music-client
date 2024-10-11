@@ -1,13 +1,13 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo } from 'react';
 import {
   Track,
   getTracksFromLibaryDefaultOptions,
   useMutation,
   useQuery,
   useSafeState,
-} from "../../utils";
-import { useMusicLibraryConfig } from "../Jellyfin/MusicLibrary/MusicLibraryConfig";
-import { useUser } from "../Jellyfin/User/UserContext";
+} from '../../utils';
+import { useMusicLibraryConfig } from '../Jellyfin/MusicLibrary/MusicLibraryConfig';
+import { useUser } from '../Jellyfin/User/UserContext';
 
 export interface UseSearchProps {
   searchFor: string;
@@ -23,13 +23,13 @@ export const useSearch = (props: UseSearchProps) => {
 
   const allResults = useMemo(() => {
     let results: Track[] = [];
-    if (titleSearchState === "success") {
-      results.push(...titleMatches);
+    if (titleSearchState === 'success') {
+      results.push(...(titleMatches ?? []));
     }
-    if (artistSearchState === "success") {
+    if (artistSearchState === 'success') {
       results.push(...artistMatches);
     }
-    if (genreSearchState === "success") {
+    if (genreSearchState === 'success') {
       results.push(...genreMatches);
     }
 
@@ -49,11 +49,11 @@ export const useSearch = (props: UseSearchProps) => {
   ]);
 
   const status = useMemo(() => {
-    if (titleSearchState !== "success") {
+    if (titleSearchState !== 'success') {
       return titleSearchState;
     }
 
-    if (artistSearchState !== "success") {
+    if (artistSearchState !== 'success') {
       return artistSearchState;
     }
 
@@ -70,9 +70,9 @@ export const useTrackTitleSearch = (props: UseSearchProps) => {
   const user = useUser();
   const musicLibrary = useMusicLibraryConfig();
 
-  const [results] = useQuery("items", "getItems", [
+  const [results] = useQuery('items', 'getItems', [
     {
-      ...getTracksFromLibaryDefaultOptions(user.Id, musicLibrary.id),
+      ...getTracksFromLibaryDefaultOptions(user!.Id as string, musicLibrary.id),
       searchTerm: props.searchFor,
     },
   ]);
@@ -86,26 +86,28 @@ export const useTrackTitleSearch = (props: UseSearchProps) => {
 export const useSearchTracksByArtist = (props: UseSearchProps) => {
   const user = useUser();
   const musicLibrary = useMusicLibraryConfig();
-  const [getArtists] = useQuery("artists", "getArtists", [
+  const [getArtists] = useQuery('artists', 'getArtists', [
     {
       searchTerm: props.searchFor,
-      userId: user.Id,
+      userId: user!.Id,
       parentId: musicLibrary.id,
     },
   ]);
 
-  const [getTracks, getTracksState] = useMutation("items", "getItems");
+  const [getTracks, getTracksState] = useMutation('items', 'getItems');
   const [tracks, setTracks] = useSafeState<Track[]>([]);
   const [emptyResults, setEmptyResults] = useSafeState(false);
 
   useEffect(() => {
-    if (getArtists.status !== "success") {
+    if (getArtists.status !== 'success') {
       return;
     }
 
-    (async () => {
+    void (async () => {
       const artistIds =
-        getArtists.data.Items?.map((a) => a.Id).filter((a) => !!a) ?? [];
+        getArtists.data.Items?.map((a) => a.Id).filter(
+          (a): a is string => !!a
+        ) ?? [];
 
       if (artistIds.length === 0) {
         setEmptyResults(true);
@@ -113,7 +115,10 @@ export const useSearchTracksByArtist = (props: UseSearchProps) => {
       } else {
         const result = await getTracks([
           {
-            ...getTracksFromLibaryDefaultOptions(user.Id, musicLibrary.id),
+            ...getTracksFromLibaryDefaultOptions(
+              user!.Id as string,
+              musicLibrary.id
+            ),
             artistIds: artistIds,
           },
         ]);
@@ -125,33 +130,35 @@ export const useSearchTracksByArtist = (props: UseSearchProps) => {
 
   return {
     results: tracks,
-    status: emptyResults ? "success" : getTracksState.status,
+    status: emptyResults ? 'success' : getTracksState.status,
   };
 };
 
 export const useSearchTracksByGenre = (props: UseSearchProps) => {
   const user = useUser();
   const musicLibrary = useMusicLibraryConfig();
-  const [getGenres] = useQuery("musicGenres", "getMusicGenres", [
+  const [getGenres] = useQuery('musicGenres', 'getMusicGenres', [
     {
       searchTerm: props.searchFor,
-      userId: user.Id,
+      userId: user!.Id,
       parentId: musicLibrary.id,
     },
   ]);
 
   const [emptyResults, setEmptyResults] = useSafeState(false);
-  const [getTracks, getTracksState] = useMutation("items", "getItems");
+  const [getTracks, getTracksState] = useMutation('items', 'getItems');
   const [tracks, setTracks] = useSafeState<Track[]>([]);
 
   useEffect(() => {
-    if (getGenres.status !== "success") {
+    if (getGenres.status !== 'success') {
       return;
     }
 
-    (async () => {
+    void (async () => {
       const genreIds =
-        getGenres.data.Items?.map((a) => a.Id).filter((a) => !!a) ?? [];
+        getGenres.data.Items?.map((a) => a.Id).filter(
+          (a): a is string => !!a
+        ) ?? [];
 
       if (genreIds.length === 0) {
         setEmptyResults(true);
@@ -159,7 +166,10 @@ export const useSearchTracksByGenre = (props: UseSearchProps) => {
       } else {
         const result = await getTracks([
           {
-            ...getTracksFromLibaryDefaultOptions(user.Id, musicLibrary.id),
+            ...getTracksFromLibaryDefaultOptions(
+              user?.Id as string,
+              musicLibrary.id
+            ),
             genreIds: genreIds,
           },
         ]);
@@ -171,6 +181,6 @@ export const useSearchTracksByGenre = (props: UseSearchProps) => {
 
   return {
     results: tracks,
-    status: emptyResults ? "success" : getTracksState.status,
+    status: emptyResults ? 'success' : getTracksState.status,
   };
 };

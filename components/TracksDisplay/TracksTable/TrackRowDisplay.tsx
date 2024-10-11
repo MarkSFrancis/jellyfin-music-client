@@ -1,9 +1,9 @@
-import React, { FC, useRef } from "react";
-import { TrackCellsDisplay } from "./TrackCells";
+import React, { FC, useRef } from 'react';
+import { TrackCellsDisplay } from './TrackCells';
 import {
   TrackCellsContainer,
   TrackCellsContainerProps,
-} from "./TrackCells/TrackCellsContainer";
+} from './TrackCells/TrackCellsContainer';
 
 export interface TrackRowDisplayProps extends TrackCellsContainerProps {
   index: number;

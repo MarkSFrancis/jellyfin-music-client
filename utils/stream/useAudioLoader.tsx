@@ -1,10 +1,10 @@
-import { Howl } from "howler";
-import { useApiConfig } from "../../components/Jellyfin/useApiConfig";
-import { Track } from "../trackTypes";
-import { useMemo, useRef } from "react";
-import { usePreloadTracks } from "./usePreloadTracks";
-import { ApiConfig } from "../apiConfig/apiConfigSlice";
-import { getTrackSrc } from "./getTrackSrc";
+import { Howl } from 'howler';
+import { useApiConfig } from '../../components/Jellyfin/useApiConfig';
+import { Track } from '../trackTypes';
+import { useMemo, useRef } from 'react';
+import { usePreloadTracks } from './usePreloadTracks';
+import { ApiConfig } from '../apiConfig/apiConfigSlice';
+import { getTrackSrc } from './getTrackSrc';
 
 // Hoist into redux
 
@@ -20,6 +20,7 @@ export const useAudioLoader = () => {
 
   const loadedTracks = useMemo(() => {
     let tracksToLoad = preloadTracks;
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!apiConfig || !preloadTracks) {
       tracksToLoad = [];
     }
