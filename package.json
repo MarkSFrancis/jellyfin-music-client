@@ -48,7 +48,7 @@
     "@types/wicg-mediasession": "^1.1.8",
     "babel-loader": "^9.2.1",
     "eslint": "^9.16.0",
-    "eslint-plugin-react-hooks": "^5.1.0-rc.1",
+    "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.16",
     "husky": "^9.1.7",
     "jsdom": "^25.0.1",
