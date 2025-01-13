@@ -34,7 +34,7 @@
     "react-virtualized": "^9.22.5",
     "react-virtualized-auto-sizer": "^1.0.25",
     "react-window": "^1.8.11",
-    "uuid": "^11.0.4"
+    "uuid": "^11.0.5"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",
