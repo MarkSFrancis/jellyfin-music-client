@@ -47,7 +47,7 @@
     "@types/uuid": "^10.0.0",
     "@types/wicg-mediasession": "^1.1.8",
     "babel-loader": "^9.2.1",
-    "eslint": "^9.17.0",
+    "eslint": "^9.18.0",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.18",
     "husky": "^9.1.7",
