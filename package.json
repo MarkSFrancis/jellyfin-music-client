@@ -42,7 +42,7 @@
     "@types/howler": "^2.2.12",
     "@types/react": "^18.3.13",
     "@types/react-infinite-scroller": "^1.2.5",
-    "@types/react-virtualized": "^9.22.0",
+    "@types/react-virtualized": "^9.22.1",
     "@types/react-window": "^1.8.8",
     "@types/uuid": "^10.0.0",
     "@types/wicg-mediasession": "^1.1.8",
