@@ -46,7 +46,7 @@
     "@types/react-window": "^1.8.8",
     "@types/uuid": "^10.0.0",
     "@types/wicg-mediasession": "^1.1.8",
-    "babel-loader": "^9.2.1",
+    "babel-loader": "^10.0.0",
     "eslint": "^9.21.0",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
