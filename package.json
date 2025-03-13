@@ -22,7 +22,7 @@
     "@reduxjs/toolkit": "^2.6.1",
     "@tabler/icons-react": "^3.31.0",
     "@types/react-virtualized-auto-sizer": "^1.0.4",
-    "axios": "^1.8.2",
+    "axios": "^1.8.3",
     "dequal": "^2.0.3",
     "framer-motion": "^12",
     "howler": "^2.2.4",
